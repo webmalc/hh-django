@@ -60,3 +60,22 @@ target/
 
 #Ipython Notebook
 .ipynb_checkpoints
+
+#IDE
+.idea
+
+#bower_components
+bower_components/*
+!bower_components/.gitkeep
+
+#static
+/static
+
+#media
+/media
+
+#coverage
+/htmlcov
+
+#Project
+/fh/local_settings.py
