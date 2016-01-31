@@ -1,0 +1,28 @@
+{% load url_replace %}
+
+<thead>
+<tr>
+    {% for th in thead %}
+        <th class="{{ th.class }}">
+            {% if th.sort %}
+                {% if request.GET.sort == th.sort %}
+                    <small>
+                        <i class="fa fa-sort-amount-{{ request.GET.order }} margin-right-sm"></i>
+                    </small>
+                {% endif %}
+                {% if request.GET.order == 'asc' and request.GET.sort == th.sort %}
+                    <a href="{% url link %}?{% url_replace request sort=th.sort order='desc' %}">
+                {% else %}
+                    <a href="{% url link %}?{% url_replace request sort=th.sort order='asc' %}">
+                {% endif %}
+            {{ th.title|title }}
+            </a>
+
+            {% else %}
+                {{ th.title|title }}
+            {% endif %}
+        </th>
+    {% endfor %}
+    <th class="td-sm text-right"></th>
+</tr>
+</thead>

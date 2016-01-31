@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% load i18n %}
+
+{% block content %}
+    <div class="box box-default">
+        <div class="box-body">
+            <form method="post" action="{% url 'account_logout' %}" >
+                {% csrf_token %}
+                {% if redirect_field_value %}
+                    <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+                {% endif %}
+                <button type="submit" class="btn btn-primary btn-lg">{% trans 'Sign Out' %}</button>
+            </form>
+
+        </div>
+    </div>
+{% endblock %}

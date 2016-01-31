@@ -1,0 +1,22 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+    <div class="box box-default">
+        <div class="box-body">
+            <form action="" method="post">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger margin-right-md">
+                    <i class="fa fa-trash"></i>
+                    Are you sure you want to delete {{ object }}?
+                </button>
+                <button type="button" onclick="history.go(-1);return false;"
+                        class="btn btn-default">
+                    <i class="fa fa-ban"></i>
+                    <span class="hidden-xs margin-left-sm">Cancel</span>
+                </button>
+
+            </form>
+        </div>
+    </div>
+{% endblock %}

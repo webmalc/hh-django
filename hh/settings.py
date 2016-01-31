@@ -13,6 +13,13 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 import os
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
+# Local settings
+try:
+    from hh.local_settings import *
+except ImportError:
+    pass
+
+
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -143,6 +150,8 @@ CACHES = {
     }
 }
 
+LOGIN_REDIRECT_URL = '/'
+
 # Django stronghold
 STRONGHOLD_DEFAULTS = True
 
@@ -172,11 +181,4 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
-
-# Local settings
-try:
-    from hh.local_settings import *
-except ImportError:
-    pass
-
 
