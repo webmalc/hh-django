@@ -1,0 +1,25 @@
+{% extends "meta.html" %}
+
+{% load staticfiles %}
+
+{% block body %}
+    {% with 'skin-red login-page' as body_classes %}{{ block.super }}{% endwith %}
+{% endblock body %}
+
+{% block body_content %}
+
+    <div class="login-box">
+
+        <div class="login-logo">
+            <a href="{% url 'index' %}">
+                <img id="fh-navbar-logo" src="{% static 'img/favicon_24_red.ico' %}" height="24" width="24">
+                <b>Hostel</b>Hunt
+            </a>
+        </div>
+
+        <div class="login-box-body">
+            {% block account_content %}{% endblock %}
+        </div>
+
+    </div>
+{% endblock %}

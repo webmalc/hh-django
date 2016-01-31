@@ -10,4 +10,4 @@ class SiteTreeTree(TreeBase):
 class SiteTreeItem(TreeItemBase):
     """ HH tree item model."""
 
-    icon = models.CharField(max_length=50, null=True, help_text='Иконка FontAwesome. Пример: fa-user.')
+    icon = models.CharField(max_length=50, null=True, blank=True, verbose_name='Иконка',  help_text='Иконка FontAwesome. Пример: fa-user.')

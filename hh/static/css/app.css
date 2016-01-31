@@ -88,6 +88,12 @@ body {
     color: #d9534f;
     padding-left: 2px;
 }
+.errorlist {
+    list-style-type: none;
+    margin: 0px 0px 3px 0px;
+    padding: 0px;
+    color: #dd4b39;
+}
 /******************* TABLES ***********************/
 
 .td-xs {

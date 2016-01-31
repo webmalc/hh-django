@@ -1,0 +1,26 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+
+{% block account_content %}
+    <div class="alert alert-warning">
+        <i class="fa fa-info-circle"></i>
+        {% trans "Verify Your E-mail Address" %}
+    </div>
+
+    <p>
+        {% blocktrans %}
+            Мы послали вам письмо для проверки e-mail.
+            Пройдите по ссылке для завершения процесса регистрации.
+            <br><br>
+            <small>
+            Пожалуйста, свяжитесь с нами, если вы не получите письмо в течение нескольких минут.
+            </small>
+        {% endblocktrans %}
+    </p>
+
+    <small>
+        <a href="{% url 'account_login' %}">Войти</a>
+    </small>
+
+{% endblock %}

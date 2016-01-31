@@ -1,0 +1,38 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load account %}
+
+{% block title %}Подтверждение e-mail | {% endblock %}
+
+
+{% block account_content %}
+<p class="login-box-msg">{% trans "Confirm E-mail Address" %}</p>
+
+{% if confirmation %}
+
+{% user_display confirmation.email_address.user as user_display %}
+
+<form method="post" action="{% url 'account_confirm_email' confirmation.key %}">
+{% csrf_token %}
+    <div class="row">
+            <div class="col-xs-3">
+
+            </div>
+            <div class="col-xs-6">
+                <button type="submit" class="btn btn-primary btn-block btn-flat">
+                    Подтвердить
+                </button>
+            </div>
+        </div>
+</form>
+
+{% else %}
+
+{% url 'account_email' as email_url %}
+
+<div class="alert alert-danger">Ссылка некорректна или срок ее действия истек.</div>
+
+{% endif %}
+
+{% endblock %}

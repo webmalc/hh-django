@@ -78,4 +78,4 @@ bower_components/*
 /htmlcov
 
 #Project
-/fh/local_settings.py
+/hh/local_settings.py

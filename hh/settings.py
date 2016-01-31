@@ -35,6 +35,7 @@ INSTALLED_APPS = [
     #'allauth.socialaccount.providers.odnoklassniki',
     #'allauth.socialaccount.providers.twitter',
     #'allauth.socialaccount.providers.vk',
+    'widget_tweaks',
     'django_extensions',
     'debug_toolbar',
     'stronghold',

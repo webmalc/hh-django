@@ -1,0 +1,52 @@
+{% extends "account/base.html" %}
+
+{% load i18n %}
+{% load widget_tweaks %}
+
+{% block account_content %}
+
+    <p class="login-box-msg">
+        {% blocktrans %}Already have an account? Then please <a href="{{ login_url }}">sign in</a>.{% endblocktrans %}
+    </p>
+
+    <form class="signup" id="signup_form" method="post" action="{% url 'account_signup' %}">
+        {% csrf_token %}
+
+        {{ form.errors.email }}
+        <div class="form-group has-feedback">
+
+            {{ form.email|add_class:"form-control"|attr:"placeholder:E-mail" }}
+            <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        </div>
+
+        {{ form.errors.password1 }}
+        <div class="form-group has-feedback">
+
+            {{ form.password1|add_class:"form-control"|attr:"placeholder:Пароль" }}
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+
+        {{ form.errors.password2 }}
+        <div class="form-group has-feedback">
+
+            {{ form.password2|add_class:"form-control"|attr:"placeholder:Пароль (еще раз)" }}
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+
+        <div class="row">
+            <div class="col-xs-4">
+            </div>
+            <div class="col-xs-8">
+                <button type="submit" class="btn btn-primary btn-block btn-flat">
+                    Зарегистрироваться
+                </button>
+            </div>
+        </div>
+
+        {% if redirect_field_value %}
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}"/>
+        {% endif %}
+
+    </form>
+
+{% endblock %}

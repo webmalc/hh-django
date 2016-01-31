@@ -45,9 +45,6 @@ $(document).ready(function () {
 
     //Datepickers & period select
     (function () {
-        $('.datetimepicker').datetimepicker({
-            format: "YYYY-MM-DD HH:ss"
-        });
 
         $('.datepicker').datepicker({
             format: "yyyy-mm-dd",
