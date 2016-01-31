@@ -43,7 +43,8 @@ INSTALLED_APPS = [
     'compressor',
 
     # HH apps
-    'hh'
+    'hh',
+    'booking'
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -145,11 +146,11 @@ CACHES = {
 STRONGHOLD_DEFAULTS = True
 
 STRONGHOLD_PUBLIC_URLS = (
-    r'^/admin.+$', r'^/accounts.+$',
+    r'^/admin.+$',
+    r'^/accounts.+$',
 )
 
 # Django allauth
-LOGIN_REDIRECT_URL = '/'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
@@ -161,6 +162,10 @@ ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
 
 # Django crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+# Django sitetree
+SITETREE_MODEL_TREE_ITEM = 'hh.SiteTreeItem'
+SITETREE_MODEL_TREE = 'hh.SiteTreeTree'
 
 AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',

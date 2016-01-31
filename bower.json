@@ -1,0 +1,31 @@
+{
+  "name": "hh",
+  "homepage": "https://github.com/webmalc/hh-django",
+  "authors": [
+    "webmalc <webmalc@gmail.com>"
+  ],
+  "description": "hh project",
+  "main": "",
+  "moduleType": [],
+  "keywords": [
+    "hh"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap-switch": "^3.3.2",
+    "bootstrap-datepicker": "^1.5.1",
+    "js-cookie": "^2.1.0",
+    "AdminLTE": "adminlte#^2.3.2",
+    "font-awesome": "^4.5.0",
+    "Ionicons": "ionicons#^2.0.1",
+    "moment": "^2.11.1"
+  }
+}

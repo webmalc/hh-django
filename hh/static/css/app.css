@@ -1,0 +1,129 @@
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700,700italic&subset=latin,cyrillic,cyrillic-ext);
+
+/******************* MAIN ***********************/
+body {
+    font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
+}
+.container-fluid {
+  max-width: 1600px;
+}
+#fh-navbar-logo {
+    display: inline-block;
+    margin: 0px 8px 3px 0px;
+}
+.breadcrumb {
+    margin-bottom: 20px;
+}
+
+.clickable{
+    cursor: pointer;
+}
+
+.panel-heading span {
+	margin-top: -20px;
+	font-size: 15px;
+}
+.dropdown-menu {
+    z-index: 99999 !important;
+}
+.margin-right-sm {
+    margin-right: 4px;
+    display: inline-block;
+}
+.margin-left-sm {
+    margin-left: 4px;
+    display: inline-block;
+}
+.margin-right-md {
+    margin-right: 10px;
+    display: inline-block;
+}
+.margin-left-md {
+    margin-left: 10px;
+    display: inline-block;
+}
+.margin-top-md-lg {
+    margin-top: 15px;
+}
+.margin-bottom-md-lg {
+    margin-bottom: 15px;
+}
+.margin-bottom-lg {
+    margin-bottom: 25px;
+}
+.padding-bottom-md {
+    padding-bottom: 10px !important;
+}
+.bottom-dotted {
+    border-bottom: 1px dashed;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.cursor-help {
+    cursor: help;
+}
+/******************* FORMS ***********************/
+
+.bootstrap-tagsinput {
+    display: block !important;
+    border-radius: 0px !important;
+    box-shadow: none !important;
+}
+
+.checkbox label {
+    padding-left: 0px;
+}
+
+.bootstrap-switch-wrapper {
+    margin-right: 10px;
+}
+.has-success .bootstrap-select button {
+    border-color: #3c763d;
+}
+.has-error .bootstrap-select button {
+    border-color: #a94442;
+}
+.asteriskField {
+    color: #d9534f;
+    padding-left: 2px;
+}
+/******************* TABLES ***********************/
+
+.td-xs {
+    width: 50px;
+}
+.td-sm {
+    width: 100px;
+}
+.td-sm-md {
+    width: 150px;
+}
+.td-md {
+    width: 200px;
+}
+
+th a, th a:hover, th a:visited, th a:link {
+    color: inherit;
+    text-decoration: none;
+    border-bottom: 1px #999 dashed;
+}
+
+
+/******************* BOOTSTRAP ***********************/
+
+/* bootstrap hack: fix content width inside hidden tabs */
+.tab-content > .tab-pane,
+.pill-content > .pill-pane {
+display: block;     /* undo display:none          */
+height: 0;          /* height:0 is also invisible */
+overflow-y: hidden; /* no-overflow                */
+}
+.tab-content > .active,
+.pill-content > .active {
+height: auto;       /* let the content decide it  */
+} /* bootstrap hack end */
+
+input, select, textarea, .bootstrap-tagsinput {
+    max-width: 700px !important;
+}
