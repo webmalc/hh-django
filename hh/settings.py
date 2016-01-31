@@ -27,6 +27,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'django_extensions',
+    'debug_toolbar',
+    'stronghold',
+    'crispy_forms',
+    'sitetree',
+    'compressor',
 
     # HH apps
     'hh'
@@ -41,6 +46,7 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'stronghold.middleware.LoginRequiredMiddleware',
 ]
 
 ROOT_URLCONF = 'hh.urls'
@@ -86,7 +92,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ru-ru'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -105,7 +111,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'fh/static'),
+    os.path.join(BASE_DIR, 'hh/static'),
     os.path.join(BASE_DIR, 'bower_components'),
 )
 
@@ -126,8 +132,16 @@ CACHES = {
     }
 }
 
+# Django crispy forms
+CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
 # Local settings
 try:
     from hh.local_settings import *
 except ImportError:
     pass
+
+if not DEBUG:
+    AUTHENTICATION_BACKENDS = (
+        'ratelimitbackend.backends.RateLimitModelBackend',
+    )
