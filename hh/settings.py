@@ -26,6 +26,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    #'allauth.socialaccount.providers.facebook',
+    #'allauth.socialaccount.providers.google',
+    #'allauth.socialaccount.providers.instagram',
+    #'allauth.socialaccount.providers.odnoklassniki',
+    #'allauth.socialaccount.providers.twitter',
+    #'allauth.socialaccount.providers.vk',
     'django_extensions',
     'debug_toolbar',
     'stronghold',
@@ -92,7 +101,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'ru-ru'
+LANGUAGE_CODE = 'ru'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -132,8 +141,31 @@ CACHES = {
     }
 }
 
+# Django stronghold
+STRONGHOLD_DEFAULTS = True
+
+STRONGHOLD_PUBLIC_URLS = (
+    r'^/admin.+$', r'^/accounts.+$',
+)
+
+# Django allauth
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_CONFIRMATION_EXPIRE_DAYS = 1
+ACCOUNT_EMAIL_VERIFICATION = 'mandatory'
+ACCOUNT_USERNAME_MIN_LENGTH = 3
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_PASSWORD_MIN_LENGTH = 8
+ACCOUNT_LOGIN_ON_EMAIL_CONFIRMATION = True
+
 # Django crispy forms
 CRISPY_TEMPLATE_PACK = 'bootstrap3'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
 
 # Local settings
 try:
@@ -141,7 +173,4 @@ try:
 except ImportError:
     pass
 
-if not DEBUG:
-    AUTHENTICATION_BACKENDS = (
-        'ratelimitbackend.backends.RateLimitModelBackend',
-    )
+
