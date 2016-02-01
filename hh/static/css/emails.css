@@ -1,0 +1,9 @@
+.email_list .blockLabels{
+    margin-bottom: 10px;
+}
+.verified, .unverified, .primary {
+    font-weight: normal;
+}
+.ctrlHolder {
+    margin-bottom: 2px;
+}

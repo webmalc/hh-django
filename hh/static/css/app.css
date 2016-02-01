@@ -75,8 +75,8 @@ body {
     padding-left: 0px;
 }
 
-.bootstrap-switch-wrapper {
-    margin-right: 10px;
+.icheckbox_flat-red, .iradio_flat-red {
+    margin-right: 4px;
 }
 .has-success .bootstrap-select button {
     border-color: #3c763d;

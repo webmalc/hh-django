@@ -3,11 +3,10 @@
 $(document).ready(function () {
     'use strict';
 
-    //bootstrap switch
-    $('input[type="checkbox"]').not('#avatar-delete-form input').bootstrapSwitch({
-        size: 'small',
-        onText: 'yes',
-        offText: 'no'
+    //iCheck
+    $('input[type="radio"], input[type="checkbox"]').not('#avatar-delete-form input, #avatar-choose-form input').iCheck({
+        checkboxClass: 'icheckbox_flat-red',
+        radioClass: 'iradio_flat-red',
     });
 
     //tabs remember
