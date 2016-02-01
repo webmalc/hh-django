@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'sitetree',
     'compressor',
+    'avatar',
 
     # HH apps
     'hh',
@@ -159,6 +160,10 @@ STRONGHOLD_PUBLIC_URLS = (
     r'^/admin.+$',
     r'^/accounts.+$',
 )
+
+# Django avatar
+AVATAR_GRAVATAR_DEFAULT = 'mm'
+AVATAR_AUTO_GENERATE_SIZES = (24, 25, 160)
 
 # Django allauth
 ACCOUNT_AUTHENTICATION_METHOD = 'email'

@@ -6,7 +6,7 @@
 {% endblock body %}
 
 {% block body_content %}
-    <div class="wrapper" id="fh-main-container">
+    <div class="wrapper" id="hh-main-container">
 
         {% block header %}
             {% include "partials/header.html" %}
@@ -41,14 +41,7 @@
 
                 <!-- Messages -->
                 {% block messages %}
-                    <div id="fh-messages">
-                        {% for message in messages %}
-                            <div class="alert{% if message.tags %} alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}{% endif %} alert-dismissable">
-                                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&#215;</button>
-                                {{ message|safe }}
-                            </div>
-                        {% endfor %}
-                    </div>
+                    {% include "partials/messages.html" %}
                 {% endblock %}
 
                 {% block content %}{% endblock %}

@@ -23,6 +23,7 @@ urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^avatar/', include('avatar.urls')),
     url(r'^booking/', include('booking.urls', namespace="booking")),
     url(r'^$', RedirectView.as_view(pattern_name='booking:search', permanent=True), name='index'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -12,12 +12,17 @@
 
         <div class="login-logo">
             <a href="{% url 'index' %}">
-                <img id="fh-navbar-logo" src="{% static 'img/favicon_24_red.ico' %}" height="24" width="24">
+                <img id="hh-navbar-logo" src="{% static 'img/favicon_24_red.ico' %}" height="24" width="24">
                 <b>Hostel</b>Hunt
             </a>
         </div>
 
         <div class="login-box-body">
+            <!-- Messages -->
+            {% block messages %}
+                {% include "partials/messages.html" %}
+            {% endblock %}
+
             {% block account_content %}{% endblock %}
         </div>
 

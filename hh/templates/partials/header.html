@@ -1,5 +1,6 @@
 {% load staticfiles %}
 {% load humanize %}
+{% load avatar %}
 
 <header class="main-header">
     <!-- Logo -->
@@ -8,7 +9,7 @@
           <img src="{% static '/static/img/favicon_24_black.ico' %}" height="24" width="24">
       </span>
       <span class="logo-lg">
-          <img id="fh-navbar-logo" src="{% static '/static/img/favicon_24_black.ico' %}" height="24" width="24">
+          <img id="hh-navbar-logo" src="{% static '/static/img/favicon_24_black.ico' %}" height="24" width="24">
           <b>Family</b>Helper
       </span>
     </a>
@@ -29,9 +30,31 @@
 
                     <!-- User Account -->
                     <li class="dropdown user user-menu">
-                        <a href="{% url 'account_logout' %}">
+                        <a href="{% url 'index' %}" class="dropdown-toggle" data-toggle="dropdown">
+                            <img src="{% cached_avatar_url user 25 %}" class="user-image" alt="User avatar">
                             <span class="hidden-xs">{{ user }}</span>
                         </a>
+                        <ul class="dropdown-menu">
+                            <li class="user-header">
+                                <img src="{% cached_avatar_url user 160 %}" class="img-circle" alt="User avatar">
+                                <p>
+                                    {{ user }}
+                                    <small>Зарегистрировался {{ user.date_joined|naturalday }}</small>
+                                </p>
+                            </li>
+                            <li class="user-footer">
+                                <div class="pull-left">
+                                    <a href="{% url 'index' %}" class="btn btn-default btn-flat">
+                                        <i class="fa fa-user margin-right-sm"></i>Профиль
+                                    </a>
+                                </div>
+                                <div class="pull-right">
+                                    <a href="{% url 'account_logout' %}" class="btn btn-default btn-flat">
+                                        <i class="fa fa-sign-out margin-right-sm"></i>Выйти
+                                    </a>
+                                </div>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             {% endif %}

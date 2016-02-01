@@ -1,0 +1,43 @@
+{% extends 'users/profile_layout.html' %}
+{% load avatar_tags %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'css/avatar.css' %}">
+{% endblock %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'js/avatar.js' %}"></script>
+{% endblock %}
+
+{% block tabs %}
+    {% with 'avatars' as tab %}{{ block.super }}{% endwith %}
+{% endblock tabs %}
+
+{% block profile_content %}
+
+    {% if not avatars %}
+        <div class="alert alert-warning">You haven't uploaded an avatar yet. Please upload one now.</div>
+    {% endif %}
+
+
+    {% include 'partials/box_widget_begin.html' with header='Upload new avatar' id='avatar-change-form-widget' %}
+    <form enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}" class="form">
+        {% csrf_token %}
+        {{ upload_avatar_form|crispy }}
+
+
+        <button type="submit" class="btn btn-success margin-right-sm">
+            <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">Upload avatar</span>
+        </button>
+        <a href="{% url 'avatar_change' %}" class="btn btn-default">
+            <i class="fa fa-ban"></i><span class="hidden-xs margin-left-sm">Cancel</span>
+        </a>
+
+    </form>
+    {% include 'partials/box_widget_end.html' %}
+
+{% endblock %}
