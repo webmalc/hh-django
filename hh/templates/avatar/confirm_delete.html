@@ -19,8 +19,7 @@
 {% block profile_content %}
 
     {% if not avatars %}
-        <div class="alert alert-warning">You haven't uploaded an avatar yet. Please <a href="{% url 'avatar_change' %}">upload
-            one</a> now.
+        <div class="alert alert-warning">У вас нет ни одного аватара. <a href="{% url 'avatar_change' %}">Загрузить?</a>.
         </div>
     {% else %}
 

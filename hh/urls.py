@@ -16,14 +16,21 @@ Including another URLconf
 from django.conf.urls import include, url
 from django.contrib import admin
 from django.conf import settings
+from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
+from users.views import PasswordChangeRedirectView
 
 urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
+    url(r'users/profile/password$', auth_views.password_change, {
+        'template_name': 'users/password_change_form.html'},
+        name='password_change'),
+    url(r'users/profile/password/done$', PasswordChangeRedirectView.as_view(), name='password_change_done'),
     url(r'^accounts/', include('allauth.urls')),
     url(r'^avatar/', include('avatar.urls')),
+    url(r'^users/', include('users.urls', namespace="users")),
     url(r'^booking/', include('booking.urls', namespace="booking")),
     url(r'^$', RedirectView.as_view(pattern_name='booking:search', permanent=True), name='index'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

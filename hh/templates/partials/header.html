@@ -30,7 +30,7 @@
 
                     <!-- User Account -->
                     <li class="dropdown user user-menu">
-                        <a href="{% url 'index' %}" class="dropdown-toggle" data-toggle="dropdown">
+                        <a href="{% url 'users:profile' %}" class="dropdown-toggle" data-toggle="dropdown">
                             <img src="{% cached_avatar_url user 25 %}" class="user-image" alt="User avatar">
                             <span class="hidden-xs">{{ user }}</span>
                         </a>
@@ -44,7 +44,7 @@
                             </li>
                             <li class="user-footer">
                                 <div class="pull-left">
-                                    <a href="{% url 'index' %}" class="btn btn-default btn-flat">
+                                    <a href="{% url 'users:profile' %}" class="btn btn-default btn-flat">
                                         <i class="fa fa-user margin-right-sm"></i>Профиль
                                     </a>
                                 </div>

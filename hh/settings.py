@@ -53,6 +53,7 @@ INSTALLED_APPS = [
 
     # HH apps
     'hh',
+    'users',
     'booking'
 ]
 
@@ -65,6 +66,8 @@ MIDDLEWARE_CLASSES = [
     'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'hh.middleware.UserMiddleware',
+    'hh.middleware.AdminLocaleMiddleware',
     'stronghold.middleware.LoginRequiredMiddleware',
 ]
 
@@ -111,7 +114,8 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
 
-LANGUAGE_CODE = 'ru'
+LANGUAGE_CODE = 'ru-RU'
+ADMIN_LANGUAGE_CODE = 'en-US'
 
 TIME_ZONE = 'Europe/Moscow'
 
@@ -164,6 +168,7 @@ STRONGHOLD_PUBLIC_URLS = (
 # Django avatar
 AVATAR_GRAVATAR_DEFAULT = 'mm'
 AVATAR_AUTO_GENERATE_SIZES = (24, 25, 160)
+AVATAR_MAX_AVATARS_PER_USER = 5
 
 # Django allauth
 ACCOUNT_AUTHENTICATION_METHOD = 'email'

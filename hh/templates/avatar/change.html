@@ -20,10 +20,10 @@
 {% block profile_content %}
 
     {% if not avatars %}
-        <div class="alert alert-warning">You haven't uploaded an avatar yet. Please upload one now.</div>
+        <div class="alert alert-warning">У вас нет ни одного аватара.</div>
     {% else %}
 
-        {% include 'partials/box_widget_begin.html' with header='Choose default avatar' id='avatar-choose-form-widget' %}
+        {% include 'partials/box_widget_begin.html' with header='Выбрать основной аватар' id='avatar-choose-form-widget' %}
         <form method="POST" action="{% url 'avatar_change' %}" id="avatar-choose-form" class="avatar-list-form">
             {% csrf_token %}
             <ul>
@@ -31,25 +31,25 @@
             </ul>
 
             <button type="submit" class="btn btn-default margin-right-sm">
-                <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">Set default</span>
+                <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">Сделать основным</span>
             </button>
             <a href="{% url 'avatar_delete' %}" class="btn btn-danger pull-right">
-                <i class="fa fa-trash"></i><span class="hidden-xs margin-left-sm">Delete avatars</span>
+                <i class="fa fa-trash"></i><span class="hidden-xs margin-left-sm">Удаление аватаров</span>
             </a>
         </form>
         {% include 'partials/box_widget_end.html' %}
     {% endif %}
 
-    {% include 'partials/box_widget_begin.html' with header='Upload new avatar' id='avatar-change-form-widget' %}
+    {% include 'partials/box_widget_begin.html' with header='Загрузить новый аватар' id='avatar-change-form-widget' %}
     <form enctype="multipart/form-data" method="POST" action="{% url 'avatar_add' %}" class="form">
         {% csrf_token %}
         {{ upload_avatar_form|crispy }}
 
         <button type="submit" class="btn btn-success margin-right-sm">
-            <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">Upload avatar</span>
+            <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">Загрузить аватар</span>
         </button>
         <a href="{% url 'avatar_change' %}" class="btn btn-default">
-            <i class="fa fa-ban"></i><span class="hidden-xs margin-left-sm">Cancel</span>
+            <i class="fa fa-ban"></i><span class="hidden-xs margin-left-sm">Отмена</span>
         </a>
 
     </form>
