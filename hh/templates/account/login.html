@@ -2,6 +2,7 @@
 
 {% load account socialaccount %}
 {% load widget_tweaks %}
+{% load i18n %}
 
 {% block account_content %}
 
@@ -48,7 +49,18 @@
 
     </form>
 
-    <br>
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+        <div class="social-auth-links text-center">
+            <ul class="socialaccount_providers">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </ul>
+        </div>
+        {% include "socialaccount/snippets/login_extra.html" %}
+    {% endif %}
+
+
     <small>
         <a href="{% url 'account_reset_password' %}">Забыли пароль?</a><br>
         <a href="{{ signup_url }}">Регистрация</a>

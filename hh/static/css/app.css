@@ -133,3 +133,16 @@ height: auto;       /* let the content decide it  */
 input, select, textarea, .bootstrap-tagsinput {
     max-width: 700px !important;
 }
+
+/******************* SOCIAL ACCOUNT ***********************/
+.social-auth-links {
+    margin-top: 20px;
+}
+.social-auth-links ul , .social-auth-links-profile ul {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+}
+.social-auth-links ul li, .social-auth-links-profile ul li {
+    display: inline-block;
+}

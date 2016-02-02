@@ -29,6 +29,11 @@
                         <i class="fa fa-envelope"></i> E-mail
                     </a>
                 </li>
+                <li role="presentation" {% if tab == 'socialaccount' %}class="active"{% endif %}>
+                    <a href="{% url 'socialaccount_connections' %}" aria-controls="security">
+                        <i class="fa fa-users"></i> Социальные аккаунты
+                    </a>
+                </li>
                 <li role="presentation" {% if tab == 'security' %}class="active"{% endif %}>
                     <a href="{% url 'password_change' %}" aria-controls="security">
                         <i class="fa fa-lock"></i> Безопасность

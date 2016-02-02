@@ -36,12 +36,12 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-    #'allauth.socialaccount.providers.facebook',
-    #'allauth.socialaccount.providers.google',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
     #'allauth.socialaccount.providers.instagram',
     #'allauth.socialaccount.providers.odnoklassniki',
     #'allauth.socialaccount.providers.twitter',
-    #'allauth.socialaccount.providers.vk',
+    'allauth.socialaccount.providers.vk',
     'widget_tweaks',
     'django_extensions',
     'debug_toolbar',
@@ -163,6 +163,7 @@ STRONGHOLD_DEFAULTS = True
 STRONGHOLD_PUBLIC_URLS = (
     r'^/admin.+$',
     r'^/accounts.+$',
+    r'^/__debug__.+$',
 )
 
 # Django avatar
