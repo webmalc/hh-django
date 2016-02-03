@@ -19,9 +19,9 @@
                         <i class="fa fa-user"></i> Профиль
                     </a>
                 </li>
-                <li role="presentation" {% if tab == 'partner' %}class="active"{% endif %}>
-                    <a href="{% url 'account_email' %}" aria-controls="security">
-                        <i class="fa fa-rub"></i> {{ request.user|has_group:'Partner'|yesno:"Партнерство,Стань партнером" }}
+                <li role="presentation" class="{{ request.user|has_group:'Partner'|yesno:",tab-important" }}{% if tab == 'partner' %} active{% endif %}">
+                    <a href="{% url 'account_email' %}" aria-controls="security" class="text-danger">
+                        <i class="fa fa-rub"></i> {{ request.user|has_group:'Partner'|yesno:"Партнерство,Станьте партнером" }}
                     </a>
                 </li>
                 <li role="presentation" {% if tab == 'emails' %}class="active"{% endif %}>

@@ -1,6 +1,7 @@
 {% load staticfiles %}
 {% load humanize %}
 {% load avatar %}
+{% load has_group %}
 
 <header class="main-header">
     <!-- Logo -->
@@ -39,7 +40,11 @@
                                 <img src="{% cached_avatar_url user 160 %}" class="img-circle" alt="User avatar">
                                 <p>
                                     {{ user }}
-                                    <small>Зарегистрировался {{ user.date_joined|naturalday }}</small>
+                                    {% if not request.user.has_group %}
+                                       <small>Начните зарабатывать сейчас! <a href="#">Станьте партнером</a></small>
+                                    {% else %}
+                                        <small>Зарегистрировался {{ user.date_joined|naturalday }}</small>
+                                    {% endif %}
                                 </p>
                             </li>
                             <li class="user-footer">

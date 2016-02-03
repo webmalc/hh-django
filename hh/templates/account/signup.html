@@ -1,5 +1,6 @@
 {% extends "account/base.html" %}
 
+{% load account socialaccount %}
 {% load i18n %}
 {% load widget_tweaks %}
 
@@ -34,11 +35,11 @@
         </div>
 
         <div class="row">
-            <div class="col-xs-4">
+            <div class="col-xs-6">
             </div>
-            <div class="col-xs-8">
+            <div class="col-xs-6">
                 <button type="submit" class="btn btn-primary btn-block btn-flat">
-                    Зарегистрироваться
+                    Дальше
                 </button>
             </div>
         </div>
@@ -48,5 +49,16 @@
         {% endif %}
 
     </form>
+
+    {% get_providers as socialaccount_providers %}
+
+    {% if socialaccount_providers %}
+        <div class="social-auth-links text-center">
+            <ul class="socialaccount_providers">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            </ul>
+        </div>
+        {% include "socialaccount/snippets/login_extra.html" %}
+    {% endif %}
 
 {% endblock %}

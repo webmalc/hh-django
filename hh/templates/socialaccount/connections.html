@@ -2,6 +2,9 @@
 
 {% load i18n %}
 
+{% block tabs %}
+    {% with 'socialaccount' as tab %}{{ block.super }}{% endwith %}
+{% endblock tabs %}
 
 {% block profile_content %}
 

@@ -63,6 +63,11 @@ body {
 .cursor-help {
     cursor: help;
 }
+.user-header a {
+    color: rgba(255,255,255,0.8) !important;
+    border-bottom: 1px dashed rgba(255,255,255,0.8);
+    font-size: 12px;
+}
 /******************* FORMS ***********************/
 
 .bootstrap-tagsinput {
