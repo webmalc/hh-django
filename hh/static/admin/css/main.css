@@ -1,3 +1,6 @@
 .admin-filter-select {
     width: 100%;
 }
+th.column-is_enabled, th.column-is_sorting, td.field-is_enabled, td.field-sorting {
+    text-align: center;
+}

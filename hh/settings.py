@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'sitetree',
     'compressor',
     'avatar',
+    'cities_light',
 
     # HH apps
     'hh',
@@ -193,3 +194,6 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+CITIES_LIGHT_TRANSLATION_LANGUAGES = ['ru']
+CITIES_LIGHT_INCLUDE_COUNTRIES = ['RU']
+CITIES_LIGHT_APP_NAME = 'hh'
