@@ -69,6 +69,7 @@ MIDDLEWARE_CLASSES = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'hh.middleware.UserMiddleware',
     'hh.middleware.AdminLocaleMiddleware',
+    'hh.middleware.WhodidMiddleware',
     'stronghold.middleware.LoginRequiredMiddleware',
 ]
 

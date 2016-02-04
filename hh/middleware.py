@@ -20,6 +20,7 @@ class AdminLocaleMiddleware:
             translation.activate(request.LANG)
             request.LANGUAGE_CODE = request.LANG
 
+
 class WhodidMiddleware(object):
     """Add user created_by and modified_by foreign key refs to any model automatically.
    Almost entirely taken from https://github.com/Atomidata/django-audit-log/blob/master/audit_log/middleware.py"""

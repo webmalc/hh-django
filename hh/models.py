@@ -1,8 +1,23 @@
-from django.db import models
 import pytz
+from django.db import models
 from sitetree.models import TreeItemBase, TreeBase
 from cities_light.abstract_models import AbstractCity, AbstractRegion, AbstractCountry
 from cities_light.receivers import connect_default_signals
+from django.utils.translation import ugettext_lazy as _
+
+
+class CommonInfo(models.Model):
+    """ CommonInfo abstract model """
+
+    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True, editable=False)
+    modified_at = models.DateTimeField(auto_now=True, null=True, blank=True, editable=False)
+    created_by = models.ForeignKey('users.User', null=True, blank=True, on_delete=models.CASCADE,
+                                   related_name="%(app_label)s_%(class)s_created_by")
+    modified_by = models.ForeignKey('users.User', null=True, blank=True, on_delete=models.CASCADE, editable=False,
+                                    related_name="%(app_label)s_%(class)s_modified_by")
+
+    class Meta:
+        abstract = True
 
 
 class Country(AbstractCountry):
@@ -29,6 +44,8 @@ class City(AbstractCity):
 
     class Meta:
         ordering = ['-sorting', 'name']
+        unique_together = (('region', 'name'), ('region', 'slug'))
+        verbose_name_plural = _('cities')
 
 connect_default_signals(City)
 
