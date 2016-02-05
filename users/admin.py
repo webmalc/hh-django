@@ -1,5 +1,6 @@
 from django.contrib.auth.admin import admin, UserAdmin
-from django.contrib.auth.models import User
+from reversion.helpers import patch_admin
+from django.contrib.auth.models import User, Group
 from django.utils.translation import ugettext_lazy as _
 from reversion.admin import VersionAdmin
 from allauth.account.models import EmailAddress
@@ -103,3 +104,5 @@ admin.site.unregister(User)
 admin.site.register(User, MyUserAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(PartnershipOrder, PartnershipOrderAdmin)
+patch_admin(Group)
+

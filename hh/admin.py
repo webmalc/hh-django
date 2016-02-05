@@ -3,9 +3,14 @@ from django.contrib.auth.admin import admin
 from django.db import models
 from django import forms
 from reversion.admin import VersionAdmin
+from reversion.helpers import patch_admin
 from sitetree.admin import TreeItemAdmin, override_item_admin
+from django.contrib.sites.models import Site
 from cities_light.admin import CityAdmin
-from hh.models import City
+from allauth.account.models import EmailAddress
+from allauth.socialaccount.models import SocialAccount, SocialToken, SocialApp
+from avatar.models import Avatar
+from hh.models import City, Region, Country
 
 
 class HHCityAdmin(CityAdmin, VersionAdmin):
@@ -49,3 +54,11 @@ class CustomTreeItemAdmin(TreeItemAdmin):
 override_item_admin(CustomTreeItemAdmin)
 admin.site.unregister(City)
 admin.site.register(City, HHCityAdmin)
+patch_admin(Region)
+patch_admin(Country)
+patch_admin(EmailAddress)
+patch_admin(SocialAccount)
+patch_admin(SocialApp)
+patch_admin(SocialToken)
+patch_admin(Avatar)
+patch_admin(Site)
