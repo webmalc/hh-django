@@ -1,5 +1,8 @@
-defusedxml==0.4.1
 Django==1.9.1
+Pillow==3.1.0
+Unidecode==0.04.19
+Werkzeug==0.11.3
+defusedxml==0.4.1
 django-allauth==0.24.1
 django-appconf==1.0.1
 django-autoslug==1.9.3
@@ -10,12 +13,13 @@ django-crispy-forms==1.6.0
 django-debug-toolbar==1.4
 django-extensions==1.6.1
 django-ratelimit-backend==1.0
+django-reversion==1.10.1
 django-sitetree==1.5.1
 django-stronghold==0.2.7
 django-widget-tweaks==1.4.1
 html5lib==0.9999999
+image==1.4.4
 oauthlib==1.0.3
-Pillow==3.1.0
 progressbar2==3.6.0
 psycopg2==2.6.1
 python-memcached==1.57
@@ -28,6 +32,4 @@ requests-oauthlib==0.6.0
 rjsmin==1.0.12
 six==1.10.0
 sqlparse==0.1.18
-Unidecode==0.4.19
-Werkzeug==0.11.3
 wheel==0.24.0

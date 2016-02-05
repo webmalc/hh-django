@@ -1,13 +1,14 @@
+from django.utils.translation import ugettext_lazy as _
 from django.contrib.auth.admin import admin
 from django.db import models
 from django import forms
+from reversion.admin import VersionAdmin
 from sitetree.admin import TreeItemAdmin, override_item_admin
 from cities_light.admin import CityAdmin
 from hh.models import City
-from django.utils.translation import ugettext_lazy as _
 
 
-class HHCityAdmin(CityAdmin):
+class HHCityAdmin(CityAdmin, VersionAdmin):
     list_display = (
         'name', 'get_first_alternate_name', 'region', 'country', 'sorting', 'is_enabled',
     )

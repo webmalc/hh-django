@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'compressor',
     'avatar',
     'cities_light',
+    'reversion',
 
     # HH apps
     'hh',

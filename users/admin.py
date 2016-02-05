@@ -1,11 +1,12 @@
 from django.contrib.auth.admin import admin, UserAdmin
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
+from reversion.admin import VersionAdmin
 from allauth.account.models import EmailAddress
 from users.models import Profile, Organization, PartnershipOrder
 
 
-class OrganizationAdmin(admin.ModelAdmin):
+class OrganizationAdmin(VersionAdmin):
     """
     Organization admin interface
     """
@@ -27,7 +28,7 @@ class OrganizationInline(admin.TabularInline):
     model = Organization
 
 
-class PartnershipOrderAdmin(admin.ModelAdmin):
+class PartnershipOrderAdmin(VersionAdmin):
     """
     PartnershipOrder admin interface
     """
@@ -65,7 +66,7 @@ class EmailsInline(admin.TabularInline):
     model = EmailAddress
 
 
-class MyUserAdmin(UserAdmin):
+class MyUserAdmin(UserAdmin, VersionAdmin):
     """
     User admin interface
     """
