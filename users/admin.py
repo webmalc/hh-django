@@ -2,6 +2,13 @@ from django.contrib.auth.admin import admin, UserAdmin
 from django.contrib.auth.models import User
 from django.utils.translation import ugettext_lazy as _
 from allauth.account.models import EmailAddress
+from users.models import Profile
+
+
+class ProfileInline(admin.StackedInline):
+    model = Profile
+    verbose_name_plural = 'Profile'
+    raw_id_fields = ("city",)
 
 
 class EmailsInline(admin.TabularInline):
@@ -12,12 +19,12 @@ class MyUserAdmin(UserAdmin):
     list_display = UserAdmin.list_display + ('last_login',)
     list_filter = UserAdmin.list_filter + ('last_login',)
     inlines = [
-        EmailsInline,
+        ProfileInline, EmailsInline
     ]
     fieldsets = (
         ('General', {
-             'fields': ('username', 'password')
-         }),
+            'fields': ('username', 'password')
+        }),
         (_('Personal info'), {
             'fields': ('first_name', 'last_name', 'email')
         }),

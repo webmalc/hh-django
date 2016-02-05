@@ -27,9 +27,9 @@ class PartnershipCommonInfo(models.Model):
         ('other', 'Другое'),
     ]
 
-    patronymic = models.TextField(max_length=50, null=True, blank=True)
-    type = models.TextField(max_length=50, choices=TYPES)
-    phone = models.TextField(max_length=30)
+    patronymic = models.CharField(max_length=50, null=True, blank=True)
+    type = models.CharField(max_length=50, choices=TYPES)
+    phone = models.CharField(max_length=30)
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, blank=False)
     experience = models.PositiveSmallIntegerField()
 
@@ -38,9 +38,9 @@ class PartnershipCommonInfo(models.Model):
 
 
 class PartnershipOrder(CommonInfo, PartnershipCommonInfo):
-    comment = models.CharField(max_length=255, null=True, blank=True)
+    comment = models.TextField(null=True, blank=True)
 
 
 class Profile(PartnershipCommonInfo):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(BaseUser, on_delete=models.CASCADE)
 

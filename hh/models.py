@@ -42,6 +42,19 @@ class City(AbstractCity):
     sorting = models.IntegerField(default=0)
     is_enabled = models.BooleanField(default=False, verbose_name='Is enabled?')
 
+    def get_first_alternate_name(self):
+        """
+        Returns first alternate name
+        :return: string
+        """
+        return self.alternate_names.split(',')[0]
+    get_first_alternate_name.short_description = 'Alternative name'
+    get_first_alternate_name.admin_order_field = 'alternate_names'
+
+    def __str__(self):
+        name = self.get_first_alternate_name()
+        return name if name else self.name
+
     class Meta:
         ordering = ['-sorting', 'name']
         unique_together = (('region', 'name'), ('region', 'slug'))
