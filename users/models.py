@@ -1,4 +1,5 @@
 from django.utils.translation import ugettext_lazy as _
+import re
 from hh.models import CommonInfo, City
 from django.db import models
 from django.contrib.auth.models import User as BaseUser
@@ -58,6 +59,16 @@ class PartnershipCommonInfo(models.Model):
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, blank=False)
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=False)
     experience = models.PositiveSmallIntegerField()
+
+    def save(self, *args, **kwargs):
+        """
+        Model save override
+        :param args:
+        :param kwargs:
+        :return:
+        """
+        self.phone = re.sub(r'\D', '', self.phone)
+        super(PartnershipCommonInfo, self).save(*args, **kwargs)
 
     class Meta:
         abstract = True

@@ -19,7 +19,6 @@ try:
 except ImportError:
     pass
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -158,6 +157,35 @@ CACHES = {
 }
 
 LOGIN_REDIRECT_URL = '/'
+
+# Logs
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': "[%(asctime)s] %(levelname)s [%(name)s:%(lineno)s] %(message)s",
+            'datefmt': "%d/%b/%Y %H:%M:%S"
+        },
+        'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+    },
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'var/logs/hh.log',
+            'formatter': 'verbose'
+        },
+    },
+    'loggers': {
+        'hh': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+        },
+    }
+}
 
 # Django stronghold
 STRONGHOLD_DEFAULTS = True

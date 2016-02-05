@@ -21,6 +21,9 @@ class CommonInfo(models.Model):
 
 
 class CityMixin:
+    """
+    City, Region, County name mixin
+    """
     def get_first_alternate_name(self):
         """
         Returns first alternate name
