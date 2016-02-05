@@ -1,3 +1,4 @@
+from django.utils.translation import ugettext_lazy as _
 from hh.models import CommonInfo, City
 from django.db import models
 from django.contrib.auth.models import User as BaseUser
@@ -18,7 +19,9 @@ class User(BaseUser):
 
 
 class PartnershipCommonInfo(models.Model):
-
+    """
+    Base Partnership information
+    """
     TYPES = [
         ('agent', 'Представитель агентства'),
         ('realtor', 'Частный агент/Риэлтор'),
@@ -38,7 +41,20 @@ class PartnershipCommonInfo(models.Model):
 
 
 class PartnershipOrder(CommonInfo, PartnershipCommonInfo):
+    """
+    Base Partnership information
+    """
+    STATUSES = [
+        ('new', 'Ожидает обработки'),
+        ('in_work', 'Обрабатывается'),
+        ('approved', 'Принята'),
+        ('canceled', 'Отклонена')
+    ]
+
+    first_name = models.CharField(_('first name'), max_length=30, blank=False)
+    last_name = models.CharField(_('last name'), max_length=30, blank=False)
     comment = models.TextField(null=True, blank=True)
+    status = models.CharField(max_length=20, choices=STATUSES, default='new')
 
 
 class Profile(PartnershipCommonInfo):

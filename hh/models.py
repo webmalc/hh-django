@@ -20,28 +20,7 @@ class CommonInfo(models.Model):
         abstract = True
 
 
-class Country(AbstractCountry):
-    """ HH country model."""
-    pass
-connect_default_signals(Country)
-
-
-class Region(AbstractRegion):
-    """ HH region model."""
-    pass
-connect_default_signals(Region)
-
-
-class City(AbstractCity):
-    """ HH city model."""
-    TIMEZONES = [(c, c) for c in pytz.all_timezones if c.startswith('Europe') or c.startswith('Asia')]
-
-    timezone = models.CharField(
-            max_length=40, null=True, blank=True, choices=TIMEZONES
-    )
-    sorting = models.IntegerField(default=0)
-    is_enabled = models.BooleanField(default=False, verbose_name='Is enabled?')
-
+class CityMixin:
     def get_first_alternate_name(self):
         """
         Returns first alternate name
@@ -55,11 +34,41 @@ class City(AbstractCity):
         name = self.get_first_alternate_name()
         return name if name else self.name
 
+
+class Country(CityMixin, AbstractCountry):
+    """ HH country model."""
+connect_default_signals(Country)
+
+
+class Region(CityMixin, AbstractRegion):
+
+    """ HH region model."""
+    def get_display_name(self):
+        return '%s, %s' % (self, self)
+
+connect_default_signals(Region)
+
+
+class City(CityMixin, AbstractCity):
+    """ HH city model."""
+    TIMEZONES = [(c, c) for c in pytz.all_timezones if c.startswith('Europe') or c.startswith('Asia')]
+
+    timezone = models.CharField(
+            max_length=40, null=True, blank=True, choices=TIMEZONES
+    )
+    sorting = models.IntegerField(default=0)
+    is_enabled = models.BooleanField(default=False, verbose_name='Is enabled?')
+
+    def get_display_name(self):
+        if self.region_id:
+            return '%s, %s, %s' % (self, self.region, self.country)
+        else:
+            return '%s, %s' % (self.name, self.country)
+
     class Meta:
         ordering = ['-sorting', 'name']
         unique_together = (('region', 'name'), ('region', 'slug'))
         verbose_name_plural = _('cities')
-
 connect_default_signals(City)
 
 
@@ -71,4 +80,5 @@ class SiteTreeTree(TreeBase):
 class SiteTreeItem(TreeItemBase):
     """ HH tree item model."""
 
-    icon = models.CharField(max_length=50, null=True, blank=True, verbose_name='Иконка',  help_text='Иконка FontAwesome. Пример: fa-user.')
+    icon = models.CharField(max_length=50, null=True, blank=True, verbose_name='Иконка',
+                            help_text='Иконка FontAwesome. Пример: fa-user.')
