@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from users.models import PartnershipOrder
-from hh.messangers.mailer import Mailer
+from users.tasks import mail_managers_task
 
 
 @receiver(post_save, sender=PartnershipOrder, dispatch_uid="users_partnership_order_post_save")
@@ -29,8 +29,15 @@ def users_partnership_order_post_save(sender, **kwargs):
 
     if created:
         # Send emails to managers on PartnershipOrder create
-        Mailer.mail_managers(
-            subject='Новая заявка на партнерство # {}'.format(order.id),
-            template='emails/new_partner_order.html',
-            data={'order': order}
-        )
+        mail_managers_task.delay(
+                subject='Новая заявка на партнерство # {}'.format(order.id),
+                template='emails/new_partner_order.html',
+                data={
+                    'id': order.id,
+                    'full_name': order.get_full_name(),
+                    'phone': order.phone,
+                    'city': str(order.city),
+                    'type': order.get_type_display(),
+                    'organization': str(order.organization),
+                    'comment': order.comment,
+                })
