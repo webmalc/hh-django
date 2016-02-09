@@ -2,7 +2,7 @@ from django.utils.translation import ugettext_lazy as _
 import re
 from hh.models import CommonInfo, City
 from django.db import models
-from django.contrib.auth.models import User as BaseUser
+from django.contrib.auth.models import User as BaseUser, Group
 
 
 class User(BaseUser):
@@ -10,7 +10,35 @@ class User(BaseUser):
         proxy = True
 
     def get_emails(self):
+        """
+        Get users emails
+        :return: set()
+        """
         return set([e.email for e in self.emailaddress_set.all() if e.verified] + [self.email])
+
+    def partner_create(self):
+        """
+        Add user to Partner group
+        """
+        group = Group.objects.get(name='Partner')
+        self.groups.add(group)
+        self.save()
+
+    def is_partner(self):
+        """
+        Check is user a partner
+        :return: boolean
+        """
+        return self.groups.filter(name='Partner').exists()
+
+    def partner_remove(self):
+        """
+        Remove user from Partner group
+        """
+        if self.is_partner():
+            group = Group.objects.get(name='Partner')
+            group.user_set.remove(self)
+            group.save()
 
     def __str__(self):
 
@@ -97,6 +125,9 @@ class PartnershipOrder(CommonInfo, PartnershipCommonInfo):
 
     def get_full_name(self):
         return "{} {} {}".format(self.last_name, self.first_name, self.patronymic)
+
+    class Meta:
+        ordering = ['-created_at', 'status']
 
 
 class Profile(PartnershipCommonInfo):

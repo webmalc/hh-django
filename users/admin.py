@@ -58,7 +58,9 @@ class PartnershipOrderAdmin(VersionAdmin):
     set_approved.short_description = "Mark selected orders as approved"
 
     def set_canceled(self, request, queryset):
-        queryset.update(status='canceled')
+        for order in queryset:
+            order.status = 'canceled'
+            order.save()
         self.message_user(request, 'Orders successfully marked as canceled.')
     set_canceled.short_description = "Mark selected orders as canceled"
 
@@ -68,6 +70,12 @@ class PartnershipOrderAdmin(VersionAdmin):
     set_in_work.short_description = "Mark selected orders as processing"
 
     actions = [set_in_work, set_approved, set_canceled]
+
+    class Media:
+        css = {
+            'all': ('admin/css/partnership_orders.css',)
+        }
+        js = ('admin/js/partnership_orders.js',)
 
 
 class ProfileInline(admin.StackedInline):
