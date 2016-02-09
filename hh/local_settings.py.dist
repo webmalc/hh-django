@@ -18,6 +18,7 @@ DEFAULT_FROM_EMAIL = "admin@example.ru"
 SERVER_EMAIL = "robot@example.ru"
 
 ADMINS = (('Name', 'admin@example.com'),)
+MANAGERS = ADMINS
 
 SECRET_KEY = 'my_super_secret_key'
 ALLOWED_HOSTS = ['127.0.0.1']

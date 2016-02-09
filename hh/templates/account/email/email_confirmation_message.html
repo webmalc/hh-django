@@ -1,0 +1,18 @@
+{% extends 'emails/base.html' %}
+
+{% block content %}
+<p>
+    {% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}
+        {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Здравствуйте!
+            </p>
+            <p>
+                Для подтверждения e-mail перейдите по ссылке {{ activate_url }}
+            </p>
+
+            <p>
+        {% endblocktrans %}{% endautoescape %}
+    {% blocktrans with site_name=current_site.name site_domain=current_site.domain %}Спасибо за использование,
+        {{ site_name }}!
+    {% endblocktrans %}
+    </p>
+{% endblock %}

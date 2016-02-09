@@ -9,6 +9,9 @@ class User(BaseUser):
     class Meta:
         proxy = True
 
+    def get_emails(self):
+        return set([e.email for e in self.emailaddress_set.all() if e.verified] + [self.email])
+
     def __str__(self):
 
         if self.first_name:
@@ -81,6 +84,11 @@ class PartnershipOrder(CommonInfo, PartnershipCommonInfo):
         ('approved', 'Принята'),
         ('canceled', 'Отклонена')
     )
+    original_status = None
+
+    def __init__(self, *args, **kwargs):
+        super(PartnershipOrder, self).__init__(*args, **kwargs)
+        self.original_status = self.status
 
     first_name = models.CharField(_('first name'), max_length=30, blank=False)
     last_name = models.CharField(_('last name'), max_length=30, blank=False)

@@ -159,6 +159,8 @@ CACHES = {
 
 LOGIN_REDIRECT_URL = '/'
 
+EMAIL_SUBJECT_PREFIX = '[HostelHunt] '
+
 # Logs
 LOGGING = {
     'version': 1,

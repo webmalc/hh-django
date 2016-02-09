@@ -33,9 +33,9 @@ class PartnershipOrderAdmin(VersionAdmin):
     """
     PartnershipOrder admin interface
     """
-    list_display = ('get_full_name', 'type', 'created_at', 'created_by', 'status')
-    list_display_links = ('get_full_name',)
-    search_fields = ('last_name', 'city__name', 'city__alternate_names')
+    list_display = ('id', 'get_full_name', 'type', 'created_at', 'created_by', 'status')
+    list_display_links = ('id', 'get_full_name',)
+    search_fields = ('id', 'last_name', 'city__name', 'city__alternate_names')
     list_filter = ('status', 'created_at', )
     raw_id_fields = ('city', 'organization')
     fieldsets = (
@@ -51,15 +51,20 @@ class PartnershipOrderAdmin(VersionAdmin):
     )
 
     def set_approved(self, request, queryset):
-        queryset.update(status='approved')
+        for order in queryset:
+            order.status = 'approved'
+            order.save()
+        self.message_user(request, 'Orders successfully marked as approved.')
     set_approved.short_description = "Mark selected orders as approved"
 
     def set_canceled(self, request, queryset):
         queryset.update(status='canceled')
+        self.message_user(request, 'Orders successfully marked as canceled.')
     set_canceled.short_description = "Mark selected orders as canceled"
 
     def set_in_work(self, request, queryset):
         queryset.update(status='in_work')
+        self.message_user(request, 'Orders successfully marked as processing.')
     set_in_work.short_description = "Mark selected orders as processing"
 
     actions = [set_in_work, set_approved, set_canceled]

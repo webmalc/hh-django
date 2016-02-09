@@ -1,0 +1,15 @@
+{% extends 'emails/base.html' %}
+
+{% block content %}
+    <h3>Новая заявка на партнерство #{{ order.id }}</h3>
+
+    <strong>ID:</strong> {{ order.id }}<br>
+    <strong>ФИО:</strong> {{ order.get_full_name }}<br>
+    <strong>ТЕЛЕФОН:</strong> {{ order.phone }}<br>
+    <strong>ГОРОД:</strong> {{ order.city }}<br>
+    <strong>ТИП:</strong> {{ order.get_type_display }}<br>
+    <strong>ОРГАНИЗАЦИЯ:</strong> {{ order.organization }}<br>
+    <strong>КОММЕНТАРИЙ:</strong> {{ order.comment|linebreaks }}<br>
+{% endblock %}
+
+
