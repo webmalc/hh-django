@@ -1,0 +1,37 @@
+{% extends 'users/profile_layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block tabs %}
+    {% with 'partner' as tab %}{{ block.super }}{% endwith %}
+{% endblock tabs %}
+
+
+{% block profile_content %}
+
+    {% if not not_completed_orders_count %}
+
+    <form action="" method="post" class="form">
+        {% csrf_token %}
+        <fieldset>
+            <legend>Контактная информация</legend>
+            {{ order_form|crispy }}
+        </fieldset>
+        <fieldset>
+            <legend>Ваша организация</legend>
+            {{ organization_form|crispy }}
+        </fieldset>
+
+        <button type="submit" class="btn btn-success margin-right-sm">
+            <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">Отправить заявку</span>
+        </button>
+        <a href="{% url 'users:partner_add' %}" class="btn btn-default">
+            <i class="fa fa-ban"></i><span class="hidden-xs margin-left-sm">Отмена</span>
+        </a>
+    </form>
+    {% else %}
+        <div class="bg-gray disabled color-palette alert">
+            <i class="fa fa-info-circle"></i>
+            Ваша заявка ожидает обработки. Наши менеджеры свяжутся с Вами в ближайшее время.
+        </div>
+    {% endif %}
+{% endblock %}

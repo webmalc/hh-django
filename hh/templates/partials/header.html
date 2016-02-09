@@ -41,7 +41,7 @@
                                 <p>
                                     {{ user }}
                                     {% if not request.user.has_group %}
-                                       <small>Начните зарабатывать сейчас! <a href="#">Станьте партнером</a></small>
+                                       <small>Начните зарабатывать сейчас! <a href="{% url 'users:partner_add' %}">Станьте партнером</a></small>
                                     {% else %}
                                         <small>Зарегистрировался {{ user.date_joined|naturalday }}</small>
                                     {% endif %}

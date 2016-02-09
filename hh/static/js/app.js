@@ -24,7 +24,10 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
     //select2
-    $('select.form-control').not('.not-select2').select2();
+    $('select.form-control').not('.not-select2').select2({
+        allowClear: true,
+        placeholder: "--------------"
+    });
 
     //sidebar
     (function () {

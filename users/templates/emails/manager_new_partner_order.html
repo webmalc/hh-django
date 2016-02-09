@@ -8,7 +8,7 @@
     <strong>ТЕЛЕФОН:</strong> {{ phone }}<br>
     <strong>ГОРОД:</strong> {{ city }}<br>
     <strong>ТИП:</strong> {{ type }}<br>
-    <strong>ОРГАНИЗАЦИЯ:</strong> {{ organization }}<br>
+    <strong>ОРГАНИЗАЦИЯ:</strong> {{ organization|default:'-' }}<br>
     <strong>КОММЕНТАРИЙ:</strong> {{ comment|linebreaks }}<br>
 {% endblock %}
 

@@ -40,6 +40,17 @@ class User(BaseUser):
             group.user_set.remove(self)
             group.save()
 
+    def get_profile(self):
+        """
+        Check profile
+        :return: Profile
+        """
+        try:
+            return self.profile
+        except Profile.DoesNotExist:
+            None
+
+
     def __str__(self):
 
         if self.first_name:
@@ -62,8 +73,8 @@ class Organization(CommonInfo):
         ('ip', 'ИП ',),
         ('other', 'Другое')
     )
-    type = models.CharField(max_length=20, choices=TYPES)
-    name = models.CharField(max_length=255)
+    type = models.CharField(max_length=20, choices=TYPES, verbose_name='тип')
+    name = models.CharField(max_length=255, verbose_name='название')
 
     def __str__(self):
         return '{} {}'.format(self.get_type_display(), self.name)
@@ -81,12 +92,14 @@ class PartnershipCommonInfo(models.Model):
         ('other', 'Другое'),
     )
 
-    patronymic = models.CharField(max_length=50, null=True, blank=True)
-    type = models.CharField(max_length=50, choices=TYPES)
-    phone = models.CharField(max_length=30)
-    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, blank=False)
-    organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=False)
-    experience = models.PositiveSmallIntegerField()
+    patronymic = models.CharField(max_length=50, null=True, blank=True, verbose_name='отчество')
+    type = models.CharField(max_length=50, choices=TYPES, verbose_name='тип')
+    phone = models.CharField(max_length=30, verbose_name='Сотовый телефон',
+                             help_text='Ваш контактный телефон. Пример: 79251234567')
+    city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, blank=False, verbose_name='город')
+    organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
+    experience = models.PositiveSmallIntegerField(verbose_name='опыт',
+                                                  help_text='Опыт работы в гостиничной сфере (в годах)')
 
     def save(self, *args, **kwargs):
         """
@@ -120,7 +133,7 @@ class PartnershipOrder(CommonInfo, PartnershipCommonInfo):
 
     first_name = models.CharField(_('first name'), max_length=30, blank=False)
     last_name = models.CharField(_('last name'), max_length=30, blank=False)
-    comment = models.TextField(null=True, blank=True)
+    comment = models.TextField(null=True, blank=True, verbose_name='Комментарий')
     status = models.CharField(max_length=20, choices=STATUSES, default='new')
 
     def get_full_name(self):
@@ -132,4 +145,3 @@ class PartnershipOrder(CommonInfo, PartnershipCommonInfo):
 
 class Profile(PartnershipCommonInfo):
     user = models.OneToOneField(BaseUser, on_delete=models.CASCADE)
-

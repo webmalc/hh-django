@@ -13,12 +13,7 @@ class Mailer:
         send_mail(
             recipient_list=user.get_emails(),
             from_email=settings.DEFAULT_FROM_EMAIL,
-            subject=subject,
+            subject='{prefix} {text}'.format(prefix=settings.EMAIL_SUBJECT_PREFIX, text=subject),
             message='',
             html_message=render_to_string(template, data)
         )
-        """try:
-            user = User.objects.get(pk=user_id)
-
-        except User.DoesNotExist:
-            pass"""

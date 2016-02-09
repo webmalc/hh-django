@@ -1,6 +1,6 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-from users.models import PartnershipOrder
+from users.models import PartnershipOrder, Profile
 from users.tasks import mail_managers_task, mail_user_task
 
 
@@ -23,6 +23,9 @@ def users_partnership_order_post_save(sender, **kwargs):
         for field in ('first_name', 'last_name'):
             setattr(user, field, getattr(order, field, getattr(user, field)))
 
+        if not user.get_profile():
+            user.profile = Profile()
+
         for field in ('patronymic', 'type', 'phone', 'city', 'organization', 'experience'):
             setattr(user.profile, field, getattr(order, field, getattr(user.profile, field)))
 
@@ -31,7 +34,7 @@ def users_partnership_order_post_save(sender, **kwargs):
         user.save()
 
         mail_user_task.delay(
-            subject='Заявка на партнерство #{} подтверждена'.format(order.id),
+            subject='Заявка на партнерство #{id} подтверждена'.format(id=order.id),
             template='emails/user_partner_order_approved.html',
             data={'id': order.id},
             user_id=user.id
@@ -42,7 +45,7 @@ def users_partnership_order_post_save(sender, **kwargs):
             and order.status == 'canceled' and user:
 
         mail_user_task.delay(
-            subject='Заявка на партнерство #{} отклонена'.format(order.id),
+            subject='Заявка на партнерство #{id} отклонена'.format(id=order.id),
             template='emails/user_partner_order_canceled.html',
             data={'id': order.id},
             user_id=user.id
@@ -51,7 +54,7 @@ def users_partnership_order_post_save(sender, **kwargs):
     # Send emails to managers on PartnershipOrder create
     if created:
         mail_managers_task.delay(
-                subject='Новая заявка на партнерство #{}'.format(order.id),
+                subject='Новая заявка на партнерство #{id}'.format(id=order.id),
                 template='emails/manager_new_partner_order.html',
                 data={
                     'id': order.id,

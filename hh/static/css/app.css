@@ -99,6 +99,12 @@ body {
     padding: 0px;
     color: #dd4b39;
 }
+fieldset {
+    margin-bottom: 30px;
+}
+.help-block {
+    font-size: 80%;
+}
 /******************* TABLES ***********************/
 
 .td-xs {
