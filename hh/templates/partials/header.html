@@ -40,7 +40,7 @@
                                 <img src="{% cached_avatar_url user 160 %}" class="img-circle" alt="User avatar">
                                 <p>
                                     {{ user }}
-                                    {% if not request.user.has_group %}
+                                    {% if not request.user|has_group:'Partner'%}
                                        <small>Начните зарабатывать сейчас! <a href="{% url 'users:partner_add' %}">Станьте партнером</a></small>
                                     {% else %}
                                         <small>Зарегистрировался {{ user.date_joined|naturalday }}</small>
