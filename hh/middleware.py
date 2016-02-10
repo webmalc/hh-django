@@ -19,6 +19,10 @@ class AdminLocaleMiddleware:
             request.LANG = getattr(settings, 'ADMIN_LANGUAGE_CODE', settings.LANGUAGE_CODE)
             translation.activate(request.LANG)
             request.LANGUAGE_CODE = request.LANG
+        else:
+            request.LANG = settings.LANGUAGE_CODE
+            translation.activate(request.LANG)
+            request.LANGUAGE_CODE = request.LANG
 
 
 class WhodidMiddleware(object):
