@@ -14,8 +14,8 @@ EMAIL_HOST = 'smtp.example.com'
 EMAIL_PORT = 587
 EMAIL_HOST_USER = 'admin'
 EMAIL_HOST_PASSWORD = 'password'
-DEFAULT_FROM_EMAIL = "admin@example.ru"
-SERVER_EMAIL = "robot@example.ru"
+DEFAULT_FROM_EMAIL = 'HostelHunt <admin@example.ru>'
+SERVER_EMAIL = 'HostelHunt <admin@example.ru>'
 
 ADMINS = (('Name', 'admin@example.com'),)
 MANAGERS = ADMINS
