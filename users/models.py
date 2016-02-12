@@ -1,9 +1,8 @@
 from django.utils.translation import ugettext_lazy as _
-import re
 from hh.models import CommonInfo, City
 from django.db import models
 from django.contrib.auth.models import User as BaseUser, Group
-
+from phonenumber_field.modelfields import PhoneNumberField
 
 class User(BaseUser):
     class Meta:
@@ -29,7 +28,7 @@ class User(BaseUser):
         Check is user a partner
         :return: boolean
         """
-        return self.groups.filter(name='Partner').exists()
+        return self.groups.filter(name='Partner').exists() and self.get_profile()
 
     def partner_remove(self):
         """
@@ -50,6 +49,10 @@ class User(BaseUser):
         except Profile.DoesNotExist:
             None
 
+    def get_full_name(self):
+        profile = self.get_profile()
+        patronymic = profile.patronymic if profile else ''
+        return '{0} {1} {2}'.format(self.last_name, self.first_name, patronymic)
 
     def __str__(self):
 
@@ -94,22 +97,12 @@ class PartnershipCommonInfo(models.Model):
 
     patronymic = models.CharField(max_length=50, null=True, blank=True, verbose_name='отчество')
     type = models.CharField(max_length=50, choices=TYPES, verbose_name='тип')
-    phone = models.CharField(max_length=30, verbose_name='Сотовый телефон',
+    phone = PhoneNumberField (max_length=30, verbose_name='Сотовый телефон',
                              help_text='Ваш контактный телефон. Пример: 79251234567')
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, blank=False, verbose_name='город')
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)
     experience = models.PositiveSmallIntegerField(verbose_name='опыт',
                                                   help_text='Опыт работы в гостиничной сфере (в годах)')
-
-    def save(self, *args, **kwargs):
-        """
-        Model save override
-        :param args:
-        :param kwargs:
-        :return:
-        """
-        self.phone = re.sub(r'\D', '', self.phone)
-        super(PartnershipCommonInfo, self).save(*args, **kwargs)
 
     class Meta:
         abstract = True

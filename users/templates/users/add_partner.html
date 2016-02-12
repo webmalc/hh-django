@@ -1,33 +1,70 @@
 {% extends 'users/profile_layout.html' %}
 {% load crispy_forms_tags %}
+{% load has_group %}
+{% load staticfiles %}
 
 {% block tabs %}
     {% with 'partner' as tab %}{{ block.super }}{% endwith %}
 {% endblock tabs %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'users/js/partnership_orders.js' %}"></script>
+{% endblock %}
 
 
 {% block profile_content %}
 
     {% if not not_completed_orders_count %}
 
-    <form action="" method="post" class="form">
-        {% csrf_token %}
-        <fieldset>
-            <legend>Контактная информация</legend>
-            {{ order_form|crispy }}
-        </fieldset>
-        <fieldset>
-            <legend>Ваша организация</legend>
-            {{ organization_form|crispy }}
-        </fieldset>
+        {% if request.user.is_partner and not request.POST %}
+            <table id="partner-info-table" class="table table-striped table-hover">
+                <tr>
+                    <th class="td-sm-md"><strong>ФИО:</strong></th>
+                    <td>{{ user.get_full_name }}</td>
+                </tr>
+                <tr>
+                    <th class="td-sm-md"><strong>Тип:</strong></th>
+                    <td>{{ user.profile.get_type_display }}</td>
+                </tr>
+                <tr>
+                    <th class="td-sm-md"><strong>Город:</strong></th>
+                    <td>{{ user.profile.city }}</td>
+                </tr>
+                <tr>
+                    <th class="td-sm-md"><strong>Ваш опыт:</strong></th>
+                    <td>{{ user.profile.experience }}</td>
+                </tr>
+                <tr>
+                    <th class="td-sm-md"><strong>Организация:</strong></th>
+                    <td>{{ user.profile.organization }}</td>
+                </tr>
+            </table>
+            <a href="{% url 'users:partner_add' %}" class="btn btn-success" id="show-partner-add-form">
+                <i class="fa fa fa-pencil-square-o margin-right-sm"></i>Редактировать
+            </a>
+        {% endif %}
 
-        <button type="submit" class="btn btn-success margin-right-sm">
-            <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">Отправить заявку</span>
-        </button>
-        <a href="{% url 'users:partner_add' %}" class="btn btn-default">
-            <i class="fa fa-ban"></i><span class="hidden-xs margin-left-sm">Отмена</span>
-        </a>
-    </form>
+        <form action="" method="post" id="partner-add-form"
+              class="form {% if request.user.is_partner and not request.POST %}hidden{% endif %}">
+            {% csrf_token %}
+            <fieldset>
+                <legend>Контактная информация</legend>
+                {{ order_form|crispy }}
+            </fieldset>
+            <fieldset>
+                <legend>Ваша организация</legend>
+                {{ organization_form|crispy }}
+            </fieldset>
+
+            <button type="submit" class="btn btn-success margin-right-sm">
+                <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">Отправить заявку</span>
+            </button>
+            <a href="{% url 'users:partner_add' %}" class="btn btn-default">
+                <i class="fa fa-ban"></i><span class="hidden-xs margin-left-sm">Отмена</span>
+            </a>
+        </form>
+
     {% else %}
         <div class="bg-gray disabled color-palette alert">
             <i class="fa fa-info-circle"></i>

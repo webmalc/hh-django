@@ -105,6 +105,9 @@ fieldset {
 .help-block {
     font-size: 80%;
 }
+.select2-container {
+    min-width: 300px;
+}
 /******************* TABLES ***********************/
 
 .td-xs {

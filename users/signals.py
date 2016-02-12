@@ -59,7 +59,7 @@ def users_partnership_order_post_save(sender, **kwargs):
                 data={
                     'id': order.id,
                     'full_name': order.get_full_name(),
-                    'phone': order.phone,
+                    'phone': str(order.phone),
                     'city': str(order.city),
                     'type': order.get_type_display(),
                     'organization': str(order.organization),

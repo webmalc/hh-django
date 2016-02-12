@@ -50,7 +50,7 @@ class PartnershipOrderCreate(TemplateView):
         # Get organization from request
         if context['organization_form'].is_valid():
             new_organization = context['organization_form'].save(commit=False)
-            organizations = Organization.objects.filter(name=new_organization.name, type=new_organization.type)
+            organizations = Organization.objects.filter(name__iexact=new_organization.name, type=new_organization.type)
 
             if not organizations:
                 new_organization.save()
