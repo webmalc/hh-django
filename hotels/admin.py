@@ -1,7 +1,28 @@
 from django.contrib.auth.admin import admin
 from django.contrib import messages
 from reversion.admin import VersionAdmin
-from hotels.models import Tariff, TariffElement
+from hotels.models import Tariff, TariffElement, MetroStation
+
+
+class MetroStationsAdmin(VersionAdmin):
+    """
+    Tariff admin interface
+    """
+    list_display = ('name', 'city', 'color', 'created_at', 'created_by')
+    list_display_links = ('name',)
+    search_fields = ('name', 'city__name', 'city__alternate_names')
+    raw_id_fields = ['city']
+    fieldsets = (
+        ('General', {
+            'fields': ('name', 'city',)
+        }),
+        ('Options', {
+            'fields': ('color',)
+        }),
+    )
+
+    class Media:
+        js = ('admin/js/metro_stations.js',)
 
 
 class TariffElementsInline(admin.TabularInline):
@@ -42,3 +63,4 @@ class TariffAdmin(VersionAdmin):
 
 
 admin.site.register(Tariff, TariffAdmin)
+admin.site.register(MetroStation, MetroStationsAdmin)

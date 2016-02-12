@@ -1,7 +1,18 @@
 from django.db import models
 from django.core.validators import MaxValueValidator
 from django.core.exceptions import ValidationError
+from colorful.fields import RGBColorField
 from hh.models import CommonInfo
+from users.models import City
+
+
+class MetroStation(CommonInfo):
+    """
+    Metro stations
+    """
+    name = models.CharField(max_length=80)
+    city = models.ForeignKey(City, null=True, blank=False, on_delete=models.SET_NULL)
+    color = RGBColorField(null=True, blank=True)
 
 
 class Tariff(CommonInfo):

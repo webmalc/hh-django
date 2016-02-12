@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'cities_light',
     'reversion',
     'django_select2',
+    'colorful',
 
     # HH apps
     'hh',
