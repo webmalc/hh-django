@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'avatar',
     'cities_light',
     'reversion',
+    'django_select2',
 
     # HH apps
     'hh',
@@ -157,6 +158,13 @@ CACHES = {
         'BACKEND': 'django.core.cache.backends.memcached.MemcachedCache',
         'LOCATION': '127.0.0.1:11211',
         'TIMEOUT': 600
+    },
+    'select2': {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://127.0.0.1:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
     }
 }
 
@@ -229,6 +237,7 @@ AUTHENTICATION_BACKENDS = [
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
+# Django cities-light
 CITIES_LIGHT_TRANSLATION_LANGUAGES = ['ru']
 CITIES_LIGHT_INCLUDE_COUNTRIES = ['RU']
 CITIES_LIGHT_APP_NAME = 'hh'
@@ -244,3 +253,8 @@ CELERY_TIMEZONE = 'Europe/Moscow'
 # Django phonenumber
 PHONENUMBER_DB_FORMAT = 'NATIONAL'
 PHONENUMBER_DEFAULT_REGION = 'RU'
+
+# Django select2
+SELECT2_CACHE_BACKEND = 'select2'
+SELECT2_JS = 'AdminLTE/plugins/select2/select2.full.min.js'
+SELECT2_CSS = 'AdminLTE/plugins/select2/select2.min.css'

@@ -24,6 +24,7 @@ from users.views import PasswordChangeRedirectView
 urlpatterns = [
 
     url(r'^admin/', admin.site.urls),
+    url(r'^select2/', include('django_select2.urls')),
     url(r'users/profile/password$', auth_views.password_change, {
         'template_name': 'users/password_change_form.html'},
         name='password_change'),

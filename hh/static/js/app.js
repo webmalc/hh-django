@@ -24,10 +24,9 @@ $(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
     //select2
-    $('select.form-control').not('.not-select2').select2({
-        allowClear: true,
-        placeholder: "--------------"
-    });
+    $.fn.select2.defaults.set("allowClear", true);
+    $.fn.select2.defaults.set("placeholder", "--------------");
+    $('select.form-control').not('.not-select2').select2();
 
     //sidebar
     (function () {

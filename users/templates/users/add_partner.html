@@ -10,6 +10,7 @@
 {% block scripts %}
     {{ block.super }}
     <script src="{% static 'users/js/partnership_orders.js' %}"></script>
+    {{ order_form.media.js }}
 {% endblock %}
 
 
