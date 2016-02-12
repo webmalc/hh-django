@@ -4,6 +4,7 @@ from django.db import models
 from django.contrib.auth.models import User as BaseUser, Group
 from phonenumber_field.modelfields import PhoneNumberField
 
+
 class User(BaseUser):
     class Meta:
         proxy = True
@@ -110,7 +111,7 @@ class PartnershipCommonInfo(models.Model):
 
 class PartnershipOrder(CommonInfo, PartnershipCommonInfo):
     """
-    Base Partnership information
+    Partnership information
     """
     STATUSES = (
         ('new', 'Ожидает обработки'),

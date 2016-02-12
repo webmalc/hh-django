@@ -56,7 +56,8 @@ INSTALLED_APPS = [
     # HH apps
     'hh',
     'users',
-    'booking'
+    'booking',
+    'hotels'
 ]
 
 MIDDLEWARE_CLASSES = [
