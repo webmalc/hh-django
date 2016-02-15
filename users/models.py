@@ -24,6 +24,18 @@ class User(BaseUser):
         self.groups.add(group)
         self.save()
 
+    def hotelier_create(self):
+        """
+        Add user to Hotelier group
+        """
+        profile = self.get_profile()
+        group = Group.objects.get(name='Hotelier')
+        if profile and profile.type in ('hotel_worker', 'hotel_owner', 'agent'):
+            self.groups.add(group)
+        else:
+            self.groups.remove(group)
+        self.save()
+
     def is_partner(self):
         """
         Check is user a partner

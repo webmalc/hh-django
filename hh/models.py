@@ -36,7 +36,7 @@ class CommonInfo(models.Model):
                                     related_name="%(app_label)s_%(class)s_modified_by")
 
     def __str__(self):
-        return getattr(self, 'name', self.id)
+        return getattr(self, 'name', '{} #{}'.format(type(self).__name__, str(self.id)))
 
     class Meta:
         abstract = True

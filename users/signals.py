@@ -29,9 +29,10 @@ def users_partnership_order_post_save(sender, **kwargs):
         for field in ('patronymic', 'type', 'phone', 'city', 'organization', 'experience'):
             setattr(user.profile, field, getattr(order, field, getattr(user.profile, field)))
 
-        user.partner_create()
         user.profile.save()
         user.save()
+        user.partner_create()
+        user.hotelier_create()
 
         mail_user_task.delay(
             subject='Заявка на партнерство #{id} подтверждена'.format(id=order.id),
