@@ -39,6 +39,11 @@
             <!-- Main content -->
             <section class="content">
 
+                <!-- Notifications -->
+                {% block notifications %}
+                    {% include "partials/notifications.html" %}
+                {% endblock %}
+
                 <!-- Messages -->
                 {% block messages %}
                     {% include "partials/messages.html" %}

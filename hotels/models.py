@@ -54,7 +54,7 @@ class TariffElement(models.Model):
             raise ValidationError('Start sum cannot exceed end sum')
 
 
-class Hotel(CommonInfo, GeoMixin):
+class Property(CommonInfo, GeoMixin):
     """
     Hotel class
     """
@@ -72,8 +72,9 @@ class Hotel(CommonInfo, GeoMixin):
 
     class Meta:
         permissions = (
-            ("can_search_hotels", "Can search hotels"),
-            ("can_book_hotels", "Can book hotels"),
-            ("can_send_hotel_orders", "Can send orders to hotels"),
+            ("can_search_property", "Can search property"),
+            ("can_book_property", "Can book property"),
+            ("can_send_property_orders", "Can send orders to property"),
         )
         ordering = ['name', '-sorting']
+        verbose_name_plural = 'properties'

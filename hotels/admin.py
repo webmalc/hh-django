@@ -1,10 +1,10 @@
 from django.contrib.auth.admin import admin
 from django.contrib import messages
 from reversion.admin import VersionAdmin
-from hotels.models import Tariff, TariffElement, MetroStation, Hotel
+from hotels.models import Tariff, TariffElement, MetroStation, Property
 
 
-class HotelAdmin(VersionAdmin):
+class PropertyAdmin(VersionAdmin):
     """
     Tariff admin interface
     """
@@ -85,5 +85,5 @@ class TariffAdmin(VersionAdmin):
 
 
 admin.site.register(Tariff, TariffAdmin)
-admin.site.register(Hotel, HotelAdmin)
+admin.site.register(Property,PropertyAdmin)
 admin.site.register(MetroStation, MetroStationsAdmin)

@@ -1,0 +1,10 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+
+{% block content %}
+    <div class="box box-default">
+        <div class="box-body">
+            {% block hotel_content %}{{ block.super }}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

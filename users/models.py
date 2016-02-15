@@ -43,6 +43,13 @@ class User(BaseUser):
         """
         return self.groups.filter(name='Partner').exists() and self.get_profile()
 
+    def is_hotelier(self):
+        """
+        Check is user a hotelier
+        :return: boolean
+        """
+        return self.groups.filter(name='Hotelier').exists() and self.get_profile()
+
     def partner_remove(self):
         """
         Remove user from Partner group

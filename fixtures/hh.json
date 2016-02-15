@@ -52,7 +52,7 @@
         "access_restricted": false,
         "access_perm_type": 1,
         "parent": null,
-        "sort_order": 13,
+        "sort_order": 15,
         "icon": "fa-user",
         "access_permissions": []
     }
@@ -327,15 +327,15 @@
         "access_restricted": true,
         "access_perm_type": 2,
         "parent": null,
-        "sort_order": 10,
+        "sort_order": 13,
         "icon": "fa fa-cogs",
         "access_permissions": [
-            22,
-            23,
-            24,
-            25,
-            26,
-            27,
+            28,
+            29,
+            30,
+            31,
+            32,
+            33,
             4,
             5,
             6,
@@ -363,21 +363,21 @@
             1,
             2,
             3,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
             37,
             38,
             39,
-            40,
-            41,
-            42,
-            31,
-            32,
-            33,
-            28,
-            29,
-            30,
             34,
             35,
-            36
+            36,
+            40,
+            41,
+            42
         ]
     }
 },
@@ -426,7 +426,7 @@
         "access_restricted": false,
         "access_perm_type": 1,
         "parent": null,
-        "sort_order": 15,
+        "sort_order": 26,
         "icon": "",
         "access_permissions": []
     }
@@ -629,6 +629,58 @@
         "sort_order": 24,
         "icon": "",
         "access_permissions": []
+    }
+},
+{
+    "model": "hh.sitetreeitem",
+    "pk": 25,
+    "fields": {
+        "title": "\u041f\u0430\u0440\u0442\u043d\u0435\u0440\u0441\u0442\u0432\u043e",
+        "hint": "",
+        "url": "users:partner_add",
+        "urlaspattern": true,
+        "tree": 1,
+        "hidden": false,
+        "alias": null,
+        "description": "",
+        "inmenu": true,
+        "inbreadcrumbs": true,
+        "insitetree": true,
+        "access_loggedin": true,
+        "access_guest": false,
+        "access_restricted": false,
+        "access_perm_type": 1,
+        "parent": 15,
+        "sort_order": 25,
+        "icon": "",
+        "access_permissions": []
+    }
+},
+{
+    "model": "hh.sitetreeitem",
+    "pk": 26,
+    "fields": {
+        "title": "\u041e\u0442\u0435\u043b\u0438",
+        "hint": "",
+        "url": "hotel:property_list",
+        "urlaspattern": true,
+        "tree": 1,
+        "hidden": false,
+        "alias": null,
+        "description": "",
+        "inmenu": true,
+        "inbreadcrumbs": true,
+        "insitetree": true,
+        "access_loggedin": true,
+        "access_guest": false,
+        "access_restricted": true,
+        "access_perm_type": 1,
+        "parent": null,
+        "sort_order": 10,
+        "icon": "fa fa-home",
+        "access_permissions": [
+            97
+        ]
     }
 }
 ]
