@@ -52,3 +52,28 @@ class TariffElement(models.Model):
     def clean(self):
         if self.start_sum >= self.end_sum:
             raise ValidationError('Start sum cannot exceed end sum')
+
+
+class Hotel(CommonInfo, GeoMixin):
+    """
+    Hotel class
+    """
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    address = models.TextField()
+    city = models.ForeignKey(City, null=True, blank=True, on_delete=models.SET_NULL)
+    metro_stations = models.ManyToManyField(MetroStation, blank=True)
+    tariff = models.ForeignKey(Tariff, null=True, blank=True, on_delete=models.SET_NULL)
+    sorting = models.IntegerField(default=0)
+
+    def get_metro_stations_as_string(self):
+        return ', '.join([str(m) for m in self.metro_stations.all()])
+    get_metro_stations_as_string.short_description = 'Metro stations'
+
+    class Meta:
+        permissions = (
+            ("can_search_hotels", "Can search hotels"),
+            ("can_book_hotels", "Can book hotels"),
+            ("can_send_hotel_orders", "Can send orders to hotels"),
+        )
+        ordering = ['name', '-sorting']

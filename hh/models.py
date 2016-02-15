@@ -35,6 +35,9 @@ class CommonInfo(models.Model):
     modified_by = models.ForeignKey('users.User', null=True, blank=True, on_delete=models.CASCADE, editable=False,
                                     related_name="%(app_label)s_%(class)s_modified_by")
 
+    def __str__(self):
+        return getattr(self, 'name', self.id)
+
     class Meta:
         abstract = True
 
