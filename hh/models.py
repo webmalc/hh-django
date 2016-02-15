@@ -4,6 +4,25 @@ from sitetree.models import TreeItemBase, TreeBase
 from cities_light.abstract_models import AbstractCity, AbstractRegion, AbstractCountry
 from cities_light.receivers import connect_default_signals
 from django.utils.translation import ugettext_lazy as _
+from geoposition.fields import GeopositionField
+
+
+class GeoMixin(models.Model):
+    """
+    GeoMixin: add Latitude & Longitude fields
+    """
+    position = GeopositionField(null=True, blank=True)
+    latitude = models.DecimalField(max_digits=8, decimal_places=5, null=True, blank=True)
+    longitude = models.DecimalField(max_digits=8, decimal_places=5, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.position:
+            self.latitude = self.position.latitude
+            self.longitude = self.position.longitude
+        super(GeoMixin, self).save(*args, **kwargs)
+
+    class Meta:
+        abstract = True
 
 
 class CommonInfo(models.Model):

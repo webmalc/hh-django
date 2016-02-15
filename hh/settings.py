@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'reversion',
     'django_select2',
     'colorful',
+    'geoposition',
 
     # HH apps
     'hh',

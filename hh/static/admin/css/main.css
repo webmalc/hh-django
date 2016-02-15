@@ -4,3 +4,6 @@
 th.column-is_enabled, th.column-is_sorting, td.field-is_enabled, td.field-sorting {
     text-align: center;
 }
+input.geoposition {
+    margin-bottom: 5px !important;
+}

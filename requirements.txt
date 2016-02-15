@@ -14,10 +14,12 @@ django-appconf==1.0.1
 django-autoslug==1.9.3
 django-avatar==2.2.1
 django-cities-light==3.2.0
+django-colorful==1.1.0
 django-compressor==2.0
 django-crispy-forms==1.6.0
 django-debug-toolbar==1.4
 django-extensions==1.6.1
+django-geoposition==0.2.2
 django-phonenumber-field==1.0.0
 django-ratelimit-backend==1.0
 django-redis==4.3.0

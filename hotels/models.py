@@ -2,11 +2,11 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 from django.core.exceptions import ValidationError
 from colorful.fields import RGBColorField
-from hh.models import CommonInfo
+from hh.models import CommonInfo, GeoMixin
 from users.models import City
 
 
-class MetroStation(CommonInfo):
+class MetroStation(CommonInfo, GeoMixin):
     """
     Metro stations
     """
@@ -14,11 +14,15 @@ class MetroStation(CommonInfo):
     city = models.ForeignKey(City, null=True, blank=False, on_delete=models.SET_NULL)
     color = RGBColorField(null=True, blank=True)
 
+    class Meta:
+        ordering = ['city', 'name']
+
 
 class Tariff(CommonInfo):
     """
     Hotel tariffs
     """
+
     def validate_is_default(is_default):
         if not is_default and not Tariff.objects.filter(is_default=True).count():
             raise ValidationError('One of the tariffs should be the default')
@@ -48,4 +52,3 @@ class TariffElement(models.Model):
     def clean(self):
         if self.start_sum >= self.end_sum:
             raise ValidationError('Start sum cannot exceed end sum')
-

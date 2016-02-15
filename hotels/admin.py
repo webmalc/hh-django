@@ -17,7 +17,7 @@ class MetroStationsAdmin(VersionAdmin):
             'fields': ('name', 'city',)
         }),
         ('Options', {
-            'fields': ('color',)
+            'fields': ('color', 'position')
         }),
     )
 
