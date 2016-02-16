@@ -78,7 +78,7 @@ def hotels_room_post_save(sender, **kwargs):
                 template=email_template,
                 data=email_data
         )
-    if not created and room.modified_by.is_staff:
+    if not created and not room.modified_by.is_staff:
         mail_managers_task.delay(
                 subject='Обновлена комната #{id}'.format(id=room.id),
                 template=email_template,

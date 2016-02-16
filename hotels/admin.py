@@ -10,7 +10,8 @@ class RoomsInlineAdmin(admin.StackedInline):
     """
     model = Room
     fields = (
-        'name', 'description', 'gender', 'places', 'calculation_type', 'price', 'created_at', 'created_by'
+        'name', 'description', 'gender', 'places', 'calculation_type',
+        'price', 'is_enabled', 'created_at', 'created_by'
     )
     extra = 1
     readonly_fields = ('created_at', 'created_by')
@@ -20,9 +21,12 @@ class PropertyAdmin(VersionAdmin):
     """
     Property admin interface
     """
-    list_display = ('id', 'name', 'city', 'get_metro_stations_as_string', 'tariff', 'sorting', 'created_at', 'created_by')
+    list_display = (
+        'id', 'name', 'city', 'get_metro_stations_as_string', 'tariff',
+        'sorting', 'is_enabled', 'created_at', 'created_by'
+    )
     list_display_links = ('id', 'name',)
-    list_filter = ('tariff', 'metro_stations')
+    list_filter = ('tariff', 'metro_stations', 'is_enabled')
     search_fields = ('id', 'name', 'city__name', 'city__alternate_names', 'metro_stations__name')
     raw_id_fields = ['city', 'created_by']
     inlines = [RoomsInlineAdmin]

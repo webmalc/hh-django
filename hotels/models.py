@@ -65,6 +65,7 @@ class Property(CommonInfo, GeoMixin):
     metro_stations = models.ManyToManyField(MetroStation, blank=True)
     tariff = models.ForeignKey(Tariff, null=True, blank=True, on_delete=models.SET_NULL)
     sorting = models.IntegerField(default=0)
+    is_enabled = models.BooleanField(default=True)
 
     def get_metro_stations_as_string(self):
         return ', '.join([str(m) for m in self.metro_stations.all()])
@@ -102,3 +103,4 @@ class Room(CommonInfo):
     gender = models.CharField(max_length=20, default='mixed', choices=GENDER_TYPES)
     price = models.PositiveIntegerField()
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
+    is_enabled = models.BooleanField(default=True)
