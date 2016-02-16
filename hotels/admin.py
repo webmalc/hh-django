@@ -1,7 +1,7 @@
 from django.contrib.auth.admin import admin
 from django.contrib import messages
 from reversion.admin import VersionAdmin
-from hotels.models import Tariff, TariffElement, MetroStation, Property, Room
+from hotels.models import Tariff, TariffElement, MetroStation, Property, Room, PropertyPhoto
 
 
 class RoomsInlineAdmin(admin.StackedInline):
@@ -17,6 +17,15 @@ class RoomsInlineAdmin(admin.StackedInline):
     readonly_fields = ('created_at', 'created_by')
 
 
+class PropertyPhotoInline(admin.StackedInline):
+    """
+    Property photos admin
+    """
+    model = PropertyPhoto
+    extra = 1
+    fields = ('name', 'photo', 'is_default')
+
+
 class PropertyAdmin(VersionAdmin):
     """
     Property admin interface
@@ -29,7 +38,7 @@ class PropertyAdmin(VersionAdmin):
     list_filter = ('tariff', 'metro_stations', 'is_enabled')
     search_fields = ('id', 'name', 'city__name', 'city__alternate_names', 'metro_stations__name')
     raw_id_fields = ['city', 'created_by']
-    inlines = [RoomsInlineAdmin]
+    inlines = [RoomsInlineAdmin, PropertyPhotoInline]
     fieldsets = (
         ('General', {
             'fields': ('name', 'description',)

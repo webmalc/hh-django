@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'django_select2',
     'colorful',
     'geoposition',
+    'imagekit',
 
     # HH apps
     'hh',

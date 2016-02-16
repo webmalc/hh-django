@@ -1,8 +1,11 @@
 {% extends 'hotels/layout.html' %}
+{% load staticfiles %}
 {% block hotel_content %}
 
     {% for property in object_list %}
-        {{ property }}
+        {% for photo in  property.propertyphoto_set.all %}
+            <img src="{% static photo.thumbnail.url %}">
+        {% endfor %}
     {% endfor %}
 
 {% endblock %}

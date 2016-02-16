@@ -2,6 +2,8 @@ from django.db import models
 from django.core.validators import MaxValueValidator
 from django.core.exceptions import ValidationError
 from colorful.fields import RGBColorField
+from imagekit.models import ImageSpecField, ProcessedImageField
+from imagekit.processors import Thumbnail, ResizeToCover
 from hh.models import CommonInfo, GeoMixin
 from users.models import City
 
@@ -69,6 +71,7 @@ class Property(CommonInfo, GeoMixin):
 
     def get_metro_stations_as_string(self):
         return ', '.join([str(m) for m in self.metro_stations.all()])
+
     get_metro_stations_as_string.short_description = 'Metro stations'
 
     class Meta:
@@ -79,6 +82,24 @@ class Property(CommonInfo, GeoMixin):
         )
         ordering = ['name', '-sorting']
         verbose_name_plural = 'properties'
+
+
+class PropertyPhoto(CommonInfo):
+    """
+    Property photo class
+    """
+    name = models.CharField(max_length=255, null=True, blank=True)
+    is_default = models.BooleanField(default=False)
+    photo = ProcessedImageField(upload_to='hotels_property_photos',
+                                processors=[ResizeToCover(600, 600, False)],
+                                format='JPEG',
+                                options={'quality': 90})
+    thumbnail = ImageSpecField(source='photo',
+                               processors=[Thumbnail(150, 150)],
+                               format='JPEG',
+                               options={'quality': 90})
+
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
 
 class Room(CommonInfo):
