@@ -261,3 +261,6 @@ PHONENUMBER_DEFAULT_REGION = 'RU'
 SELECT2_CACHE_BACKEND = 'select2'
 SELECT2_JS = 'AdminLTE/plugins/select2/select2.full.min.js'
 SELECT2_CSS = 'AdminLTE/plugins/select2/select2.min.css'
+
+# Django geoposition
+GEOPOSITION_MAP_WIDGET_HEIGHT = 300

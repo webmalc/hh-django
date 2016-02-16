@@ -1,18 +1,31 @@
 from django.contrib.auth.admin import admin
 from django.contrib import messages
 from reversion.admin import VersionAdmin
-from hotels.models import Tariff, TariffElement, MetroStation, Property
+from hotels.models import Tariff, TariffElement, MetroStation, Property, Room
+
+
+class RoomsInlineAdmin(admin.StackedInline):
+    """
+    Rooms admin
+    """
+    model = Room
+    fields = (
+        'name', 'description', 'gender', 'places', 'calculation_type', 'price', 'created_at', 'created_by'
+    )
+    extra = 1
+    readonly_fields = ('created_at', 'created_by')
 
 
 class PropertyAdmin(VersionAdmin):
     """
-    Tariff admin interface
+    Property admin interface
     """
-    list_display = ('name', 'city', 'get_metro_stations_as_string', 'tariff', 'sorting', 'created_at', 'created_by')
-    list_display_links = ('name',)
+    list_display = ('id', 'name', 'city', 'get_metro_stations_as_string', 'tariff', 'sorting', 'created_at', 'created_by')
+    list_display_links = ('id', 'name',)
     list_filter = ('tariff', 'metro_stations')
-    search_fields = ('name', 'city__name', 'city__alternate_names', 'metro_stations__name')
+    search_fields = ('id', 'name', 'city__name', 'city__alternate_names', 'metro_stations__name')
     raw_id_fields = ['city', 'created_by']
+    inlines = [RoomsInlineAdmin]
     fieldsets = (
         ('General', {
             'fields': ('name', 'description',)
@@ -21,6 +34,7 @@ class PropertyAdmin(VersionAdmin):
             'fields': ('city', 'address', 'metro_stations', 'position')
         }),
         ('Options', {
+            'classes': ('collapse',),
             'fields': ('tariff', 'sorting', 'created_by',)
         }),
     )

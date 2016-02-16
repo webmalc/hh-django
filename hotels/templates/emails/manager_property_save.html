@@ -1,0 +1,14 @@
+{% extends 'emails/base.html' %}
+
+{% block content %}
+    <h3>Сохранен отель #{{ id }}</h3>
+
+    <strong>ID:</strong> {{ id }}<br>
+    <strong>НАЗВАНИЕ:</strong> {{ name }}<br>
+    <strong>ОПИСАНИЕ:</strong> {{ description|linebreaks }}<br>
+    <strong>ГОРОД:</strong> {{ city }}<br>
+    <strong>АДРЕС:</strong> {{ address }}<br>
+    <strong>ПОЛЬЗОВАТЕЛЬ:</strong> {{ user }}<br>
+{% endblock %}
+
+

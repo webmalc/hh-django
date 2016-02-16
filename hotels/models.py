@@ -56,7 +56,7 @@ class TariffElement(models.Model):
 
 class Property(CommonInfo, GeoMixin):
     """
-    Hotel class
+    Property class
     """
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
@@ -78,3 +78,27 @@ class Property(CommonInfo, GeoMixin):
         )
         ordering = ['name', '-sorting']
         verbose_name_plural = 'properties'
+
+
+class Room(CommonInfo):
+    """
+    Property room class
+    """
+    CALCULATION_TYPES = (
+        ('per_person', 'За человека'),
+        ('per_room', 'За комнату')
+
+    )
+    GENDER_TYPES = (
+        ('mixed', 'Смешанный'),
+        ('male', 'Мужской'),
+        ('female', 'Женский'),
+
+    )
+    name = models.CharField(max_length=255)
+    description = models.TextField(null=True, blank=True)
+    calculation_type = models.CharField(max_length=20, default='per_person', choices=CALCULATION_TYPES)
+    places = models.PositiveSmallIntegerField()
+    gender = models.CharField(max_length=20, default='mixed', choices=GENDER_TYPES)
+    price = models.PositiveIntegerField()
+    property = models.ForeignKey(Property, on_delete=models.CASCADE)
