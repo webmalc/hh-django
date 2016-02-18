@@ -48,7 +48,7 @@ class PropertyAdmin(VersionAdmin):
         }),
         ('Options', {
             'classes': ('collapse',),
-            'fields': ('tariff', 'sorting', 'created_by',)
+            'fields': ('tariff', 'sorting', 'created_by', 'is_enabled')
         }),
     )
 

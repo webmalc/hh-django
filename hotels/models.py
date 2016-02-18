@@ -69,6 +69,15 @@ class Property(CommonInfo, GeoMixin):
     sorting = models.IntegerField(default=0)
     is_enabled = models.BooleanField(default=True)
 
+    def get_main_photo(self):
+        return self.propertyphoto_set.order_by('is_default').first()
+
+    def get_main_photo_thumbnail(self):
+        photo = self.get_main_photo()
+        if photo:
+            return photo.thumbnail.url
+        return '/static/img/no-image.gif'
+
     def get_metro_stations_as_string(self):
         return ', '.join([str(m) for m in self.metro_stations.all()])
 
@@ -95,7 +104,7 @@ class PropertyPhoto(CommonInfo):
                                 format='JPEG',
                                 options={'quality': 90})
     thumbnail = ImageSpecField(source='photo',
-                               processors=[Thumbnail(150, 150)],
+                               processors=[Thumbnail(120, 120)],
                                format='JPEG',
                                options={'quality': 90})
 

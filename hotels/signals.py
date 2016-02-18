@@ -1,7 +1,21 @@
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
-from hotels.models import Tariff, Property, Room
+from hotels.models import Tariff, Property, Room, PropertyPhoto
 from users.tasks import mail_managers_task
+
+
+@receiver(pre_save, sender=PropertyPhoto, dispatch_uid="hotels_property_photo_pre_save")
+def hotels_property_photo_pre_save(sender, **kwargs):
+    """
+    PropertyPhoto pre save
+    :param sender: PropertyPhoto
+    :param kwargs: dict
+    :return:
+    """
+    photo = kwargs['instance']
+    # Set default photo
+    if PropertyPhoto.objects.filter(is_default=True).count() and photo.is_default:
+        PropertyPhoto.objects.update(is_default=False)
 
 
 @receiver(pre_save, sender=Tariff, dispatch_uid="hotels_tariff_pre_save")

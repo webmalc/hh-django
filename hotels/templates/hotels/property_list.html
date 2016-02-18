@@ -1,11 +1,66 @@
 {% extends 'hotels/layout.html' %}
 {% load staticfiles %}
 {% block hotel_content %}
+    <table class="table table-hover table-striped" id="property-table">
+        {% for property in object_list %}
+            <tr>
+                <td width="120" class="hidden-xs">
+                    <a href="#">
+                        <img src="{% static property.get_main_photo_thumbnail %}" class="img-rounded"
+                             data-toggle="tooltip"
+                             data-placement="top" title="Перейти к фотогалерее отеля">
+                    </a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-success btn-sm pull-right action" data-toggle="tooltip"
+                       data-placement="left"
+                       title="Перейти к редактированию отеля">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <h3>
+                        <a href="#" data-toggle="tooltip" data-placement="top" title="Перейти к редактированию отеля">
+                            {{ property }}
+                        </a>
+                    </h3>
+                    <h4 class="text-muted">
+                        {% if property.position %}
+                            <a target="_blank"
+                               href="http://maps.google.com/maps?q=loc:{{ property.position }}">
+                                <i class="fa fa-map-marker margin-right-sm"></i>
+                            </a>
+                        {% else %}
+                            <i class="fa fa-compass margin-right-sm"></i>
+                        {% endif %}
 
-    {% for property in object_list %}
-        {% for photo in  property.propertyphoto_set.all %}
-            <img src="{% static photo.thumbnail.url %}">
+                        {{ property.city }}, {{ property.address }}. {{ property.get_metro_stations_as_string }}
+                    </h4>
+                    <small class="text-muted">{{ property.description|truncatechars:800|linebreaks }}</small>
+
+                    {% if not property.room_set.count %}
+                        <p class="text-danger">
+                            <strong>
+                                <i class="fa fa-exclamation-circle"></i>
+                                Не заполнены цены и номера у отеля. Перейти к <a href="">управлению номерами?</a>
+                            </strong>
+                        </p>
+                    {% endif %}
+                    {% if not property.is_enabled %}
+                        <p class="text-danger">
+                            <strong>
+                                <i class="fa fa-exclamation-circle"></i>
+                                Отель выключен. Перейти к <a href="">управлению отелем?</a></strong>
+                        </p>
+                    {% endif %}
+                </td>
+            </tr>
         {% endfor %}
-    {% endfor %}
+    </table>
+
+    <p class="text-center margin-top-md-lg">
+        <a href="" class="btn btn-primary">
+            <i class="fa fa-plus"></i> Добавить новый отель
+        </a>
+    </p>
+
 
 {% endblock %}
