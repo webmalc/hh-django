@@ -1,0 +1,39 @@
+{% extends 'hotels/layout.html' %}
+{% load staticfiles %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'hotels/css/property.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="nav-tabs-custom">
+        {% block tabs %}
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" {% if tab == 'property' or not tab %}class="active"{% endif %}>
+                    <a href="{% url 'hotel:property_change' property.id %}" aria-controls="home" role="tab">
+                        <i class="fa fa-home"></i> Отель
+                    </a>
+                </li>
+                <li role="presentation" class="{% if tab == 'prices' %}active{% endif %}">
+                    <a href="{% url 'hotel:property_room_list' property.id %}" aria-controls="home" role="tab">
+                        <i class="fa fa-ruble"></i> Цены
+                    </a>
+                </li>
+                <li role="presentation" class="{% if tab == 'photos' %}active{% endif %}">
+                    <a href="{% url 'users:profile' %}" aria-controls="home" role="tab">
+                        <i class="fa fa-photo"></i> Фото
+                    </a>
+                </li>
+            </ul>
+
+        {% endblock %}
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active margin-top-md-lg">
+                    {% block hotel_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

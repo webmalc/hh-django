@@ -1,0 +1,35 @@
+{% extends 'hotels/property_tabs.html' %}
+{% load staticfiles %}
+
+{% block tabs %}
+    {% with 'prices' as tab %}{{ block.super }}{% endwith %}
+{% endblock tabs %}
+
+{% block hotel_content %}
+    {% if rooms|length %}
+       {% for room in rooms %}
+        {{ room }}
+    {% endfor %}
+    {% else %}
+        <div class="alert alert-warning">
+            <i class="fa fa-exclamation-circle margin-right-xs"></i>
+            Не заполнена ни одина цена у отеля. <a href="">Добавить первую?</a>
+        </div>
+    {% endif %}
+    {% with tariff=property.get_tariff %}
+        {% if tariff %}
+            <div class="alert  bg-gray disabled color-palette" id="commission-list">
+                <p><i class="fa fa-info-circle margin-right-xs"></i> Комисссия HostelHunt:</p>
+                <small>
+                    <ul>
+                        {% for price in tariff.tariffelement_set.all %}
+                            <li>Сумма от {{ price.start_sum }} р. до {{ price.end_sum }} р. - {{ price.commission }}%
+                            </li>
+                        {% endfor %}
+                        <li>Минимальная комисссия - {{ tariff.minimal_commission }} p.</li>
+                    </ul>
+                </small>
+            </div>
+        {% endif %}
+    {% endwith %}
+{% endblock %}

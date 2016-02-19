@@ -12,13 +12,13 @@
                     </a>
                 </td>
                 <td>
-                    <a href="#" class="btn btn-success btn-sm pull-right action" data-toggle="tooltip"
+                    <a href="{% url 'hotel:property_change' property.id %}" class="btn btn-success btn-sm pull-right action" data-toggle="tooltip"
                        data-placement="left"
                        title="Перейти к редактированию отеля">
                         <i class="fa fa-pencil"></i>
                     </a>
                     <h3>
-                        <a href="#" data-toggle="tooltip" data-placement="top" title="Перейти к редактированию отеля">
+                        <a href="{% url 'hotel:property_change' property.id %}" data-toggle="tooltip" data-placement="top" title="Перейти к редактированию отеля">
                             {{ property }}
                         </a>
                     </h3>
@@ -41,7 +41,8 @@
                         <p class="text-danger">
                             <strong>
                                 <i class="fa fa-exclamation-circle"></i>
-                                Не заполнены цены и номера у отеля. Перейти к <a href="">управлению номерами?</a>
+                                Не заполнены цены и номера у отеля.
+                                Перейти к <a href="{% url 'hotel:property_room_list' property.id %}">управлению ценами?</a>
                             </strong>
                         </p>
                     {% endif %}
@@ -49,7 +50,9 @@
                         <p class="text-danger">
                             <strong>
                                 <i class="fa fa-exclamation-circle"></i>
-                                Отель выключен. Перейти к <a href="">управлению отелем?</a></strong>
+                                Отель выключен.
+                                Перейти к <a href="{% url 'hotel:property_change' property.id %}">управлению отелем?</a>
+                            </strong>
                         </p>
                     {% endif %}
                 </td>

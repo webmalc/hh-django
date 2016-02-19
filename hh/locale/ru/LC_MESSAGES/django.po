@@ -1,0 +1,322 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2016-02-19 13:54+0300\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
+"%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: hh/admin.py:37
+msgid "Basic settings"
+msgstr ""
+
+#: hh/admin.py:40
+msgid "Access settings"
+msgstr ""
+
+#: hh/admin.py:44
+msgid "Display settings"
+msgstr ""
+
+#: hh/admin.py:48
+msgid "Additional settings"
+msgstr ""
+
+#: hh/models.py:14
+msgid "coordinates"
+msgstr "Координаты"
+
+#: hh/models.py:96
+msgid "cities"
+msgstr ""
+
+#: hh/templates/account/account_inactive.html:5
+msgid "Account Inactive"
+msgstr ""
+
+#: hh/templates/account/account_inactive.html:9
+msgid "This account is inactive."
+msgstr ""
+
+#: hh/templates/account/email.html:20
+msgid "The following e-mail addresses are associated with your account:"
+msgstr ""
+
+#: hh/templates/account/email.html:38 hh/templates/account/email.html.py:40
+#: hh/templates/account/email.html:44
+msgid "Verified"
+msgstr ""
+
+#: hh/templates/account/email.html:46
+msgid "Unverified"
+msgstr ""
+
+#: hh/templates/account/email.html:51 hh/templates/account/email.html.py:53
+msgid "Primary"
+msgstr ""
+
+#: hh/templates/account/email.html:64
+msgid "Make Primary"
+msgstr ""
+
+#: hh/templates/account/email.html:67
+msgid "Re-send Verification"
+msgstr ""
+
+#: hh/templates/account/email.html:72
+#: hh/templates/socialaccount/connections.html:42
+msgid "Remove"
+msgstr ""
+
+#: hh/templates/account/email.html:82
+msgid ""
+"You currently do not have any e-mail address set up. You should really add "
+"an e-mail address so you can receive notifications, reset your password, etc."
+msgstr ""
+
+#: hh/templates/account/email.html:95
+msgid "Add E-mail"
+msgstr ""
+
+#: hh/templates/account/email.html:105
+msgid "Do you really want to remove the selected e-mail address?"
+msgstr ""
+
+#: hh/templates/account/email/email_confirmation_message.html:6
+#, python-format
+msgid ""
+"Здравствуйте!\n"
+"            </p>\n"
+"            <p>\n"
+"                Для подтверждения e-mail перейдите по ссылке "
+"%(activate_url)s\n"
+"            </p>\n"
+"\n"
+"            <p>\n"
+"        "
+msgstr ""
+
+#: hh/templates/account/email/email_confirmation_message.html:14
+#, python-format
+msgid ""
+"Спасибо за использование,\n"
+"        %(site_name)s!\n"
+"    "
+msgstr ""
+
+#: hh/templates/account/email/email_confirmation_message.txt:1
+#, python-format
+msgid ""
+"Здравствуйте!\n"
+"\n"
+"Для подтверждения e-mail перейдите по ссылке %(activate_url)s\n"
+msgstr ""
+
+#: hh/templates/account/email/email_confirmation_message.txt:5
+#: hh/templates/account/email/password_reset_key_message.txt:10
+#, python-format
+msgid "Спасибо за использование, %(site_name)s!\n"
+msgstr ""
+
+#: hh/templates/account/email/email_confirmation_subject.txt:3
+msgid "Подтверждение e-mail"
+msgstr ""
+
+#: hh/templates/account/email/password_reset_key_message.html:5
+#, python-format
+msgid ""
+"Здравствуйте!</p>\n"
+"\n"
+"        <p>Вы получили это письмо, потому что вы или кто-то еще запросил "
+"новый пароль для учетной записи пользователя на\n"
+"        %(site_domain)s.</p>\n"
+"        <p>Это письмо может быть проигнорировано, если вы не запрашивали "
+"сброс пароля. Нажмите на ссылку ниже, чтобы\n"
+"        сбросить пароль.<br>\n"
+"    "
+msgstr ""
+
+#: hh/templates/account/email/password_reset_key_message.html:14
+#, python-format
+msgid "<p>Если вы забыли, ваш логин %(username)s.</p>"
+msgstr ""
+
+#: hh/templates/account/email/password_reset_key_message.html:16
+#, python-format
+msgid ""
+"<p>Спасибо за использование,\n"
+"        %(site_name)s!</p>\n"
+"    "
+msgstr ""
+
+#: hh/templates/account/email/password_reset_key_message.txt:1
+#, python-format
+msgid ""
+"Здравствуйте!\n"
+"\n"
+"Вы получили это письмо, потому что вы или кто-то еще запросил новый пароль "
+"для учетной записи пользователя на %(site_domain)s.\n"
+"Это письмо может быть проигнорировано, если вы не запрашивали сброс пароля. "
+"Нажмите на ссылку ниже, чтобы сбросить пароль.\n"
+msgstr ""
+
+#: hh/templates/account/email/password_reset_key_message.txt:8
+#, python-format
+msgid "Если вы забыли, ваш логин %(username)s."
+msgstr ""
+
+#: hh/templates/account/email/password_reset_key_subject.txt:3
+msgid "Password Reset E-mail"
+msgstr ""
+
+#: hh/templates/account/email_confirm.html:10
+msgid "Confirm E-mail Address"
+msgstr ""
+
+#: hh/templates/account/logout.html:13
+msgid "Sign Out"
+msgstr ""
+
+#: hh/templates/account/password_reset_done.html:14
+msgid ""
+"We have sent you an e-mail. Please contact us if you do not receive it "
+"within a few minutes."
+msgstr ""
+
+#: hh/templates/account/password_reset_from_key.html:11
+msgid "Bad Token"
+msgstr ""
+
+#: hh/templates/account/password_reset_from_key.html:13
+#: hh/templates/account/password_reset_from_key_done.html:4
+msgid "Change Password"
+msgstr ""
+
+#: hh/templates/account/password_reset_from_key.html:22
+#, python-format
+msgid ""
+"\n"
+"            Ссылка для сброса пароля является недействительным, возможно, "
+"потому, что он уже был использован. Пожалуйста, запросите <a href="
+"\"%(passwd_reset_url)s\">новый сброс пароля</a>.\n"
+"            "
+msgstr ""
+
+#: hh/templates/account/password_reset_from_key.html:55
+#: hh/templates/account/password_reset_from_key_done.html:9
+msgid "Your password is now changed."
+msgstr ""
+
+#: hh/templates/account/signup.html:10
+#, python-format
+msgid ""
+"Already have an account? Then please <a href=\"%(login_url)s\">sign in</a>."
+msgstr ""
+
+#: hh/templates/account/verification_sent.html:8
+msgid "Verify Your E-mail Address"
+msgstr ""
+
+#: hh/templates/account/verification_sent.html:12
+msgid ""
+"\n"
+"            Мы послали вам письмо для проверки e-mail.\n"
+"            Пройдите по ссылке для завершения процесса регистрации.\n"
+"            <br><br>\n"
+"            <small>\n"
+"            Пожалуйста, свяжитесь с нами, если вы не получите письмо в "
+"течение нескольких минут.\n"
+"            </small>\n"
+"        "
+msgstr ""
+
+#: hh/templates/socialaccount/authentication_error.html:9
+msgid ""
+"An error occurred while attempting to login via your social network account."
+msgstr ""
+
+#: hh/templates/socialaccount/connections.html:15
+msgid ""
+"Вы можете войти в свою учетную запись, используя любой из следующих "
+"социальных\n"
+"            аккаунтов:"
+msgstr ""
+
+#: hh/templates/socialaccount/connections.html:52
+msgid ""
+"You currently have no social network accounts connected to this account."
+msgstr ""
+
+#: hh/templates/socialaccount/login_cancelled.html:5
+msgid "Login Cancelled"
+msgstr ""
+
+#: hh/templates/socialaccount/login_cancelled.html:12
+#, python-format
+msgid ""
+"You decided to cancel logging in to our site using one of your existing "
+"accounts. If this was a mistake, please proceed to <a href=\"%(login_url)s"
+"\">sign in</a>."
+msgstr ""
+
+#: hh/templates/socialaccount/signup.html:6
+msgid "Signup"
+msgstr ""
+
+#: hotels/models.py:64
+msgid "name"
+msgstr ""
+
+#: hotels/models.py:66
+msgid "description"
+msgstr ""
+
+#: hotels/models.py:67
+msgid "address"
+msgstr "Адрес"
+
+#: hotels/models.py:68
+msgid "city"
+msgstr "Город"
+
+#: hotels/models.py:69
+msgid "metro"
+msgstr "Метро"
+
+#: hotels/models.py:73
+msgid "is enabled?"
+msgstr "Включен?"
+
+#: users/admin.py:110
+msgid "Personal info"
+msgstr ""
+
+#: users/admin.py:113
+msgid "Permissions"
+msgstr ""
+
+#: users/admin.py:118
+msgid "Important dates"
+msgstr ""
+
+#: users/models.py:147
+msgid "first name"
+msgstr ""
+
+#: users/models.py:148
+msgid "last name"
+msgstr ""

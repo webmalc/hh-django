@@ -330,12 +330,12 @@
         "sort_order": 13,
         "icon": "fa fa-cogs",
         "access_permissions": [
-            28,
-            29,
-            30,
-            31,
-            32,
-            33,
+            22,
+            23,
+            24,
+            25,
+            26,
+            27,
             4,
             5,
             6,
@@ -363,21 +363,21 @@
             1,
             2,
             3,
-            22,
-            23,
-            24,
-            25,
-            26,
-            27,
             37,
             38,
             39,
-            34,
-            35,
-            36,
             40,
             41,
-            42
+            42,
+            31,
+            32,
+            33,
+            28,
+            29,
+            30,
+            34,
+            35,
+            36
         ]
     }
 },
@@ -679,7 +679,88 @@
         "sort_order": 10,
         "icon": "fa fa-home",
         "access_permissions": [
-            97
+            115
+        ]
+    }
+},
+{
+    "model": "hh.sitetreeitem",
+    "pk": 27,
+    "fields": {
+        "title": "\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u043e\u0442\u0435\u043b\u044c",
+        "hint": "",
+        "url": "hotel:property_create",
+        "urlaspattern": true,
+        "tree": 1,
+        "hidden": false,
+        "alias": null,
+        "description": "",
+        "inmenu": false,
+        "inbreadcrumbs": true,
+        "insitetree": true,
+        "access_loggedin": true,
+        "access_guest": false,
+        "access_restricted": true,
+        "access_perm_type": 1,
+        "parent": 26,
+        "sort_order": 27,
+        "icon": "",
+        "access_permissions": [
+            115
+        ]
+    }
+},
+{
+    "model": "hh.sitetreeitem",
+    "pk": 28,
+    "fields": {
+        "title": "{{property}}: \u0441\u043f\u0438\u0441\u043e\u043a \u0446\u0435\u043d",
+        "hint": "",
+        "url": "hotel:property_room_list property.id",
+        "urlaspattern": true,
+        "tree": 1,
+        "hidden": false,
+        "alias": null,
+        "description": "",
+        "inmenu": false,
+        "inbreadcrumbs": true,
+        "insitetree": true,
+        "access_loggedin": true,
+        "access_guest": false,
+        "access_restricted": true,
+        "access_perm_type": 1,
+        "parent": 26,
+        "sort_order": 28,
+        "icon": "",
+        "access_permissions": [
+            121
+        ]
+    }
+},
+{
+    "model": "hh.sitetreeitem",
+    "pk": 29,
+    "fields": {
+        "title": "{{property}}: \u0440\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435",
+        "hint": "",
+        "url": "hotel:property_change property.id",
+        "urlaspattern": true,
+        "tree": 1,
+        "hidden": false,
+        "alias": null,
+        "description": "",
+        "inmenu": false,
+        "inbreadcrumbs": true,
+        "insitetree": true,
+        "access_loggedin": true,
+        "access_guest": false,
+        "access_restricted": false,
+        "access_perm_type": 2,
+        "parent": 26,
+        "sort_order": 29,
+        "icon": "",
+        "access_permissions": [
+            116
         ]
     }
 }

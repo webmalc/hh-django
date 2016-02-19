@@ -1,21 +1,24 @@
-{% extends 'hotels/layout.html' %}
+{% extends property.id|yesno:'hotels/property_tabs.html,hotels/layout.html' %}
 {% load crispy_forms_tags %}
+{% load staticfiles %}
 
 {% block scripts %}
     {{ block.super }}
     {{ form.media.js }}
+    <script src="{% static 'js/position.js' %}"></script>
+    <script src="{% static 'js/metro.js' %}"></script>
 {% endblock %}
 
 {% block hotel_content %}
-
     <form action="" method="post" class="form">
         {% csrf_token %}
         {{ form|crispy }}
 
         <button type="submit" class="btn btn-success margin-right-sm">
-            <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">Добавить отель</span>
+            <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">
+            {{ property.id|yesno:'Обновить, Добавить' }} отель</span>
         </button>
-        <a href="{% url 'users:profile' %}" class="btn btn-default">
+        <a href="{% url 'hotel:property_list' %}" class="btn btn-default">
             <i class="fa fa-ban"></i><span class="hidden-xs margin-left-sm">Отмена</span>
         </a>
     </form>

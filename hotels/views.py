@@ -1,6 +1,8 @@
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView
+from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
-from hotels.models import Property
+from django.core.urlresolvers import reverse_lazy
+from hotels.models import Property, Room
 from hotels.forms import PropertyForm
 
 
@@ -20,10 +22,50 @@ class PropertyList(ListView):
             filter(created_by=self.request.user).prefetch_related('metro_stations', 'propertyphoto_set', 'room_set')
 
 
-class PropertyCreate(CreateView):
+class PropertyCreate(SuccessMessageMixin, CreateView):
     """
     User property create
     """
     form_class = PropertyForm
     template_name = 'hotels/property_edit.html'
+    success_url = reverse_lazy('hotel:property_room_list')
+    success_message = "Отель успешно добавлен. Теперь необходимо заполнить цены."
+
+
+class PropertyUpdate(SuccessMessageMixin, UpdateView):
+    """
+    Property update
+    """
+    model = Property
+    form_class = PropertyForm
+    template_name = 'hotels/property_edit.html'
+    success_message = "Данные отеля успешно обновлены."
+
+    def get_queryset(self):
+        return super(PropertyUpdate, self).get_queryset().filter(created_by=self.request.user)
+
+
+class RoomList(DetailView):
+    """
+    Property rooms List
+    """
+    model = Property
+    template_name = 'hotels/room_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(RoomList, self).get_context_data(**kwargs)
+        context['rooms'] = Room.objects.filter(property=self.object)
+        return context
+
+    def get_queryset(self):
+        return super(RoomList, self).get_queryset().filter(created_by=self.request.user)
+
+
+class RoomCreate(SuccessMessageMixin, CreateView):
+    """
+    Property rooms create
+    """
+    model = Room
+    success_message = "Комната/цена успешно добавлена."
+
 

@@ -4,3 +4,9 @@
 #property-table a.btn.action {
     margin: 0px 0px 10px 10px;
 }
+
+#commission-list ul {
+    list-style-type: none;
+    margin: 5px 0px 0px 0px;
+    padding: 0px;
+}

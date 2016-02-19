@@ -14,5 +14,6 @@ class PropertyForm(forms.ModelForm):
         ]
         widgets = {
             'city': CityWidget(attrs={'class': 'not-select2'}),
-            'description': forms.Textarea(attrs={'rows': 4, 'cols': 15}),
+            'description': forms.Textarea(attrs={'rows': 5, 'cols': 15}),
+            'address': forms.Textarea(attrs={'rows': 2, 'cols': 15}),
         }

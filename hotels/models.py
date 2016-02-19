@@ -1,4 +1,6 @@
 from django.db import models
+from django.utils.translation import ugettext_lazy as _
+from django.core.urlresolvers import reverse
 from django.core.validators import MaxValueValidator
 from django.core.exceptions import ValidationError
 from colorful.fields import RGBColorField
@@ -60,14 +62,22 @@ class Property(CommonInfo, GeoMixin):
     """
     Property class
     """
-    name = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
-    address = models.TextField()
-    city = models.ForeignKey(City, on_delete=models.PROTECT)
-    metro_stations = models.ManyToManyField(MetroStation, blank=True)
+    name = models.CharField(max_length=255, verbose_name=_('name'))
+    description = models.TextField(null=True, blank=True,
+                                   verbose_name=_('description'), help_text='Краткое описание отеля для поиска')
+    address = models.TextField(verbose_name=_('address'))
+    city = models.ForeignKey(City, on_delete=models.PROTECT, verbose_name=_('city'))
+    metro_stations = models.ManyToManyField(MetroStation, blank=True, verbose_name=_('metro'),
+                                            help_text='Ближайшие станции метро')
     tariff = models.ForeignKey(Tariff, null=True, blank=True, on_delete=models.SET_NULL)
     sorting = models.IntegerField(default=0)
-    is_enabled = models.BooleanField(default=True)
+    is_enabled = models.BooleanField(default=True, verbose_name=_('is enabled?'))
+
+    def get_tariff(self):
+        if self.tariff:
+            return self.tariff
+        else:
+            return Tariff.objects.filter(is_default=True).first()
 
     def get_main_photo(self):
         return self.propertyphoto_set.order_by('is_default').first()
@@ -82,6 +92,9 @@ class Property(CommonInfo, GeoMixin):
         return ', '.join([str(m) for m in self.metro_stations.all()])
 
     get_metro_stations_as_string.short_description = 'Metro stations'
+
+    def get_absolute_url(self):
+        return reverse('hotel:property_change', args=[str(self.id)])
 
     class Meta:
         permissions = (

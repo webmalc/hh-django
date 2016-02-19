@@ -11,7 +11,7 @@ class GeoMixin(models.Model):
     """
     GeoMixin: add Latitude & Longitude fields
     """
-    position = GeopositionField(null=True, blank=True)
+    position = GeopositionField(null=True, blank=True, verbose_name=_('coordinates'))
     latitude = models.DecimalField(max_digits=8, decimal_places=5, null=True, blank=True)
     longitude = models.DecimalField(max_digits=8, decimal_places=5, null=True, blank=True)
 
