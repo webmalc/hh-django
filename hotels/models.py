@@ -63,7 +63,7 @@ class Property(CommonInfo, GeoMixin):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True, blank=True)
     address = models.TextField()
-    city = models.ForeignKey(City, null=True, blank=True, on_delete=models.SET_NULL)
+    city = models.ForeignKey(City, on_delete=models.PROTECT)
     metro_stations = models.ManyToManyField(MetroStation, blank=True)
     tariff = models.ForeignKey(Tariff, null=True, blank=True, on_delete=models.SET_NULL)
     sorting = models.IntegerField(default=0)

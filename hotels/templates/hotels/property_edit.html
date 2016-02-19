@@ -1,0 +1,22 @@
+{% extends 'hotels/layout.html' %}
+{% load crispy_forms_tags %}
+
+{% block scripts %}
+    {{ block.super }}
+    {{ form.media.js }}
+{% endblock %}
+
+{% block hotel_content %}
+
+    <form action="" method="post" class="form">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <button type="submit" class="btn btn-success margin-right-sm">
+            <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">Добавить отель</span>
+        </button>
+        <a href="{% url 'users:profile' %}" class="btn btn-default">
+            <i class="fa fa-ban"></i><span class="hidden-xs margin-left-sm">Отмена</span>
+        </a>
+    </form>
+{% endblock %}

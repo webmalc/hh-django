@@ -2,6 +2,6 @@
 {% if request.user.is_hotelier and not request.user.hotels_property_created_by.all.count %}
     <div class="alert alert-warning">
         <i class="fa fa-info-circle"></i>
-        У Вас еще не добавлено ни одного отеля. Перейти к <a href="">управлению отелями?</a>
+        У Вас еще не добавлено ни одного отеля. Перейти к <a href="{% url 'hotel:property_list' %}">управлению отелями?</a>
     </div>
 {% endif %}

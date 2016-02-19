@@ -22,18 +22,19 @@
                             {{ property }}
                         </a>
                     </h3>
-                    <h4 class="text-muted">
+                    <p class="text-muted font-lg">
                         {% if property.position %}
                             <a target="_blank"
                                href="http://maps.google.com/maps?q=loc:{{ property.position }}">
-                                <i class="fa fa-map-marker margin-right-sm"></i>
+                                <i class="fa fa-map-marker margin-right-xs"></i>
                             </a>
                         {% else %}
                             <i class="fa fa-compass margin-right-sm"></i>
                         {% endif %}
 
+
                         {{ property.city }}, {{ property.address }}. {{ property.get_metro_stations_as_string }}
-                    </h4>
+                    </p>
                     <small class="text-muted">{{ property.description|truncatechars:800|linebreaks }}</small>
 
                     {% if not property.room_set.count %}
@@ -57,7 +58,7 @@
     </table>
 
     <p class="text-center margin-top-md-lg">
-        <a href="" class="btn btn-primary">
+        <a href="{% url 'hotel:property_create' %}" class="btn btn-primary">
             <i class="fa fa-plus"></i> Добавить новый отель
         </a>
     </p>
