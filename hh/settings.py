@@ -98,6 +98,10 @@ TEMPLATES = [
 
 SITE_ID = 1
 
+LOCALE_PATHS = (
+    os.path.join(os.path.dirname(__file__), "locale"),
+)
+
 WSGI_APPLICATION = 'hh.wsgi.application'
 
 # Password validation
