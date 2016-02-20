@@ -17,7 +17,7 @@ class RoomsInlineAdmin(admin.StackedInline):
     readonly_fields = ('created_at', 'created_by')
 
 
-class PropertyPhotoInline(admin.StackedInline):
+class PropertyPhotoInline(admin.TabularInline):
     """
     Property photos admin
     """

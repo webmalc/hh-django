@@ -1,19 +1,60 @@
 {% extends 'hotels/property_tabs.html' %}
 {% load staticfiles %}
-
+{% load main %}
+{% load i18n %}
 {% block tabs %}
     {% with 'prices' as tab %}{{ block.super }}{% endwith %}
 {% endblock tabs %}
 
 {% block hotel_content %}
     {% if rooms|length %}
-       {% for room in rooms %}
-        {{ room }}
-    {% endfor %}
+        <table class="table table-hover table-striped" id="property-table">
+            {% for room in rooms %}
+                <tr>
+                    <td>
+                        <a href="{% url 'hotel:property_change' property.id %}"
+                           class="btn btn-success btn-sm pull-right action" data-toggle="tooltip"
+                           data-placement="left"
+                           title="Перейти к редактированию цены">
+                            <i class="fa fa-pencil"></i>
+                        </a>
+
+                        <h3>
+                            <a href="{% url 'hotel:property_change' property.id %}" data-toggle="tooltip"
+                               data-placement="top" title="Перейти к редактированию цены">
+                                {{ room }}
+                                -
+                                <small class="margin-left-sm text-success">3000
+                                    р. {{ room.get_calculation_type_display|lower }}</small>
+                            </a>
+                        </h3>
+                        <p class="text-muted font-lg">
+                            <small><i class="fa fa-male margin-right-sm"></i></small>
+                            {{ room.get_gender_display }} на {{ room.places }} мест{{ room.places|ru_pluralize:'о,а,' }}
+                        </p>
+                        <small class="text-muted">
+                            {{ room.description|truncatechars:800|linebreaks }}
+                        </small>
+
+                        {% if not room.is_enabled %}
+                            <p class="text-danger">
+                                <strong>
+                                    <i class="fa fa-exclamation-circle"></i>
+                                    Цена выключена.
+                                    Перейти к <a href="{% url 'hotel:property_change' property.id %}">редактированию
+                                    цены?</a>
+                                </strong>
+                            </p>
+                        {% endif %}
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
     {% else %}
         <div class="alert alert-warning">
             <i class="fa fa-exclamation-circle margin-right-xs"></i>
-            Не заполнена ни одина цена у отеля. <a href="">Добавить первую?</a>
+            Не заполнена ни одна цена у отеля. <a href="">Добавить первую?</a>
         </div>
     {% endif %}
     {% with tariff=property.get_tariff %}
