@@ -123,6 +123,9 @@ class PropertyPhoto(CommonInfo):
 
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
+    class Meta:
+        ordering = ['-is_default']
+
 
 class Room(CommonInfo):
     """

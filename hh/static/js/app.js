@@ -3,6 +3,9 @@
 $(document).ready(function () {
     'use strict';
 
+    //Fancybox
+    $(".fancybox").fancybox();
+
     //iCheck
     $('input[type="radio"], input[type="checkbox"]').not('#avatar-delete-form input, #avatar-choose-form input').iCheck({
         checkboxClass: 'icheckbox_flat-red',

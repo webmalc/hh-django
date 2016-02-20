@@ -26,6 +26,7 @@
     "font-awesome": "^4.5.0",
     "Ionicons": "ionicons#^2.0.1",
     "moment": "^2.11.1",
-    "bootstrap": "^3.3.6"
+    "bootstrap": "^3.3.6",
+    "fancybox": "^2.1.5"
   }
 }

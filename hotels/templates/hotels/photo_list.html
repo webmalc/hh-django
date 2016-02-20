@@ -8,11 +8,22 @@
 {% block hotel_content %}
     {% if photos|length %}
         {% for photo in photos %}
-        <div class="property-photo-list-wrapper">
-            <img src="{% static photo.thumbnail.url %}" class="img-rounded"
-                             data-toggle="tooltip"
-                             data-placement="top" title="Перейти к фотогалерее отеля">
-        </div>
+            <div class="property-photo-list-link">
+            <a class="fancybox fancybox" rel="gallery" title="{{ photo.name }}"
+               href="{{ photo.photo.url }}">
+                <img src="{% static photo.thumbnail.url %}" class="img-rounded"
+                     data-toggle="tooltip"
+                     data-placement="top" title="Перейти к фотогалерее отеля">
+            </a>
+                <div class="property-photo-list-actions">
+                    <a href="" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Редактировать фото">
+                        <i class="fa fa-pencil"></i>
+                    </a>
+                    <a href="" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Удалить фото">
+                        <i class="fa fa-trash"></i>
+                    </a>
+                </div>
+            </div>
         {% endfor %}
     {% else %}
         <div class="alert alert-warning">

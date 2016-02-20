@@ -76,6 +76,17 @@ body {
 .font-lg {
     font-size: 120%;
 }
+.property-photo-list-link {
+    margin: 0px 0px 5px 5px;
+    display: inline-block;
+}
+.property-photo-list-actions {
+    margin: 3px 0px 0px 0px;
+    text-align: center;
+}
+.property-photo-list-actions a {
+    margin: 0px 2px 0px 0px;
+}
 /******************* FORMS ***********************/
 
 .bootstrap-tagsinput {
