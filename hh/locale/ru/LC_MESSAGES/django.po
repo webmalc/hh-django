@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-19 13:54+0300\n"
+"POT-Creation-Date: 2016-02-20 13:35+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -277,29 +277,49 @@ msgstr ""
 msgid "Signup"
 msgstr ""
 
-#: hotels/models.py:64
+#: hotels/models.py:65
 msgid "name"
 msgstr ""
 
-#: hotels/models.py:66
+#: hotels/models.py:67 hotels/models.py:144
 msgid "description"
 msgstr ""
 
-#: hotels/models.py:67
+#: hotels/models.py:68
 msgid "address"
 msgstr "Адрес"
 
-#: hotels/models.py:68
+#: hotels/models.py:69
 msgid "city"
 msgstr "Город"
 
-#: hotels/models.py:69
+#: hotels/models.py:70
 msgid "metro"
 msgstr "Метро"
 
-#: hotels/models.py:73
+#: hotels/models.py:74 hotels/models.py:153
 msgid "is enabled?"
 msgstr "Включен?"
+
+#: hotels/models.py:142
+msgid "room name"
+msgstr "Нозвание номера"
+
+#: hotels/models.py:146
+msgid "calculation type"
+msgstr "Тип рассчета"
+
+#: hotels/models.py:148
+msgid "places"
+msgstr "Количество мест"
+
+#: hotels/models.py:150
+msgid "room gender type"
+msgstr "Тип номера"
+
+#: hotels/models.py:151
+msgid "price"
+msgstr "Цена"
 
 #: users/admin.py:110
 msgid "Personal info"

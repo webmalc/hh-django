@@ -1,6 +1,18 @@
 from django import forms
 from users.forms import CityWidget
-from hotels.models import Property
+from hotels.models import Property, Room
+
+
+class RoomForm(forms.ModelForm):
+    """
+    Frontend room form
+    """
+    class Meta:
+        model = Room
+        fields = ['name', 'description', 'places', 'gender', 'calculation_type', 'price', 'is_enabled']
+        widgets = {
+            'description': forms.Textarea(attrs={'rows': 5, 'cols': 15}),
+        }
 
 
 class PropertyForm(forms.ModelForm):

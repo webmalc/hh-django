@@ -1,9 +1,10 @@
 from django.views.generic import ListView, CreateView, UpdateView, DetailView
 from django.contrib.messages.views import SuccessMessageMixin
+from django.views.generic.edit import FormMixin
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy
 from hotels.models import Property, Room
-from hotels.forms import PropertyForm
+from hotels.forms import PropertyForm, RoomForm
 
 
 class PropertyList(ListView):
@@ -61,11 +62,53 @@ class RoomList(DetailView):
         return super(RoomList, self).get_queryset().filter(created_by=self.request.user)
 
 
-class RoomCreate(SuccessMessageMixin, CreateView):
+class RoomUpdate(SuccessMessageMixin, UpdateView):
+    model = Room
+    form_class = RoomForm
+    template_name = 'hotels/room_form.html'
+    success_message = "Комната/цена успешно обновлена."
+
+    def get_context_data(self, **kwargs):
+        context = super(RoomUpdate, self).get_context_data(**kwargs)
+        context['property'] = self.object.property
+        return context
+
+    def get_queryset(self):
+        return super(RoomUpdate, self).get_queryset().filter(property__created_by=self.request.user)
+
+
+class RoomCreate(SuccessMessageMixin, FormMixin, DetailView):
     """
     Property rooms create
     """
-    model = Room
+    model = Property
+    template_name = 'hotels/room_form.html'
     success_message = "Комната/цена успешно добавлена."
+    form_class = RoomForm
+
+    def get_success_url(self):
+        return reverse_lazy('hotel:property_room_list', kwargs={'pk': self.get_object().id})
+
+    def get_context_data(self, **kwargs):
+        context = super(RoomCreate, self).get_context_data(**kwargs)
+        context['form'] = self.get_form()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        room = form.save(commit=False)
+        room.property = self.get_object()
+        room.save()
+        return super(RoomCreate, self).form_valid(form)
+
+    def get_queryset(self):
+        return super(RoomCreate, self).get_queryset().filter(created_by=self.request.user)
 
 

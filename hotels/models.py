@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from django.core.urlresolvers import reverse
-from django.core.validators import MaxValueValidator
+from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 from colorful.fields import RGBColorField
 from imagekit.models import ImageSpecField, ProcessedImageField
@@ -130,7 +130,7 @@ class Room(CommonInfo):
     """
     CALCULATION_TYPES = (
         ('per_person', 'За человека'),
-        ('per_room', 'За комнату')
+        ('per_room', 'За номер')
 
     )
     GENDER_TYPES = (
@@ -139,11 +139,21 @@ class Room(CommonInfo):
         ('female', 'Женский'),
 
     )
-    name = models.CharField(max_length=255)
-    description = models.TextField(null=True, blank=True)
-    calculation_type = models.CharField(max_length=20, default='per_person', choices=CALCULATION_TYPES)
-    places = models.PositiveSmallIntegerField()
-    gender = models.CharField(max_length=20, default='mixed', choices=GENDER_TYPES)
-    price = models.PositiveIntegerField()
+    name = models.CharField(max_length=255, verbose_name=_('room name'))
+    description = models.TextField(null=True, blank=True,
+                                   verbose_name=_('description'), help_text='Краткое описание номера для поиска')
+    calculation_type = models.CharField(max_length=20, default='per_person',
+                                        choices=CALCULATION_TYPES, verbose_name=_('calculation type'))
+    places = models.PositiveSmallIntegerField(validators=[MaxValueValidator(20)],
+                                              verbose_name=_('places'), help_text='Количество мест/кроватей в номере')
+    gender = models.CharField(max_length=20, default='mixed',
+                              choices=GENDER_TYPES, verbose_name=_('room gender type'))
+    price = models.PositiveIntegerField(validators=[MinValueValidator(1)], verbose_name=_('price'))
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
-    is_enabled = models.BooleanField(default=True)
+    is_enabled = models.BooleanField(default=True, verbose_name=_('is enabled?'))
+
+    def get_absolute_url(self):
+        return reverse('hotel:property_room_change', args=[str(self.id)])
+
+    class Meta:
+        ordering = ['price', '-name']

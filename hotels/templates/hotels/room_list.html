@@ -2,6 +2,7 @@
 {% load staticfiles %}
 {% load main %}
 {% load i18n %}
+{% load humanize %}
 {% block tabs %}
     {% with 'prices' as tab %}{{ block.super }}{% endwith %}
 {% endblock tabs %}
@@ -12,7 +13,7 @@
             {% for room in rooms %}
                 <tr>
                     <td>
-                        <a href="{% url 'hotel:property_change' property.id %}"
+                        <a href="{% url 'hotel:property_room_change' room.id %}"
                            class="btn btn-success btn-sm pull-right action" data-toggle="tooltip"
                            data-placement="left"
                            title="Перейти к редактированию цены">
@@ -20,11 +21,11 @@
                         </a>
 
                         <h3>
-                            <a href="{% url 'hotel:property_change' property.id %}" data-toggle="tooltip"
+                            <a href="{% url 'hotel:property_room_change' room.id %}" data-toggle="tooltip"
                                data-placement="top" title="Перейти к редактированию цены">
                                 {{ room }}
                                 -
-                                <small class="margin-left-sm text-success">3000
+                                <small class="margin-left-sm text-success">{{ room.price|intcomma }}
                                     р. {{ room.get_calculation_type_display|lower }}</small>
                             </a>
                         </h3>
@@ -41,7 +42,7 @@
                                 <strong>
                                     <i class="fa fa-exclamation-circle"></i>
                                     Цена выключена.
-                                    Перейти к <a href="{% url 'hotel:property_change' property.id %}">редактированию
+                                    Перейти к <a href="{% url 'hotel:property_room_change' room.id %}">редактированию
                                     цены?</a>
                                 </strong>
                             </p>
@@ -51,6 +52,12 @@
                 </tr>
             {% endfor %}
         </table>
+
+        <p class="text-center margin-top-md-lg">
+            <a href="{% url 'hotel:property_room_create' property.id %}" class="btn btn-primary">
+                <i class="fa fa-plus"></i> Добавить новую цену
+            </a>
+        </p>
     {% else %}
         <div class="alert alert-warning">
             <i class="fa fa-exclamation-circle margin-right-xs"></i>

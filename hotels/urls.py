@@ -18,4 +18,7 @@ urlpatterns = [
     url(r'property/(?P<pk>[0-9]+)/rooms/add$',
         permission_required('hotels.add_room', raise_exception=True)(views.RoomCreate.as_view()),
         name='property_room_create'),
+    url(r'property/room/(?P<pk>[0-9]+)/change$',
+        permission_required('hotels.change_room', raise_exception=True)(views.RoomUpdate.as_view()),
+        name='property_room_change'),
 ]
