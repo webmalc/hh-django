@@ -61,7 +61,7 @@
     {% else %}
         <div class="alert alert-warning">
             <i class="fa fa-exclamation-circle margin-right-xs"></i>
-            Не заполнена ни одна цена у отеля. <a href="">Добавить первую?</a>
+            Не заполнена ни одна цена у отеля. <a href="{% url 'hotel:property_room_create' property.id %}">Добавить первую?</a>
         </div>
     {% endif %}
     {% with tariff=property.get_tariff %}

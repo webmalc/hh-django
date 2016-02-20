@@ -813,5 +813,30 @@
         "icon": "",
         "access_permissions": []
     }
+},
+{
+    "model": "hh.sitetreeitem",
+    "pk": 32,
+    "fields": {
+        "title": "{{property}}: \u0441\u043f\u0438\u0441\u043e\u043a \u0444\u043e\u0442\u043e",
+        "hint": "",
+        "url": "hotel:property_photo_list property.id",
+        "urlaspattern": true,
+        "tree": 1,
+        "hidden": false,
+        "alias": null,
+        "description": "",
+        "inmenu": false,
+        "inbreadcrumbs": true,
+        "insitetree": true,
+        "access_loggedin": true,
+        "access_guest": false,
+        "access_restricted": true,
+        "access_perm_type": 2,
+        "parent": 26,
+        "sort_order": 32,
+        "icon": "",
+        "access_permissions": []
+    }
 }
 ]

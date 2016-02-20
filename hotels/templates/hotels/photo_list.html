@@ -1,0 +1,23 @@
+{% extends 'hotels/property_tabs.html' %}
+{% load staticfiles %}
+
+{% block tabs %}
+    {% with 'photos' as tab %}{{ block.super }}{% endwith %}
+{% endblock tabs %}
+
+{% block hotel_content %}
+    {% if photos|length %}
+        {% for photo in photos %}
+        <div class="property-photo-list-wrapper">
+            <img src="{% static photo.thumbnail.url %}" class="img-rounded"
+                             data-toggle="tooltip"
+                             data-placement="top" title="Перейти к фотогалерее отеля">
+        </div>
+        {% endfor %}
+    {% else %}
+        <div class="alert alert-warning">
+            <i class="fa fa-exclamation-circle margin-right-xs"></i>
+            Не загружено ни одно фото отеля. <a href="">Добавить первое?</a>
+        </div>
+    {% endif %}
+{% endblock %}

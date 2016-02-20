@@ -5,7 +5,7 @@
         {% for property in object_list %}
             <tr>
                 <td width="120" class="hidden-xs">
-                    <a href="#">
+                    <a href="{% url 'hotel:property_photo_list' property.id %}">
                         <img src="{% static property.get_main_photo_thumbnail %}" class="img-rounded"
                              data-toggle="tooltip"
                              data-placement="top" title="Перейти к фотогалерее отеля">

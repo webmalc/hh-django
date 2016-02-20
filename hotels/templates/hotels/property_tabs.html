@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li role="presentation" class="{% if tab == 'photos' %}active{% endif %}">
-                    <a href="{% url 'users:profile' %}" aria-controls="home" role="tab">
+                    <a href="{% url 'hotel:property_photo_list' property.id %}" aria-controls="home" role="tab">
                         <i class="fa fa-photo"></i> Фото
                     </a>
                 </li>

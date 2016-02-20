@@ -3,7 +3,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import FormMixin
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy
-from hotels.models import Property, Room
+from hotels.models import Property, Room, PropertyPhoto
 from hotels.forms import PropertyForm, RoomForm
 
 
@@ -46,9 +46,25 @@ class PropertyUpdate(SuccessMessageMixin, UpdateView):
         return super(PropertyUpdate, self).get_queryset().filter(created_by=self.request.user)
 
 
+class PhotoList(DetailView):
+    """
+    Photo list
+    """
+    model = Property
+    template_name = 'hotels/photo_list.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(PhotoList, self).get_context_data(**kwargs)
+        context['photos'] = PropertyPhoto.objects.filter(property=self.object)
+        return context
+
+    def get_queryset(self):
+        return super(PhotoList, self).get_queryset().filter(created_by=self.request.user)
+
+
 class RoomList(DetailView):
     """
-    Property rooms List
+    Property photos List
     """
     model = Property
     template_name = 'hotels/room_list.html'
@@ -63,6 +79,9 @@ class RoomList(DetailView):
 
 
 class RoomUpdate(SuccessMessageMixin, UpdateView):
+    """
+    Property room update
+    """
     model = Room
     form_class = RoomForm
     template_name = 'hotels/room_form.html'
