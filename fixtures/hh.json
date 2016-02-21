@@ -329,7 +329,9 @@
         "parent": null,
         "sort_order": 13,
         "icon": "fa fa-cogs",
-        "access_permissions": []
+        "access_permissions": [
+            10
+        ]
     }
 },
 {
