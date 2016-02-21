@@ -329,9 +329,7 @@
         "parent": null,
         "sort_order": 13,
         "icon": "fa fa-cogs",
-        "access_permissions": [
-            10
-        ]
+        "access_permissions": []
     }
 },
 {
@@ -631,9 +629,7 @@
         "parent": null,
         "sort_order": 10,
         "icon": "fa fa-home",
-        "access_permissions": [
-            97
-        ]
+        "access_permissions": []
     }
 },
 {
@@ -658,9 +654,7 @@
         "parent": 26,
         "sort_order": 27,
         "icon": "",
-        "access_permissions": [
-            97
-        ]
+        "access_permissions": []
     }
 },
 {
@@ -685,9 +679,7 @@
         "parent": 26,
         "sort_order": 28,
         "icon": "",
-        "access_permissions": [
-            109
-        ]
+        "access_permissions": []
     }
 },
 {
@@ -712,9 +704,7 @@
         "parent": 26,
         "sort_order": 29,
         "icon": "",
-        "access_permissions": [
-            98
-        ]
+        "access_permissions": []
     }
 },
 {
@@ -739,9 +729,7 @@
         "parent": 26,
         "sort_order": 30,
         "icon": "",
-        "access_permissions": [
-            109
-        ]
+        "access_permissions": []
     }
 },
 {
@@ -766,9 +754,7 @@
         "parent": 26,
         "sort_order": 31,
         "icon": "",
-        "access_permissions": [
-            110
-        ]
+        "access_permissions": []
     }
 },
 {
@@ -793,9 +779,7 @@
         "parent": 26,
         "sort_order": 32,
         "icon": "",
-        "access_permissions": [
-            106
-        ]
+        "access_permissions": []
     }
 },
 {
@@ -820,9 +804,7 @@
         "parent": 26,
         "sort_order": 33,
         "icon": "",
-        "access_permissions": [
-            108
-        ]
+        "access_permissions": []
     }
 },
 {
@@ -847,9 +829,7 @@
         "parent": 26,
         "sort_order": 34,
         "icon": "",
-        "access_permissions": [
-            106
-        ]
+        "access_permissions": []
     }
 },
 {
@@ -874,9 +854,7 @@
         "parent": 26,
         "sort_order": 35,
         "icon": "",
-        "access_permissions": [
-            107
-        ]
+        "access_permissions": []
     }
 }
 ]
