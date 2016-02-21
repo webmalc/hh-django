@@ -4,9 +4,12 @@
 
 {% block scripts %}
     {{ block.super }}
+    <script src="{% static 'js/metro.js' %}"></script>
+{% endblock %}
+
+{% block scripts_cdn %}
     {{ form.media.js }}
     <script src="{% static 'js/position.js' %}"></script>
-    <script src="{% static 'js/metro.js' %}"></script>
 {% endblock %}
 
 {% block hotel_content %}
