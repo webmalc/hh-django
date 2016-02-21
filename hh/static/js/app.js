@@ -4,7 +4,10 @@ $(document).ready(function () {
     'use strict';
 
     //Fancybox
-    $(".fancybox").fancybox();
+    $(".fancybox").fancybox({
+        openEffect: 'none',
+        closeEffect: 'none'
+    });
 
     //iCheck
     $('input[type="radio"], input[type="checkbox"]').not('#avatar-delete-form input, #avatar-choose-form input').iCheck({

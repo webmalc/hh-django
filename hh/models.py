@@ -1,10 +1,24 @@
 import pytz
+from django.contrib import messages
 from django.db import models
 from sitetree.models import TreeItemBase, TreeBase
 from cities_light.abstract_models import AbstractCity, AbstractRegion, AbstractCountry
 from cities_light.receivers import connect_default_signals
 from django.utils.translation import ugettext_lazy as _
 from geoposition.fields import GeopositionField
+
+
+class DeleteSuccessMessageMixin(object):
+    """
+    Adds a success message on successful object deletion.
+    """
+    success_message = ''
+
+    def delete(self, request, *args, **kwargs):
+        success_message = self.success_message
+        if success_message:
+            messages.success(self.request, success_message)
+        return super(DeleteSuccessMessageMixin, self).delete(request, *args, **kwargs)
 
 
 class GeoMixin(models.Model):

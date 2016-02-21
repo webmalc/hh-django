@@ -19,7 +19,7 @@
                     <a href="" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Редактировать фото">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <a href="" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Удалить фото">
+                    <a href="{% url 'hotel:property_photo_delete' photo.id %}" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Удалить фото">
                         <i class="fa fa-trash"></i>
                     </a>
                 </div>

@@ -123,6 +123,9 @@ class PropertyPhoto(CommonInfo):
 
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.name if self.name else 'фото #{}'.format(self.id)
+
     class Meta:
         ordering = ['-is_default']
 

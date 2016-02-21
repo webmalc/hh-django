@@ -1,8 +1,9 @@
-from django.views.generic import ListView, CreateView, UpdateView, DetailView
+from django.views.generic import ListView, CreateView, UpdateView, DetailView, DeleteView
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic.edit import FormMixin
 from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy
+from hh.models import DeleteSuccessMessageMixin
 from hotels.models import Property, Room, PropertyPhoto
 from hotels.forms import PropertyForm, RoomForm
 
@@ -62,9 +63,24 @@ class PhotoList(DetailView):
         return super(PhotoList, self).get_queryset().filter(created_by=self.request.user)
 
 
+class PhotoDelete(DeleteSuccessMessageMixin, DeleteView):
+    """
+    Photo delete
+    """
+    model = PropertyPhoto
+    template_name = "partials/confirm_delete.html"
+    success_message = "Фото отеля успешно удалено."
+
+    def get_success_url(self):
+        return reverse_lazy('hotel:property_photo_list', kwargs={'pk': self.get_object().property.id})
+
+    def get_queryset(self):
+        return super(PhotoDelete, self).get_queryset().filter(property__created_by=self.request.user)
+
+
 class RoomList(DetailView):
     """
-    Property photos List
+    Property photos list
     """
     model = Property
     template_name = 'hotels/room_list.html'

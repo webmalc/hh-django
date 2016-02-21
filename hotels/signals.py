@@ -1,7 +1,46 @@
-from django.db.models.signals import pre_save, post_save
+import os
+from django.db.models.signals import pre_save, post_save, pre_delete
 from django.dispatch import receiver
 from hotels.models import Tariff, Property, Room, PropertyPhoto
 from users.tasks import mail_managers_task
+
+
+@receiver(pre_delete, sender=PropertyPhoto, dispatch_uid="hotels_property_photo_pre_delete")
+def hotels_property_photo_pre_delete(sender, **kwargs):
+    """
+    PropertyPhoto pre delete
+    :param sender: PropertyPhoto
+    :param kwargs: dict
+    :return:
+    """
+    photo = kwargs['instance']
+    # Remove files
+    if os.path.isfile(photo.thumbnail.path):
+        os.remove(photo.thumbnail.path)
+    photo.photo.delete(save=False)
+
+
+@receiver(post_save, sender=PropertyPhoto, dispatch_uid="hotels_property_photo_post_save")
+def hotels_property_photo_post_save(sender, **kwargs):
+    """
+    PropertyPhoto post save
+    :param sender: PropertyPhoto
+    :param kwargs: dict
+    :return:
+    """
+    photo = kwargs['instance']
+
+    email_data = {
+        'id': photo.id,
+        'name': photo.name,
+        'hotel': str(photo.property),
+    }
+    email_template = 'emails/manager_property_photo_save.html'
+    mail_managers_task.delay(
+                subject='Сохранено фото #{id} у отеля <{hotel}>'.format(id=photo.id, hotel=photo.property),
+                template=email_template,
+                data=email_data
+        )
 
 
 @receiver(pre_save, sender=PropertyPhoto, dispatch_uid="hotels_property_photo_pre_save")

@@ -1,0 +1,12 @@
+{% extends 'emails/base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <h3>Сохранено фото #{{ id }}</h3>
+
+    <strong>ID:</strong> {{ id }}<br>
+    <strong>ОТЕЛЬ:</strong> {{ hotel }}<br>
+    <strong>НАЗВАНИЕ:</strong> {{ name }}<br>
+{% endblock %}
+
+
