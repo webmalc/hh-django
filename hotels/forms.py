@@ -1,6 +1,15 @@
 from django import forms
 from users.forms import CityWidget
-from hotels.models import Property, Room
+from hotels.models import Property, Room, PropertyPhoto
+
+
+class PhotoForm(forms.ModelForm):
+    """
+    Frontend photo form
+    """
+    class Meta:
+        model = PropertyPhoto
+        fields = ['photo', 'name', 'is_default']
 
 
 class RoomForm(forms.ModelForm):

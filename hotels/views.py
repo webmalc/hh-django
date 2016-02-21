@@ -5,7 +5,7 @@ from django.shortcuts import redirect
 from django.core.urlresolvers import reverse_lazy
 from hh.models import DeleteSuccessMessageMixin
 from hotels.models import Property, Room, PropertyPhoto
-from hotels.forms import PropertyForm, RoomForm
+from hotels.forms import PropertyForm, RoomForm, PhotoForm
 
 
 class PropertyList(ListView):
@@ -30,8 +30,10 @@ class PropertyCreate(SuccessMessageMixin, CreateView):
     """
     form_class = PropertyForm
     template_name = 'hotels/property_edit.html'
-    success_url = reverse_lazy('hotel:property_room_list')
     success_message = "Отель успешно добавлен. Теперь необходимо заполнить цены."
+
+    def get_success_url(self):
+        return reverse_lazy('hotel:property_room_list', kwargs={'pk': self.object.id})
 
 
 class PropertyUpdate(SuccessMessageMixin, UpdateView):
@@ -61,6 +63,59 @@ class PhotoList(DetailView):
 
     def get_queryset(self):
         return super(PhotoList, self).get_queryset().filter(created_by=self.request.user)
+
+
+class PhotoUpdate(SuccessMessageMixin, UpdateView):
+    """
+    Property photo update
+    """
+    model = PropertyPhoto
+    fields = ['photo', 'name', 'is_default']
+    template_name = 'hotels/photo_form.html'
+    success_message = "Фото успешно обновлено."
+
+    def get_context_data(self, **kwargs):
+        context = super(PhotoUpdate, self).get_context_data(**kwargs)
+        context['property'] = self.object.property
+        return context
+
+    def get_queryset(self):
+        return super(PhotoUpdate, self).get_queryset().filter(property__created_by=self.request.user)
+
+
+class PhotoCreate(SuccessMessageMixin, FormMixin, DetailView):
+    """
+    Property photo create
+    """
+    model = Property
+    template_name = 'hotels/photo_form.html'
+    success_message = "Фото успешно добавлено."
+    form_class = PhotoForm
+
+    def get_success_url(self):
+        return reverse_lazy('hotel:property_photo_list', kwargs={'pk': self.get_object().id})
+
+    def get_context_data(self, **kwargs):
+        context = super(PhotoCreate, self).get_context_data(**kwargs)
+        context['form'] = self.get_form()
+        return context
+
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def form_valid(self, form):
+        photo = form.save(commit=False)
+        photo.property = self.get_object()
+        photo.save()
+        return super(PhotoCreate, self).form_valid(form)
+
+    def get_queryset(self):
+        return super(PhotoCreate, self).get_queryset().filter(created_by=self.request.user)
 
 
 class PhotoDelete(DeleteSuccessMessageMixin, DeleteView):

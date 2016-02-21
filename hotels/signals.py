@@ -30,17 +30,18 @@ def hotels_property_photo_post_save(sender, **kwargs):
     """
     photo = kwargs['instance']
 
-    email_data = {
-        'id': photo.id,
-        'name': photo.name,
-        'hotel': str(photo.property),
-    }
-    email_template = 'emails/manager_property_photo_save.html'
-    mail_managers_task.delay(
-                subject='Сохранено фото #{id} у отеля <{hotel}>'.format(id=photo.id, hotel=photo.property),
-                template=email_template,
-                data=email_data
-        )
+    if not photo.created_by.is_staff:
+        email_data = {
+            'id': photo.id,
+            'name': photo.name,
+            'hotel': str(photo.property),
+        }
+        email_template = 'emails/manager_property_photo_save.html'
+        mail_managers_task.delay(
+                    subject='Сохранено фото #{id} у отеля <{hotel}>'.format(id=photo.id, hotel=photo.property),
+                    template=email_template,
+                    data=email_data
+            )
 
 
 @receiver(pre_save, sender=PropertyPhoto, dispatch_uid="hotels_property_photo_pre_save")

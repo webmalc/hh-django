@@ -9,26 +9,34 @@
     {% if photos|length %}
         {% for photo in photos %}
             <div class="property-photo-list-link">
-            <a class="fancybox fancybox" rel="gallery" title="{{ photo.name }}"
-               href="{{ photo.photo.url }}">
-                <img src="{% static photo.thumbnail.url %}" class="img-rounded"
-                     data-toggle="tooltip"
-                     data-placement="top" title="Перейти к фотогалерее отеля">
-            </a>
+                <a class="fancybox fancybox" rel="gallery" title="{{ photo.name }}"
+                   href="{{ photo.photo.url }}">
+                    <img src="{% static photo.thumbnail.url %}" class="img-rounded"
+                         data-toggle="tooltip"
+                         data-placement="top" title="Перейти к фотогалерее отеля">
+                </a>
+
                 <div class="property-photo-list-actions">
-                    <a href="" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top" title="Редактировать фото">
+                    <a href="{% url 'hotel:property_photo_change' photo.id %}" class="btn btn-success btn-xs" data-toggle="tooltip" data-placement="top"
+                       title="Редактировать фото">
                         <i class="fa fa-pencil"></i>
                     </a>
-                    <a href="{% url 'hotel:property_photo_delete' photo.id %}" class="btn btn-danger btn-xs" data-toggle="tooltip" data-placement="top" title="Удалить фото">
+                    <a href="{% url 'hotel:property_photo_delete' photo.id %}" class="btn btn-danger btn-xs"
+                       data-toggle="tooltip" data-placement="top" title="Удалить фото">
                         <i class="fa fa-trash"></i>
                     </a>
                 </div>
             </div>
         {% endfor %}
+        <p class="text-center margin-top-md-lg">
+            <a href="{% url 'hotel:property_photo_create' property.id %}" class="btn btn-primary">
+                <i class="fa fa-plus"></i> Добавить новое фото
+            </a>
+        </p>
     {% else %}
         <div class="alert alert-warning">
             <i class="fa fa-exclamation-circle margin-right-xs"></i>
-            Не загружено ни одно фото отеля. <a href="">Добавить первое?</a>
+            Не загружено ни одно фото отеля. <a href="{% url 'hotel:property_photo_create' property.id %}">Добавить первое?</a>
         </div>
     {% endif %}
 {% endblock %}

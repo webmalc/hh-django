@@ -110,12 +110,14 @@ class PropertyPhoto(CommonInfo):
     """
     Property photo class
     """
-    name = models.CharField(max_length=255, null=True, blank=True)
-    is_default = models.BooleanField(default=False)
+    name = models.CharField(max_length=255, null=True, blank=True, verbose_name=_('title'))
+    is_default = models.BooleanField(default=False, verbose_name=_('is default?'))
     photo = ProcessedImageField(upload_to='hotels_property_photos',
                                 processors=[ResizeToCover(600, 600, False)],
                                 format='JPEG',
-                                options={'quality': 90})
+                                options={'quality': 90},
+                                verbose_name=_('photo')
+                                )
     thumbnail = ImageSpecField(source='photo',
                                processors=[Thumbnail(120, 120)],
                                format='JPEG',
@@ -125,6 +127,9 @@ class PropertyPhoto(CommonInfo):
 
     def __str__(self):
         return self.name if self.name else 'фото #{}'.format(self.id)
+
+    def get_absolute_url(self):
+        return reverse('hotel:property_photo_change', args=[str(self.id)])
 
     class Meta:
         ordering = ['-is_default']

@@ -12,16 +12,20 @@
                     </a>
                 </td>
                 <td>
-                    <a href="{% url 'hotel:property_change' property.id %}" class="btn btn-success btn-sm pull-right action" data-toggle="tooltip"
+                    <a href="{% url 'hotel:property_change' property.id %}"
+                       class="btn btn-success btn-sm pull-right action" data-toggle="tooltip"
                        data-placement="left"
                        title="Перейти к редактированию отеля">
                         <i class="fa fa-pencil"></i>
                     </a>
+
                     <h3>
-                        <a href="{% url 'hotel:property_change' property.id %}" data-toggle="tooltip" data-placement="top" title="Перейти к редактированию отеля">
+                        <a href="{% url 'hotel:property_change' property.id %}" data-toggle="tooltip"
+                           data-placement="top" title="Перейти к редактированию отеля">
                             {{ property }}
                         </a>
                     </h3>
+
                     <p class="text-muted font-lg">
                         {% if property.position %}
                             <a target="_blank" title="Посмотреть на карте" data-toggle="tooltip" data-placement="top"
@@ -37,12 +41,22 @@
                     </p>
                     <small class="text-muted">{{ property.description|truncatechars:800|linebreaks }}</small>
 
+                    {% if not property.propertyphoto_set.count %}
+                        <p class="text-warning">
+                            <i class="fa fa-exclamation-circle"></i>
+                            Не загружены фото отеля.
+                            Перейти к <a href="{% url 'hotel:property_photo_list' property.id %}">управлению фото?</a>
+
+                        </p>
+                    {% endif %}
+
                     {% if not property.room_set.count %}
                         <p class="text-danger">
                             <strong>
                                 <i class="fa fa-exclamation-circle"></i>
                                 Не заполнены цены и номера у отеля.
-                                Перейти к <a href="{% url 'hotel:property_room_list' property.id %}">управлению ценами?</a>
+                                Перейти к <a href="{% url 'hotel:property_room_list' property.id %}">управлению
+                                ценами?</a>
                             </strong>
                         </p>
                     {% endif %}

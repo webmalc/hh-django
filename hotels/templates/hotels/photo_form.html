@@ -1,0 +1,27 @@
+{% extends property.id|yesno:'hotels/property_tabs.html,hotels/layout.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'hotels/js/photo.js' %}"></script>
+{% endblock %}
+
+{% block tabs %}
+    {% with 'photos' as tab %}{{ block.super }}{% endwith %}
+{% endblock tabs %}
+
+{% block hotel_content %}
+    <form action="" enctype="multipart/form-data" method="post" class="form">
+        {% csrf_token %}
+        {{ form|crispy }}
+
+        <button type="submit" class="btn btn-success margin-right-sm">
+            <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">
+            {{ propertyphoto.id|yesno:'Обновить, Добавить' }} фото</span>
+        </button>
+        <a href="{% url 'hotel:property_photo_list' property.id %}" class="btn btn-default">
+            <i class="fa fa-ban"></i><span class="hidden-xs margin-left-sm">Отмена</span>
+        </a>
+    </form>
+{% endblock %}

@@ -27,4 +27,10 @@ urlpatterns = [
     url(r'property/photo/(?P<pk>[0-9]+)/delete$',
         permission_required('hotels.delete_propertyphoto', raise_exception=True)(views.PhotoDelete.as_view()),
         name='property_photo_delete'),
+    url(r'property/(?P<pk>[0-9]+)/photos/add$',
+        permission_required('hotels.add_propertyphoto', raise_exception=True)(views.PhotoCreate.as_view()),
+        name='property_photo_create'),
+    url(r'property/photo/(?P<pk>[0-9]+)/change$',
+        permission_required('hotels.change_propertyphoto', raise_exception=True)(views.PhotoUpdate.as_view()),
+        name='property_photo_change'),
 ]

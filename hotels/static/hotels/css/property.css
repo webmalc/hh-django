@@ -10,3 +10,15 @@
     margin: 5px 0px 0px 0px;
     padding: 0px;
 }
+
+div#div_id_photo .controls{
+    visibility: hidden;
+}
+div#div_id_photo input, div#div_id_photo .help-block, .photo-preview {
+    visibility: visible;
+}
+.photo-preview {
+    display: inline-block;
+    margin-bottom: 5px;
+    font-size: 90%;
+}
