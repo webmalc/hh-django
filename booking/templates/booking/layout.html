@@ -6,6 +6,11 @@
     <link rel="stylesheet" href="{% static 'booking/css/search.css' %}">
 {% endblock %}
 
+{% block scripts %}
+    {{ block.super }}
+    <script src="{% static 'booking/js/search.js' %}"></script>
+{% endblock %}
+
 {% block content %}
     {% block booking_content %}{{ block.super }}{% endblock %}
 {% endblock %}

@@ -106,8 +106,8 @@ class City(CityMixin, AbstractCity):
 
     @classmethod
     def get_with_hotels(cls):
-        from hotels.models import Property
-        ids = Property.objects.filter(is_enabled=True).values('city_id').distinct()
+        from hotels.models import Room
+        ids = Room.objects.filter(is_enabled=True).values('property__city_id').distinct()
         return cls.objects.filter(is_enabled=True, id__in=ids)
 
     class Meta:

@@ -1,4 +1,5 @@
 from django import forms
+from  django.core.validators import MinValueValidator
 from django_select2.forms import ModelSelect2Widget, ModelSelect2MultipleWidget
 from users.models import City
 from hotels.models import MetroStation, Room
@@ -26,9 +27,8 @@ class SearchForm(forms.Form):
     """
 
     # Fields
-    places = forms.IntegerField(initial=1)
+    places = forms.IntegerField(initial=1, validators=[MinValueValidator(1)])
     city = forms.ModelChoiceField(queryset=City.get_with_hotels(), widget=CityWithHotelsWidget, initial=347)
     metro_stations = forms.ModelMultipleChoiceField(queryset=MetroStation.get_with_hotels(),
-                                                    widget=MetroWithHotelsWidget)
+                                                    widget=MetroWithHotelsWidget, required=False)
     gender = forms.ChoiceField(choices=Room.GENDER_TYPES, required=True)
-    # metro_stations, gender, prices

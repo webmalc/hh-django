@@ -4,6 +4,7 @@ from django.core.urlresolvers import reverse
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.core.exceptions import ValidationError
 from colorful.fields import RGBColorField
+from django.db.models import Q
 from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import Thumbnail, ResizeToCover
 from hh.models import CommonInfo, GeoMixin
@@ -20,7 +21,7 @@ class MetroStation(CommonInfo, GeoMixin):
 
     @classmethod
     def get_with_hotels(cls):
-        ids = Property.objects.filter(is_enabled=True).values('metro_stations__id').distinct()
+        ids = Room.objects.filter(is_enabled=True).values('property__metro_stations__id').distinct()
         return cls.objects.filter(id__in=ids)
 
     class Meta:
@@ -140,6 +141,23 @@ class PropertyPhoto(CommonInfo):
         ordering = ['-is_default']
 
 
+class RoomManager(models.Manager):
+    """
+    Rooms manager
+    """
+    def search(self, **kwargs):
+        q = self.all()
+
+        if kwargs['city'] is not None:
+            q = q.filter(property__city=kwargs['city'])
+        if kwargs['places'] is not None:
+            q = q.filter(places__gte=kwargs['places'])
+        if kwargs['gender'] in ['male', 'female']:
+            q = q.filter(Q(gender=kwargs['gender']) | Q(gender='mixed'))
+
+        return q.filter(is_enabled=True)
+
+
 class Room(CommonInfo):
     """
     Property room class
@@ -155,6 +173,7 @@ class Room(CommonInfo):
         ('female', 'Женский'),
 
     )
+    objects = RoomManager()
     name = models.CharField(max_length=255, verbose_name=_('room name'))
     description = models.TextField(null=True, blank=True,
                                    verbose_name=_('description'), help_text='Краткое описание номера для поиска')
