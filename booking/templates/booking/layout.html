@@ -1,10 +1,11 @@
 {% extends 'layout.html' %}
 {% load staticfiles %}
 
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'booking/css/search.css' %}">
+{% endblock %}
+
 {% block content %}
-    <div class="box box-default">
-        <div class="box-body">
-            {% block booking_content %}{{ block.super }}{% endblock %}
-        </div>
-    </div>
+    {% block booking_content %}{{ block.super }}{% endblock %}
 {% endblock %}

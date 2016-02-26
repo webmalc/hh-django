@@ -124,8 +124,25 @@ fieldset {
 .help-block {
     font-size: 80%;
 }
-.select2-container {
+.form .select2-container {
     min-width: 260px;
+}
+.form-inline div.form-group, .form-inline input[type='submit'], .form-inline button {
+    margin: 0px 5px 5px 0px;
+}
+.form-inline label {
+    padding: 0px 5px 0px 0px;
+}
+.input-xs {
+    max-width: 60px !important;
+}
+.form-inline .select2-container {
+    display: block;
+}
+@media (min-width: 768px) {
+    .form-inline .select2-container {
+        display: inline-block;
+    }
 }
 /******************* TABLES ***********************/
 

@@ -18,6 +18,11 @@ class MetroStation(CommonInfo, GeoMixin):
     city = models.ForeignKey(City, null=True, blank=False, on_delete=models.SET_NULL)
     color = RGBColorField(null=True, blank=True)
 
+    @classmethod
+    def get_with_hotels(cls):
+        ids = Property.objects.filter(is_enabled=True).values('metro_stations__id').distinct()
+        return cls.objects.filter(id__in=ids)
+
     class Meta:
         ordering = ['city', 'name']
 
@@ -145,7 +150,7 @@ class Room(CommonInfo):
 
     )
     GENDER_TYPES = (
-        ('mixed', 'Смешанный'),
+        ('mixed', 'Неважно'),
         ('male', 'Мужской'),
         ('female', 'Женский'),
 

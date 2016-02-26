@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-21 14:53+0300\n"
+"POT-Creation-Date: 2016-02-26 13:42+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,6 +19,16 @@ msgstr ""
 "Plural-Forms: nplurals=4; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
+
+#: booking/forms.py:18
+msgid "Find"
+msgstr "Найти"
+
+#: booking/forms.py:23
+#, fuzzy
+#| msgid "places"
+msgid "Places"
+msgstr "Количество мест"
 
 #: hh/admin.py:37
 msgid "Basic settings"
@@ -281,7 +291,7 @@ msgstr ""
 msgid "name"
 msgstr ""
 
-#: hotels/models.py:67 hotels/models.py:152
+#: hotels/models.py:67 hotels/models.py:155
 msgid "description"
 msgstr ""
 
@@ -297,7 +307,7 @@ msgstr "Город"
 msgid "metro"
 msgstr "Метро"
 
-#: hotels/models.py:74 hotels/models.py:161
+#: hotels/models.py:74 hotels/models.py:164
 msgid "is enabled?"
 msgstr "Включен?"
 
@@ -313,23 +323,23 @@ msgstr "основное?"
 msgid "photo"
 msgstr "фото"
 
-#: hotels/models.py:150
+#: hotels/models.py:153
 msgid "room name"
 msgstr "Нозвание номера"
 
-#: hotels/models.py:154
+#: hotels/models.py:157
 msgid "calculation type"
 msgstr "Тип рассчета"
 
-#: hotels/models.py:156
+#: hotels/models.py:159
 msgid "places"
 msgstr "Количество мест"
 
-#: hotels/models.py:158
+#: hotels/models.py:161
 msgid "room gender type"
 msgstr "Тип номера"
 
-#: hotels/models.py:159
+#: hotels/models.py:162
 msgid "price"
 msgstr "Цена"
 
