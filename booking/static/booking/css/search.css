@@ -1,10 +1,25 @@
-select#id_city {
+#search-form select#id_city {
     width: 160px;
 }
-select#id_metro_stations {
+#search-form select#id_metro_stations {
     width: 220px;
 }
-select#id_gender {
+#search-form select#id_gender {
     width: 120px;
 }
+#search-form input#id_begin,
+#search-form input#id_end {
+    width: 100px;
+}
+#search-form input#id_places{
+    width: 60px;
+}
+#search-form button {
+    margin: 26px 0px 6px 0px;
+}
+#search-form .asteriskField {
+    display: none;
+}
+
+
 

@@ -3,6 +3,12 @@
 $(document).ready(function () {
     'use strict';
 
+    //Datepicker
+    $.fn.datepicker.defaults.format = "dd.mm.yyyy";
+    $.fn.datepicker.defaults.language = "ru";
+    $.fn.datepicker.defaults.daysOfWeekHighlighted = "0,6";
+    $.fn.datepicker.defaults.todayHighlight = true;
+
     //Fancybox
     $(".fancybox").fancybox({
         openEffect: 'none',
@@ -12,7 +18,7 @@ $(document).ready(function () {
     //iCheck
     $('input[type="radio"], input[type="checkbox"]').not('#avatar-delete-form input, #avatar-choose-form input').iCheck({
         checkboxClass: 'icheckbox_flat-red',
-        radioClass: 'iradio_flat-red',
+        radioClass: 'iradio_flat-red'
     });
 
     //tabs remember

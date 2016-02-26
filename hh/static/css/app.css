@@ -139,6 +139,10 @@ fieldset {
 .form-inline .select2-container {
     display: block;
 }
+.input-daterange {
+    display: inline-block;
+    width: auto ;
+}
 @media (min-width: 768px) {
     .form-inline .select2-container {
         display: inline-block;

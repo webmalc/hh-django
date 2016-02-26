@@ -1,17 +1,18 @@
 {% if form.errors|length %}
     <div class="alert alert-danger">
         <i class="fa fa-exclamation-circle margin-right-xs"></i>
-        Во время подбора произошли ошибки. Попробуйте отправить форму еще раз.
+        Во время подбора произошли ошибки. Проверьте поля формы и попробуйте еще раз.
     </div>
 {% else %}
     {% if rooms|length %}
+        {{ form.end }}
         {% for room in rooms %}
             {{ room.gender }}
         {% endfor %}
     {% else %}
         <div class="bg-gray color-palette alert">
         <i class="fa fa-exclamation-circle margin-right-xs"></i>
-        По Вашему завпросу ничего не найдено. Попробйте другие параметры поиска.
+        По Вашему завпросу ничего не найдено. Попробуйте другие параметры поиска.
     </div>
     {% endif %}
 {% endif %}

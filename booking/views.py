@@ -16,6 +16,6 @@ class SearchResultsView(FormView):
     def form_valid(self, form):
         data = form.cleaned_data
         rooms = Room.objects.search(**data)
-        return render_to_response(self.template_name, {'rooms': rooms})
+        return render_to_response(self.template_name, {'rooms': rooms, 'form': data})
 
 

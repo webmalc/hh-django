@@ -1,5 +1,6 @@
 {% extends 'booking/layout.html' %}
 {% load widget_tweaks %}
+{% load crispy_forms_filters %}
 
 {% block scripts_cdn %}
     {{ form.media.js }}
@@ -10,26 +11,17 @@
     <div class="callout callout-warning">
         <form class="form-inline" method="post" id="search-form">
             {% csrf_token %}
+            {% for field in form %}
+                {% if field.name == 'begin' %}<div class="input-daterange">{% endif %}
+                {% if field.name == 'places' %}</div>{% endif %}
+                {{ field|as_crispy_field }}
+            {% endfor %}
             <div class="form-group">
-                <label for="{{ form.places.id_for_label }}">Гостей</label>
-                {{ form.places|add_class:"form-control input-xs"|attr:"min:1"|attr:"required:required" }}
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-search"></i>
+                    <span class="margin-left-sm">Найти</span>
+                </button>
             </div>
-            <div class="form-group">
-                <label for="{{ form.city.id_for_label }}">Город</label>
-                {{ form.city|attr:"required:required" }}
-            </div>
-            <div class="form-group" id="form-group-metro">
-                <label for="{{ form.metro_stations.id_for_label }}">Метро</label>
-                {{ form.metro_stations }}
-            </div>
-            <div class="form-group" id="form-group-metro">
-                <label for="{{ form.gender.id_for_label }}">Пол</label>
-                {{ form.gender|add_class:"form-control not-select2" }}
-            </div>
-            <button type="submit" class="btn btn-primary">
-                <i class="fa fa-search"></i>
-                <span class="margin-left-sm">Найти</span>
-            </button>
         </form>
     </div>
 

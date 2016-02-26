@@ -3,6 +3,8 @@
 $(document).ready(function () {
     'use strict';
 
+    $('.input-daterange').datepicker({todayBtn: "linked"});
+
     (function () {
         var form = $('#search-form'),
             results = $('#search-results-body'),
