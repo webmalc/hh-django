@@ -86,7 +86,7 @@ class Property(CommonInfo, GeoMixin):
             return Tariff.objects.filter(is_default=True).first()
 
     def get_main_photo(self):
-        return self.propertyphoto_set.order_by('is_default').first()
+        return self.propertyphoto_set.order_by().order_by('-is_default').first()
 
     def get_main_photo_thumbnail(self):
         photo = self.get_main_photo()
@@ -168,7 +168,7 @@ class Room(CommonInfo):
 
     )
     GENDER_TYPES = (
-        ('mixed', 'Неважно'),
+        ('mixed', 'Смешанный'),
         ('male', 'Мужской'),
         ('female', 'Женский'),
 

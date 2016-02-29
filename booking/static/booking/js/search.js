@@ -1,5 +1,5 @@
 /*jslint browser: true*/
-/*global $, Cookies*/
+/*global $, Cookies, hh*/
 $(document).ready(function () {
     'use strict';
 
@@ -21,6 +21,7 @@ $(document).ready(function () {
                     success: function (response) {
                         overlay.hide();
                         results.html(response);
+                        hh.readmore();
                     }
                 });
 

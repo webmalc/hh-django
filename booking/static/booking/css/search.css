@@ -20,6 +20,28 @@
 #search-form .asteriskField {
     display: none;
 }
-
+.search-results-row {
+    border-bottom: 1px solid #d2d6de;
+    padding: 20px 0px 20px 0px;
+}
+.search-results-row:nth-child(odd) {
+    /*background: #f9f9f9;*/
+}
+.search-results-row:last-child {
+    border-bottom: 0px;
+}
+.search-results-row-photo {
+    max-width: 140px;
+}
+.search-results-row-photo img {
+    margin-bottom: 3px;
+}
+.search-results-row-property h4, .search-results-row-property h3 {
+    margin-top: 0px;
+    padding-top: 0px;
+}
+.search-result-rooms th.price {
+   width: 150px;
+}
 
 
