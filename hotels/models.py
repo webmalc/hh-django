@@ -150,12 +150,17 @@ class RoomManager(models.Manager):
 
         if kwargs['city'] is not None:
             q = q.filter(property__city=kwargs['city'])
+
         if kwargs['places'] is not None:
             q = q.filter(places__gte=kwargs['places'])
+
+        if kwargs['metro_stations'] is not None and len(kwargs['metro_stations']):
+            q = q.filter(property__metro_stations__in=kwargs['metro_stations'])
+
         if kwargs['gender'] in ['male', 'female']:
             q = q.filter(Q(gender=kwargs['gender']) | Q(gender='mixed'))
 
-        return q.filter(is_enabled=True)
+        return q.filter(is_enabled=True).order_by('-property__sorting', 'price').distinct()
 
 
 class Room(CommonInfo):

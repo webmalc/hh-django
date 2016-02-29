@@ -10,6 +10,7 @@ $(document).ready(function () {
             results = $('#search-results-body'),
             overlay = $('#search-results-overlay'),
             sendForm = function () {
+                var data = form.find('input[name!=csrfmiddlewaretoken], select').serialize();
                 $.ajax({
                     type: 'POST',
                     url: '/booking/search/results',
@@ -21,6 +22,7 @@ $(document).ready(function () {
                     success: function (response) {
                         overlay.hide();
                         results.html(response);
+                        window.history.pushState(data, '', '/booking/search/?' + data);
                     }
                 });
 

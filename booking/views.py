@@ -8,6 +8,12 @@ class SearchView(FormView):
     template_name = 'booking/search.html'
     form_class = SearchForm
 
+    def get_initial(self):
+        initial = super(SearchView, self).get_initial()
+        initial.update(self.request.GET.dict())
+
+        return initial
+
 
 class SearchResultsView(FormView):
     template_name = 'booking/search_results.html'
@@ -15,7 +21,7 @@ class SearchResultsView(FormView):
 
     def form_valid(self, form):
         data = form.cleaned_data
-        rooms = Room.objects.search(**data)
+        rooms = Room.objects.search(**data)[:30]
         return render_to_response(self.template_name, {'rooms': rooms, 'form': data})
 
 

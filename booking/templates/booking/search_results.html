@@ -5,9 +5,8 @@
     </div>
 {% else %}
     {% if rooms|length %}
-        {{ form.end }}
         {% for room in rooms %}
-            {{ room.gender }}
+            {{ room.property }} - {{ room.id }} - {{ room }} - {{ room.gender }} - {{ room.price }}<br>
         {% endfor %}
     {% else %}
         <div class="bg-gray color-palette alert">
