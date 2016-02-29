@@ -4,9 +4,6 @@
 body {
     font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
-.container-fluid {
-  max-width: 1600px;
-}
 #hh-navbar-logo {
     display: inline-block;
     margin: 0px 8px 3px 0px;
@@ -30,6 +27,9 @@ body {
     margin-right: 4px;
     display: inline-block;
 }
+.margin-top-sm {
+    margin-top: 4px;
+}
 .margin-left-sm {
     margin-left: 4px;
     display: inline-block;
@@ -41,6 +41,9 @@ body {
 .margin-left-md {
     margin-left: 10px;
     display: inline-block;
+}
+.margin-top-md {
+    margin-top: 10px;
 }
 .margin-top-md-lg {
     margin-top: 15px;
@@ -86,6 +89,14 @@ body {
 }
 .property-photo-list-actions a {
     margin: 0px 2px 0px 0px;
+}
+.readmore-link {
+    margin-top: 5px;
+    font-size: 80%;
+}
+a.dotted {
+    border-bottom: 1px dashed #333;
+    color: #333;
 }
 /******************* FORMS ***********************/
 

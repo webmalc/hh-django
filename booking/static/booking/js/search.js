@@ -1,5 +1,5 @@
 /*jslint browser: true*/
-/*global $, Cookies*/
+/*global $, Cookies, hh*/
 $(document).ready(function () {
     'use strict';
 
@@ -23,6 +23,7 @@ $(document).ready(function () {
                         overlay.hide();
                         results.html(response);
                         window.history.pushState(data, '', '/booking/search/?' + data);
+                        hh.readmore();
                     }
                 });
 

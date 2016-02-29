@@ -1,7 +1,20 @@
 /*jslint browser: true*/
 /*global $, Cookies*/
+var hh = {};
+hh.readmore = function () {
+    'use strict';
+    $('.readmore').readmore({
+        collapsedHeight: 60,
+        moreLink: '<a href="#" class="readmore-link">подробнее</a>',
+        lessLink: '<a href="#" class="readmore-link">скрыть</a>'
+    });
+};
+
 $(document).ready(function () {
     'use strict';
+
+    // Readmore.js
+    hh.readmore();
 
     //Datepicker
     $.fn.datepicker.defaults.format = "dd.mm.yyyy";
@@ -10,9 +23,14 @@ $(document).ready(function () {
     $.fn.datepicker.defaults.todayHighlight = true;
 
     //Fancybox
-    $(".fancybox").fancybox({
+    $(".fancybox.autoplay").fancybox({
         openEffect: 'none',
         closeEffect: 'none'
+    });
+    $(".fancybox.autoplay").fancybox({
+        openEffect: 'none',
+        closeEffect: 'none',
+        autoPlay: true
     });
 
     //iCheck

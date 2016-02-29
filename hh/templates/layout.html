@@ -56,10 +56,10 @@
         {% block footer %}
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-                <b>Version</b> 0.1.0
-            </div>
-            <strong>Copyright &copy; 2015-{% now "Y" %} <a href="{% url 'index' %}">HostelHunt</a>.</strong>
+                <strong>Copyright &copy; 2015-{% now "Y" %} <a href="{% url 'index' %}">HostelHunt</a>.</strong>
             Все права защищены.
+            </div>
+            {% block footer_content %}&nbsp;{% endblock %}
         </footer>
         {% endblock %}
 
