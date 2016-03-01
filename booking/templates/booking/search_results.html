@@ -106,8 +106,12 @@
                                                 </td>
                                                 <td>
                                                     <h4 class="text-danger">{{ room.total|intcomma }} р.</h4>
-                                                    <small class="text-muted">{{ room.price|intcomma }}
-                                                        р. {{ room.get_calculation_type_display|lower }}</small>
+                                                    <small class="text-muted">
+                                                        {{ room.price|intcomma }} р. {{ room.get_calculation_type_display|lower }}
+                                                        {% if room.commission %}
+                                                            <br><span class="text-success">{{ room.commission.agent|intcomma }} р. заработок</span>
+                                                        {% endif %}
+                                                    </small>
                                                 </td>
                                                 <td class="td-xs text-right">
                                                     <input type="checkbox" id="room_input_{{ room.id }}"
