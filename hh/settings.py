@@ -269,3 +269,6 @@ SELECT2_CSS = 'AdminLTE/plugins/select2/select2.min.css'
 
 # Django geoposition
 GEOPOSITION_MAP_WIDGET_HEIGHT = 300
+
+# HH settings
+HH_SEARCH_RESULTS_PER_PAGE = 30

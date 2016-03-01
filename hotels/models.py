@@ -129,6 +129,11 @@ class PropertyPhoto(CommonInfo):
                                format='JPEG',
                                options={'quality': 90})
 
+    thumbnail_xs = ImageSpecField(source='photo',
+                                  processors=[Thumbnail(30, 30)],
+                                  format='JPEG',
+                                  options={'quality': 90})
+
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -145,7 +150,13 @@ class RoomManager(models.Manager):
     """
     Rooms manager
     """
+
     def search(self, **kwargs):
+        """
+        Search for rooms
+        :param kwargs: search params
+        :return: models.QuerySet
+        """
         q = self.all()
 
         if kwargs['city'] is not None:
@@ -160,7 +171,9 @@ class RoomManager(models.Manager):
         if kwargs['gender'] in ['male', 'female']:
             q = q.filter(Q(gender=kwargs['gender']) | Q(gender='mixed'))
 
-        return q.filter(is_enabled=True).order_by('-property__sorting', 'price').distinct()
+        return q.filter(is_enabled=True).order_by('-property__sorting', 'price').distinct() \
+            .select_related('property', 'property__city', 'property__tariff') \
+            .prefetch_related('property__propertyphoto_set', 'property__city__metrostation_set')
 
 
 class Room(CommonInfo):
@@ -178,6 +191,9 @@ class Room(CommonInfo):
         ('female', 'Женский'),
 
     )
+    total = None
+    """Room total price for period"""
+
     objects = RoomManager()
     name = models.CharField(max_length=255, verbose_name=_('room name'))
     description = models.TextField(null=True, blank=True,
@@ -191,6 +207,25 @@ class Room(CommonInfo):
     price = models.PositiveIntegerField(validators=[MinValueValidator(1)], verbose_name=_('price'))
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
     is_enabled = models.BooleanField(default=True, verbose_name=_('is enabled?'))
+
+    def calc_price(self, persons, duration=None, begin=None, end=None):
+        """
+        Calc room price for period
+        :param persons: adults + children
+        :param duration: days
+        :param begin: datetime
+        :param end: datetime
+        :return: integer
+        """
+        if begin and end and not duration:
+            duration = (end - begin).days
+        if not duration:
+            raise AttributeError('Duration is not defined')
+        price = duration * self.price
+        if self.calculation_type == 'per_person':
+            price = price * persons
+
+        return price
 
     def get_absolute_url(self):
         return reverse('hotel:property_room_change', args=[str(self.id)])

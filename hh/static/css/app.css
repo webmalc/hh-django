@@ -110,7 +110,7 @@ a.dotted {
     padding-left: 0px;
 }
 
-.icheckbox_flat-red, .iradio_flat-red {
+.icheckbox_flat-blue, .iradio_flat-blue, .icheckbox_square-blue, .iradio_square-blue {
     margin-right: 4px;
 }
 .has-success .bootstrap-select button {

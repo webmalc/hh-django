@@ -10,117 +10,123 @@
 {% else %}
     {% if rooms|length %}
         {% regroup rooms|dictsort:'property_id' by property as rooms_by_properties %}
-
         <div class="container-fluid">
-            {% for group in rooms_by_properties %}
-                <div class="row search-results-row">
-                    <!-- BEGIN: Photo gallery -->
-                    <div class="col-sm-2 search-results-row-photo">
-                        {% with group.grouper.propertyphoto_set.all as photos %}
-                            {% if photos|length %}
-                                {% for photo in photos %}
-                                    {% if forloop.counter0 < 2 %}
-                                        <a class="fancybox fancybox autoplay {{ forloop.counter0|yesno:'hidden-xs,' }}"
-                                           rel="gallery-{{ group.grouper.id }}" title="{{ photo.name }}"
-                                           href="{{ photo.photo.url }}">
-                                            <img src="{% static photo.thumbnail.url %}" class="img-rounded"
+            <form action="" method="post" id="search-results-form">
+                <div data-spy="affix" id="search-results-form-submit" class="text-right">
+                    <button class="btn btn-success">
+                        <i class="fa fa-check"></i>
+                        Выбрано <span id="search-results-rooms-counter">0</span> шт. Отправить заявки
+                    </button>
+                </div>
+                {% for group in rooms_by_properties %}
+                    <div class="row search-results-row">
+                        <!-- BEGIN: Photo gallery -->
+                        <div class="col-sm-2 search-results-row-photo">
+                            {% with group.grouper.propertyphoto_set.all as photos %}
+                                {% if photos|length %}
+                                    {% with photos|first as main_photo %}
+                                        <a class="fancybox fancybox autoplay"
+                                           rel="gallery-{{ group.grouper.id }}" title="{{ main_photo.getname }}"
+                                           href="{{ main_photo.photo.url }}">
+                                            <img src="{% static main_photo.thumbnail.url %}" class="img-rounded"
                                                  data-toggle="tooltip"
                                                  data-placement="top" title="Посмотреть фото">
                                         </a>
-                                    {% else %}
-                                        <a class="fancybox fancybox autoplay hidden"
-                                           rel="gallery-{{ group.grouper.id }}"
-                                           href="{{ photo.photo.url }}">
-                                        </a>
-                                    {% endif %}
-
-                                {% endfor %}
-                            {% else %}
-                                <img src="{% static group.grouper.get_main_photo_thumbnail %}" class="img-rounded">
-                            {% endif %}
-                        {% endwith %}
-                    </div>
-                    <!-- END: Photo gallery -->
-
-                    <div class="col-sm-10 search-results-row-property">
-                        <!-- BEGIN: Hotel info -->
-                        {% with group.grouper as property %}
-                            <h3>{{ property }}</h3>
-
-                            <div>
-                                {% if property.position %}
-                                    <a target="_blank" class="dotted" title="Посмотреть на карте" data-toggle="tooltip"
-                                       data-placement="top"
-                                       href="http://maps.google.com/maps?q=loc:{{ group.grouper.position }}">
-                                        <i class="fa fa-map-marker margin-right-xs"></i>
-                                        {{ property.city }}, {{ property.address }}.
-                                    </a>
+                                    {% endwith %}
+                                    <div class="search-results-more-photos">
+                                        {% for photo in photos %}
+                                            {% if forloop.counter0 %}
+                                                <a class="fancybox fancybox autoplay"
+                                                   rel="gallery-{{ group.grouper.id }}" title="{{ photo.name }}"
+                                                   href="{{ photo.photo.url }}">
+                                                    <img src="{% static photo.thumbnail_xs.url %}"
+                                                         data-toggle="tooltip"
+                                                         data-placement="top" title="Посмотреть фото">
+                                                </a>
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
                                 {% else %}
-                                    {{ property.city }}, {{ property.address }}.
+                                    <img src="{% static group.grouper.get_main_photo_thumbnail %}" class="img-rounded">
                                 {% endif %}
-                                {% if property.get_metro_stations_as_string %}
-                                    <small class="margin-left-sm">
-                                        <i class="fa fa-subway"></i> {{ property.get_metro_stations_as_string }}
-                                    </small>
-                                {% endif %}
-                            </div>
+                            {% endwith %}
+                        </div>
+                        <!-- END: Photo gallery -->
 
-                            <div class="readmore margin-top-sm">
-                                <small class="text-muted">{{ property.description|linebreaks }}</small>
-                            </div>
-                            <!-- END: Hotel info -->
+                        <div class="col-sm-10 search-results-row-property">
+                            <!-- BEGIN: Hotel info -->
+                            {% with group.grouper as property %}
+                                <h3>{{ property }}</h3>
 
+                                <div>
+                                    <i class="fa fa-map-marker margin-right-xs"></i>
+                                    {% if property.position %}
+                                        <a target="_blank" class="dotted" title="Посмотреть на карте"
+                                           data-toggle="tooltip"
+                                           data-placement="top"
+                                           href="http://maps.google.com/maps?q=loc:{{ group.grouper.position }}">
+                                            {{ property.city }}, {{ property.address }}.
+                                        </a>
+                                    {% else %}
+                                        {{ property.city }}, {{ property.address }}.
+                                    {% endif %}
+                                    {% if property.get_metro_stations_as_string %}
+                                        <small class="margin-left-sm">
+                                            <i class="fa fa-subway"></i> {{ property.get_metro_stations_as_string }}
+                                        </small>
+                                    {% endif %}
+                                </div>
 
-                            {% with group.list as property_rooms %}
-                                <table class="table table-hover table-striped margin-top-md-lg search-result-rooms">
-                                    <thead>
+                                <div class="readmore margin-top-sm">
+                                    <small class="text-muted">{{ property.description|linebreaks }}</small>
+                                </div>
+                                <!-- END: Hotel info -->
+
+                                {% with group.list as property_rooms %}
+                                    <table class="table table-hover table-striped margin-top-md-lg search-result-rooms">
+                                        <thead>
                                         <tr>
                                             <th>Номер</th>
                                             <th class="price">Цена</th>
                                             <th></th>
                                         </tr>
-                                    </thead>
-                                    {% for room in property_rooms %}
-                                        <tr>
-                                            <td>
-                                                <a href="" class="font-lg">{{ room }}</a>
-                                                <p>
-                                                    <small><i class="fa fa-male margin-right-sm"></i>
-                                                        {{ room.get_gender_display }} на {{ room.places }}
-                                                        мест{{ room.places|ru_pluralize:'о,а,' }}</small>
-                                                </p>
-                                                <div class="readmore margin-top-sm">
-                                                    <small class="text-muted">{{ room.description }}</small>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <h4 class="text-success">145 400 р.</h4>
-                                                <small class="text-muted">{{ room.price|intcomma }} р. {{ room.get_calculation_type_display|lower }}</small>
-                                            </td>
-                                            <td class="td-xs text-right">
-                                                {% if forloop.counter0 %}
-                                                <button class="btn btn-default">
-                                                    <i class="fa fa-check"></i>
-                                                </button>
-                                                {% else %}
-                                                <button class="btn btn-primary" title="Добавить номер в заявку" data-toggle="tooltip"
-                                                    data-placement="left">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                                {% endif %}
-                                            </td>
-                                        </tr>
+                                        </thead>
+                                        {% for room in property_rooms %}
+                                            <tr>
+                                                <td>
+                                                    <label for="room_input_{{ room.id }}" class="font-lg text-primary cursor-pointer">{{ room }}</label>
+                                                    <p>
+                                                        <small><i class="fa fa-male margin-right-sm"></i>
+                                                            {{ room.get_gender_display }} на {{ room.places }}
+                                                            мест{{ room.places|ru_pluralize:'о,а,' }}</small>
+                                                    </p>
+                                                    <div class="readmore margin-top-sm">
+                                                        <small class="text-muted">{{ room.description }}</small>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <h4 class="text-danger">{{ room.total|intcomma }} р.</h4>
+                                                    <small class="text-muted">{{ room.price|intcomma }}
+                                                        р. {{ room.get_calculation_type_display|lower }}</small>
+                                                </td>
+                                                <td class="td-xs text-right">
+                                                    <input type="checkbox" id="room_input_{{ room.id }}"
+                                                           {% if forloop.parentloop.counter0 < 3 and not forloop.counter0 %}checked{% endif %}
+                                                           class="search-results-room-input" value="{{ room.id }}"
+                                                           name="rooms[]">
+                                                </td>
+                                            </tr>
 
-                                    {% endfor %}
-                                </table>
+                                        {% endfor %}
+                                    </table>
+                                {% endwith %}
+
                             {% endwith %}
-
-                        {% endwith %}
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </form>
         </div>
-
     {% else %}
         <div class="bg-gray color-palette alert">
             <i class="fa fa-exclamation-circle margin-right-xs"></i>

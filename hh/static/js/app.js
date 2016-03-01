@@ -10,6 +10,15 @@ hh.readmore = function () {
     });
 };
 
+hh.icheck = function () {
+    "use strict";
+    $('input[type="radio"], input[type="checkbox"]')
+        .not('#avatar-delete-form input, #avatar-choose-form input').iCheck({
+        checkboxClass: 'icheckbox_square-blue',
+        radioClass: 'iradio_square-blue'
+    });
+}
+
 $(document).ready(function () {
     'use strict';
 
@@ -34,10 +43,7 @@ $(document).ready(function () {
     });
 
     //iCheck
-    $('input[type="radio"], input[type="checkbox"]').not('#avatar-delete-form input, #avatar-choose-form input').iCheck({
-        checkboxClass: 'icheckbox_flat-red',
-        radioClass: 'iradio_flat-red'
-    });
+    hh.icheck()
 
     //tabs remember
     $(function () {

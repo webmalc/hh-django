@@ -1,5 +1,6 @@
 from django.views.generic.edit import FormView
 from django.shortcuts import render_to_response
+from django.conf import settings
 from booking.forms import SearchForm
 from hotels.models import Room
 
@@ -21,7 +22,13 @@ class SearchResultsView(FormView):
 
     def form_valid(self, form):
         data = form.cleaned_data
-        rooms = Room.objects.search(**data)[:30]
-        return render_to_response(self.template_name, {'rooms': rooms, 'form': data})
+        rooms = Room.objects.search(**data)[:settings.HH_SEARCH_RESULTS_PER_PAGE]
+        duration = (data['end'] - data['begin']).days
+        for room in rooms:
+            room.total = room.calc_price(data['places'], duration)
+
+        return render_to_response(self.template_name, {
+            'rooms': rooms, 'form': data, 'duration': duration
+        })
 
 
