@@ -9,6 +9,7 @@ from imagekit.models import ImageSpecField, ProcessedImageField
 from imagekit.processors import Thumbnail, ResizeToCover
 from hh.models import CommonInfo, GeoMixin
 from users.models import City
+from booking.calculation import calc_price
 
 
 class MetroStation(CommonInfo, GeoMixin):
@@ -41,10 +42,41 @@ class Tariff(CommonInfo):
     is_default = models.BooleanField(default=False, verbose_name='Is default?', validators=[validate_is_default])
     minimal_commission = models.PositiveIntegerField()
 
+    def get_element_for_sum(self, total):
+        """
+        Find element for sum
+        :param total: sum
+        :return: TariffElement
+        """
+        return TariffElement.objects.get_for_sum(self, total)
+
     def delete(self, *args, **kwargs):
         if self.is_default:
             raise Exception('Cannot delete default tariff')
         super(Tariff, self).delete(*args, **kwargs)
+
+
+class TariffElementManager(models.Manager):
+    """
+    TariffElement manager
+    """
+    def get_for_sum(self, tariff, total):
+        """
+        Find element for sum
+        :param tariff: Tariff
+        :param total: sum
+        :return: TariffElement
+        """
+        q = self.all().filter(tariff=tariff)
+        # get element between sums
+        el = q.filter(start_sum__lte=total, end_sum__gt=total).first()
+        # get smallest element
+        if not el:
+            el = q.filter(end_sum__gt=total).order_by().order_by('start_sum').first()
+        # get biggest element
+        if not el:
+            el = q.filter(end_sum__lt=total).order_by().order_by('-start_sum').first()
+        return el
 
 
 class TariffElement(models.Model):
@@ -52,6 +84,7 @@ class TariffElement(models.Model):
     Tariff element
     """
     PERCENT_VALIDATORS = [MaxValueValidator(100)]
+    objects = TariffElementManager()
 
     start_sum = models.PositiveIntegerField()
     end_sum = models.PositiveIntegerField()
@@ -62,6 +95,9 @@ class TariffElement(models.Model):
     def clean(self):
         if self.start_sum >= self.end_sum:
             raise ValidationError('Start sum cannot exceed end sum')
+
+    class Meta:
+        ordering = ['start_sum']
 
 
 class Property(CommonInfo, GeoMixin):
@@ -186,7 +222,7 @@ class RoomManager(models.Manager):
         if 'gender' in kwargs and kwargs['gender'] in ['male', 'female']:
             q = q.filter(Q(gender=kwargs['gender']) | Q(gender='mixed'))
 
-        return q.filter(is_enabled=True).order_by('-property__sorting', 'price').distinct() \
+        return q.filter(is_enabled=True, property__is_enabled=True).order_by('-property__sorting', 'price').distinct() \
             .select_related('property', 'property__city', 'property__tariff') \
             .prefetch_related('property__propertyphoto_set', 'property__city__metrostation_set')
 
@@ -232,15 +268,7 @@ class Room(CommonInfo):
         :param end: datetime
         :return: integer
         """
-        if begin and end and not duration:
-            duration = (end - begin).days
-        if not duration:
-            raise AttributeError('Duration is not defined')
-        price = duration * self.price
-        if self.calculation_type == 'per_person':
-            price = price * persons
-
-        return price
+        return calc_price(self, persons, duration, begin, end)
 
     def get_absolute_url(self):
         return reverse('hotel:property_room_change', args=[str(self.id)])
