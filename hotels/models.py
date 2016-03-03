@@ -68,6 +68,12 @@ class Property(CommonInfo, GeoMixin):
     """
     Property class
     """
+    TYPES = (
+        ('hotel', 'отель'),
+        ('hostel', 'хостел'),
+        ('flat', 'квартира')
+    )
+
     name = models.CharField(max_length=255, verbose_name=_('name'))
     description = models.TextField(null=True, blank=True,
                                    verbose_name=_('description'), help_text='Краткое описание отеля для поиска')
@@ -78,6 +84,7 @@ class Property(CommonInfo, GeoMixin):
     tariff = models.ForeignKey(Tariff, null=True, blank=True, on_delete=models.SET_NULL)
     sorting = models.IntegerField(default=0)
     is_enabled = models.BooleanField(default=True, verbose_name=_('is enabled?'))
+    type = models.CharField(max_length=20, default='hotel', choices=TYPES, verbose_name=_('type'))
 
     def get_tariff(self):
         if self.tariff:
@@ -134,6 +141,11 @@ class PropertyPhoto(CommonInfo):
                                   format='JPEG',
                                   options={'quality': 90})
 
+    preview_photo = ImageSpecField(source='photo',
+                                   processors=[ResizeToCover(300, 300, False)],
+                                   format='JPEG',
+                                   options={'quality': 90})
+
     property = models.ForeignKey(Property, on_delete=models.CASCADE)
 
     def __str__(self):
@@ -159,16 +171,19 @@ class RoomManager(models.Manager):
         """
         q = self.all()
 
-        if kwargs['city'] is not None:
+        if 'city' in kwargs and kwargs['city']:
             q = q.filter(property__city=kwargs['city'])
 
-        if kwargs['places'] is not None:
+        if 'places' in kwargs and kwargs['places']:
             q = q.filter(places__gte=kwargs['places'])
 
-        if kwargs['metro_stations'] is not None and len(kwargs['metro_stations']):
+        if 'type' in kwargs and kwargs['type']:
+            q = q.filter(property__type=kwargs['type'])
+
+        if 'metro_stations' in kwargs and kwargs['metro_stations'] and len(kwargs['metro_stations']):
             q = q.filter(property__metro_stations__in=kwargs['metro_stations'])
 
-        if kwargs['gender'] in ['male', 'female']:
+        if 'gender' in kwargs and kwargs['gender'] in ['male', 'female']:
             q = q.filter(Q(gender=kwargs['gender']) | Q(gender='mixed'))
 
         return q.filter(is_enabled=True).order_by('-property__sorting', 'price').distinct() \

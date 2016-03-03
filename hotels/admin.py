@@ -31,17 +31,17 @@ class PropertyAdmin(VersionAdmin):
     Property admin interface
     """
     list_display = (
-        'id', 'name', 'city', 'get_metro_stations_as_string', 'tariff',
+        'id', 'name', 'type', 'city', 'get_metro_stations_as_string', 'tariff',
         'sorting', 'is_enabled', 'created_at', 'created_by'
     )
     list_display_links = ('id', 'name',)
-    list_filter = ('tariff', 'metro_stations', 'is_enabled')
+    list_filter = ('type', 'tariff', 'metro_stations', 'is_enabled')
     search_fields = ('id', 'name', 'city__name', 'city__alternate_names', 'metro_stations__name')
     raw_id_fields = ['city', 'created_by']
     inlines = [RoomsInlineAdmin, PropertyPhotoInline]
     fieldsets = (
         ('General', {
-            'fields': ('name', 'description',)
+            'fields': ('name', 'description', 'type')
         }),
         ('Location', {
             'fields': ('city', 'address', 'metro_stations', 'position')

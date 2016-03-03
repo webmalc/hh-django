@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-02-26 22:42+0300\n"
+"POT-Creation-Date: 2016-03-03 13:54+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -301,59 +301,63 @@ msgstr ""
 msgid "Signup"
 msgstr ""
 
-#: hotels/models.py:71
+#: hotels/models.py:77
 msgid "name"
 msgstr ""
 
-#: hotels/models.py:73 hotels/models.py:179
+#: hotels/models.py:79 hotels/models.py:207
 msgid "description"
 msgstr ""
 
-#: hotels/models.py:74
+#: hotels/models.py:80
 msgid "address"
 msgstr "Адрес"
 
-#: hotels/models.py:75
+#: hotels/models.py:81
 msgid "city"
 msgstr "Город"
 
-#: hotels/models.py:76
+#: hotels/models.py:82
 msgid "metro"
 msgstr "Метро"
 
-#: hotels/models.py:80 hotels/models.py:188
+#: hotels/models.py:86 hotels/models.py:216
 msgid "is enabled?"
 msgstr "Включен?"
 
-#: hotels/models.py:119
+#: hotels/models.py:87
+msgid "type"
+msgstr "тип"
+
+#: hotels/models.py:126
 msgid "title"
 msgstr ""
 
-#: hotels/models.py:120
+#: hotels/models.py:127
 msgid "is default?"
 msgstr "основное?"
 
-#: hotels/models.py:125
+#: hotels/models.py:132
 msgid "photo"
 msgstr "фото"
 
-#: hotels/models.py:177
+#: hotels/models.py:205
 msgid "room name"
 msgstr "Нозвание номера"
 
-#: hotels/models.py:181
+#: hotels/models.py:209
 msgid "calculation type"
 msgstr "Тип рассчета"
 
-#: hotels/models.py:183
+#: hotels/models.py:211
 msgid "places"
 msgstr "Количество мест"
 
-#: hotels/models.py:185
+#: hotels/models.py:213
 msgid "room gender type"
 msgstr "Тип номера"
 
-#: hotels/models.py:186
+#: hotels/models.py:214
 msgid "price"
 msgstr "Цена"
 

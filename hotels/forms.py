@@ -31,7 +31,7 @@ class PropertyForm(forms.ModelForm):
     class Meta:
         model = Property
         fields = [
-            'name', 'description', 'city', 'address', 'metro_stations', 'position', 'is_enabled'
+            'name', 'description', 'type', 'city', 'address', 'metro_stations', 'position', 'is_enabled'
         ]
         widgets = {
             'city': CityWidget(attrs={'class': 'not-select2'}),

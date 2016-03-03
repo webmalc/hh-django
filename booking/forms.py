@@ -4,7 +4,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MinValueValidator
 from django_select2.forms import ModelSelect2Widget, ModelSelect2MultipleWidget
 from users.models import City
-from hotels.models import MetroStation, Room
+from hotels.models import MetroStation, Room, Property
 
 
 class CityWithHotelsWidget(ModelSelect2Widget):
@@ -43,6 +43,9 @@ class SearchForm(forms.Form):
 
     metro_stations = forms.ModelMultipleChoiceField(queryset=MetroStation.get_with_hotels(),
                                                     widget=MetroWithHotelsWidget, required=False, label=_('Metro'))
+
+    type = forms.ChoiceField(choices=(('', '----------'),) + Property.TYPES,
+                               required=False, label=_('Type'))
 
     gender = forms.ChoiceField(choices=(('', '----------'),) + Room.GENDER_TYPES[1:],
                                required=False, label=_('Gender'))

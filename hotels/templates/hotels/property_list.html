@@ -22,8 +22,9 @@
                     <h3>
                         <a href="{% url 'hotel:property_change' property.id %}" data-toggle="tooltip"
                            data-placement="top" title="Перейти к редактированию отеля">
-                            {{ property }}
+                             «{{ property }}»
                         </a>
+                        <small>{{ property.get_type_display }}</small>
                     </h3>
 
                     <p class="text-muted font-lg">
