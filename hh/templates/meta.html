@@ -29,7 +29,8 @@
                 <link rel="stylesheet" href="{% static 'AdminLTE/dist/css/AdminLTE.min.css' %}">
                 <link rel="stylesheet" href="{% static 'AdminLTE/dist/css/skins/skin-red.min.css' %}">
                 <link rel="stylesheet" href="{% static 'fancybox/source/jquery.fancybox.css' %}">
-                <link rel="stylesheet" href="{% static 'bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css' %}">
+                <link rel="stylesheet"
+                      href="{% static 'bootstrap-datepicker/dist/css/bootstrap-datepicker3.min.css' %}">
                 <link rel="stylesheet" href="{% static 'css/app.css' %}">
             {% endblock %}
         {% endcompress %}
@@ -72,6 +73,21 @@
                 <script src="{% static 'bootstrap-datepicker/dist/locales/bootstrap-datepicker.ru.min.js' %}"></script>
                 <script src="{% static 'Readmore.js/readmore.min.js' %}"></script>
                 <script src="{% static 'js/app.js' %}"></script>
+
+                <!--Start of Tawk.to Script-->
+                <script type="text/javascript">
+                    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
+                    (function () {
+                        var s1 = document.createElement("script"), s0 = document.getElementsByTagName("script")[0];
+                        s1.async = true;
+                        s1.src = 'https://embed.tawk.to/56d8285f1c8d37ab30315b85/default';
+                        s1.charset = 'UTF-8';
+                        s1.setAttribute('crossorigin', '*');
+                        s0.parentNode.insertBefore(s1, s0);
+                    })();
+                </script>
+                <!--End of Tawk.to Script-->
+
             {% endblock %}
         {% endcompress %}
         {% block scripts_cdn %}{% endblock %}
