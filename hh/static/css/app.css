@@ -98,6 +98,9 @@ a.dotted {
     border-bottom: 1px dashed #333;
     color: #333;
 }
+.main-background {
+    background-color: #ecf0f5;
+}
 /******************* FORMS ***********************/
 
 .bootstrap-tagsinput {

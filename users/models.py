@@ -117,7 +117,7 @@ class PartnershipCommonInfo(models.Model):
 
     patronymic = models.CharField(max_length=50, null=True, blank=True, verbose_name='отчество')
     type = models.CharField(max_length=50, choices=TYPES, verbose_name='тип')
-    phone = PhoneNumberField (max_length=30, verbose_name='Сотовый телефон',
+    phone = PhoneNumberField(max_length=30, verbose_name='Сотовый телефон',
                              help_text='Ваш контактный телефон. Пример: 79251234567')
     city = models.ForeignKey(City, on_delete=models.SET_NULL, null=True, blank=False, verbose_name='город')
     organization = models.ForeignKey(Organization, on_delete=models.SET_NULL, null=True, blank=True)

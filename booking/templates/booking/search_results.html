@@ -1,6 +1,7 @@
 {% load staticfiles %}
 {% load main %}
 {% load humanize %}
+{% load crispy_forms_tags %}
 
 {% if form.errors|length %}
     <div class="alert alert-danger">
@@ -12,8 +13,56 @@
         {% regroup rooms|dictsort:'property_id' by property as rooms_by_properties %}
         <div class="container-fluid">
             <form action="" method="post" id="search-results-form">
+                {% csrf_token %}
+
+                <!-- Order modal -->
+                <div class="modal fade" id="order-form-modal" tabindex="-1" role="dialog"
+                     aria-labelledby="order-form-modal">
+                    <div class="modal-dialog modal-lg" role="document">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                        aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title">
+                                    Заполните форму для оформления заявки
+                                </h4>
+                            </div>
+
+                            <div class="modal-body main-background">
+                                <div class="bg-gray color-palette alert">
+
+                                    <p>
+                                        После оформления заявки с Вами в течении <strong>{{ order_lifetime }}
+                                        минут</strong> свяжется какой-либо из выбраных отелей.<br>
+                                        Если этого не произошло попробуйте отправить новую заявку в другие отели.<br>
+                                    </p>
+                                    <p><i class="fa fa-info-circle"></i> Ваша заявка: <strong>{{ form.begin }}
+                                        - {{ form.end }}, {{ form.places }} чел.</strong></p>
+                                </div>
+
+                                <div class="box box-default">
+                                    <div class="box-body">
+                                        {{ order_form|crispy }}
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                                <button type="submit" class="btn btn-success">
+                                    <i class="fa fa-check"></i>
+                                    Отправить заявки
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                 <div data-spy="affix" id="search-results-form-submit" class="text-right">
-                    <button class="btn btn-success">
+                    <button type="button" class="btn btn-success" data-toggle="modal"
+                            data-target="#order-form-modal">
                         <i class="fa fa-check"></i>
                         Выбрано <span id="search-results-rooms-counter">0</span> шт. Отправить заявки
                     </button>
@@ -28,7 +77,8 @@
                                         <a class="fancybox fancybox autoplay"
                                            rel="gallery-{{ group.grouper.id }}" title="{{ main_photo.getname }}"
                                            href="{{ main_photo.photo.url }}">
-                                            <img src="{% static main_photo.preview_photo.url %}" class="img-rounded img-responsive"
+                                            <img src="{% static main_photo.preview_photo.url %}"
+                                                 class="img-rounded img-responsive"
                                                  data-toggle="tooltip"
                                                  data-placement="top" title="Посмотреть фото">
                                         </a>
@@ -56,7 +106,9 @@
                         <div class="col-sm-10 search-results-row-property">
                             <!-- BEGIN: Hotel info -->
                             {% with group.grouper as property %}
-                                <h3>{{ property }} <small class="margin-left-sm">{{ property.get_type_display }}</small></h3>
+                                <h3>{{ property }}
+                                    <small class="margin-left-sm">{{ property.get_type_display }}</small>
+                                </h3>
 
                                 <div>
                                     <i class="fa fa-map-marker margin-right-xs"></i>
@@ -94,7 +146,8 @@
                                         {% for room in property_rooms %}
                                             <tr>
                                                 <td>
-                                                    <label for="room_input_{{ room.id }}" class="font-lg text-primary cursor-pointer">{{ room }}</label>
+                                                    <label for="room_input_{{ room.id }}"
+                                                           class="font-lg text-primary cursor-pointer">{{ room }}</label>
                                                     <p>
                                                         <small><i class="fa fa-male margin-right-sm"></i>
                                                             {{ room.get_gender_display }} на {{ room.places }}
@@ -107,9 +160,11 @@
                                                 <td>
                                                     <h4 class="text-danger">{{ room.total|intcomma }} р.</h4>
                                                     <small class="text-muted">
-                                                        {{ room.price|intcomma }} р. {{ room.get_calculation_type_display|lower }}
+                                                        {{ room.price|intcomma }}
+                                                        р. {{ room.get_calculation_type_display|lower }}
                                                         {% if room.commission %}
-                                                            <br><span class="text-success">{{ room.commission.agent|intcomma }} р. заработок</span>
+                                                            <br>
+                                                            <span class="text-success">{{ room.commission.agent|intcomma }} р. заработок</span>
                                                         {% endif %}
                                                     </small>
                                                 </td>

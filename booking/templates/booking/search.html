@@ -9,7 +9,7 @@
 {% block booking_content %}
 
     <div class="callout callout-warning">
-        <form class="form-inline" method="post" id="search-form">
+        <form class="form-inline" method="post" id="search-form" data-max-rooms-in-order={{ max_rooms }}>
             {% csrf_token %}
             {% for field in form %}
                 {% if field.name == 'begin' %}<div class="input-daterange">{% endif %}

@@ -3,7 +3,7 @@ from django import forms
 from django.utils.translation import ugettext_lazy as _
 from django.core.validators import MinValueValidator
 from django_select2.forms import ModelSelect2Widget, ModelSelect2MultipleWidget
-from users.models import City
+from hh.models import City
 from hotels.models import MetroStation, Room, Property
 
 
@@ -21,6 +21,16 @@ class MetroWithHotelsWidget(ModelSelect2MultipleWidget):
         'name__icontains',
     ]
     attrs = {'class': 'not-select2'}
+
+
+class OrderPersonForm(forms.Form):
+    """
+    Person form for order
+    """
+    last_name = forms.CharField(widget=forms.TextInput(attrs={'required': 'true'}), label=_('last name').capitalize)
+    first_name = forms.CharField(widget=forms.TextInput(attrs={'required': 'true'}), label=_('first name').capitalize)
+    patronymic = forms.CharField(required=False, label=_('patronymic').capitalize)
+    #citizenship = forms.ModelChoiceField(queryset=Country.objects.all(), widget=CityWithHotelsWidget, initial=347, label=_('citizenship'))
 
 
 class SearchForm(forms.Form):
@@ -55,8 +65,8 @@ class SearchForm(forms.Form):
         begin = cleaned_data.get("begin")
         end = cleaned_data.get("end")
 
-        if begin and end and begin > end:
-            raise forms.ValidationError("Begin > end")
+        if begin and end and (begin > end or begin < datetime.date.today()):
+            raise forms.ValidationError("Dates incorrect")
 
         if begin == end:
             cleaned_data['end'] = begin + datetime.timedelta(days=1)

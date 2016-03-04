@@ -56,10 +56,12 @@
         {% block footer %}
         <footer class="main-footer">
             <div class="pull-right hidden-xs">
-                <strong>Copyright &copy; 2015-{% now "Y" %} <a href="{% url 'index' %}">HostelHunt</a>.</strong>
-            Все права защищены.
+                &nbsp;
             </div>
-            {% block footer_content %}&nbsp;{% endblock %}
+            {% block footer_content %}
+                <strong>Copyright &copy; 2015-{% now "Y" %} <a href="{% url 'index' %}">HostelHunt</a>.</strong>
+                Все права защищены.
+            {% endblock %}
         </footer>
         {% endblock %}
 

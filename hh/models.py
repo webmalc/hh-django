@@ -76,6 +76,8 @@ class CityMixin:
 
 class Country(CityMixin, AbstractCountry):
     """ HH country model."""
+    class Meta:
+        ordering = ['name']
 connect_default_signals(Country)
 
 
