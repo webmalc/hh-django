@@ -48,3 +48,10 @@ class Order(CommonInfo):
             Room, null=True, blank=False, verbose_name=_('room'), related_name='%(class)s_accepted_room'
     )
     comment = models.TextField(null=True, blank=True, verbose_name=_('comment'))
+
+    def get_fio(self):
+        return '{} {} {}'.format(self.last_name, self.first_name, self.patronymic)
+    get_fio.short_description = 'fio'
+
+    class Meta:
+        ordering = ['-created_at', 'status']
