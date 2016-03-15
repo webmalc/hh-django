@@ -1,0 +1,22 @@
+{% extends 'emails/base.html' %}
+
+{% block content %}
+    <h3>Заявка на бронирование #{{ id }} подтверждена</h3>
+
+    <p>
+        Ваша заявка на бронирование c {{ begin }} по {{ end }} подтверждена.<br>
+        Отель «{{ property }}» свяжется с Вами в ближайшее время.</a>
+    </p>
+    <p>
+        <strong>Контактные данные:</strong><br>
+        Отель «{{ property }}»<br>
+        {{ address }}<br>
+        {{ property_phone }}
+    </p>
+    <p>
+        Спасибо за использование,
+        HostelHunt!
+    </p>
+{% endblock %}
+
+

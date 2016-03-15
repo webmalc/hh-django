@@ -1,0 +1,22 @@
+{% extends 'emails/base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <h3>{{ created|yesno:'Новая,Обновлена' }} заявка на бронирование #{{ id }}</h3>
+
+    <strong>ID:</strong> {{ id }}<br>
+    <strong>СТАТУС:</strong> {{ status }}<br>
+    <strong>ЗАЕЗД:</strong> {{ begin }}<br>
+    <strong>ВЫЕЗД:</strong> {{ end }}<br>
+    <strong>ГОСТЕЙ:</strong> {{ places }}<br>
+    <strong>ФИО:</strong> {{ fio }}<br>
+    <strong>ТЕЛЕФОН:</strong> {{ phone }}<br>
+    <strong>КОМНАТА:</strong> {{ room|default:'-' }}<br>
+    <strong>СУММА:</strong> {{ total|intcomma  }}<br>
+    <strong>КОММИССИЯ:</strong> {{ commission|intcomma }}<br>
+    {% if is_agent %}
+    <strong>КОММИССИЯ АГЕНТА:</strong> {{ agent_commission|intcomma }}<br>
+    {% endif %}
+{% endblock %}
+
+

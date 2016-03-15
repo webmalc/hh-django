@@ -4,9 +4,31 @@ from reversion.admin import VersionAdmin
 from hotels.models import Tariff, TariffElement, MetroStation, Property, Room, PropertyPhoto
 
 
-class RoomsInlineAdmin(admin.StackedInline):
+class RoomAdmin(VersionAdmin):
     """
     Rooms admin
+    """
+    model = Room
+    list_display = (
+        'id', 'name', 'property', 'gender', 'places', 'calculation_type',
+        'price', 'is_enabled'
+    )
+    list_display_links = ('id', 'name')
+    search_fields = ('id', 'name', 'property__name')
+    list_filter = ('gender', 'calculation_type', 'is_enabled', 'created_at')
+    fields = (
+        'name', 'description', 'calculation_type',
+        'places', 'gender', 'price', 'property', 'is_enabled',
+        'created_by', 'created_at'
+    )
+
+    raw_id_fields = ['property']
+    readonly_fields = ('created_by', 'created_at')
+
+
+class RoomsInlineAdmin(admin.StackedInline):
+    """
+    Rooms inline admin
     """
     model = Room
     fields = (
@@ -112,5 +134,6 @@ class TariffAdmin(VersionAdmin):
 
 
 admin.site.register(Tariff, TariffAdmin)
-admin.site.register(Property,PropertyAdmin)
+admin.site.register(Property, PropertyAdmin)
+admin.site.register(Room, RoomAdmin)
 admin.site.register(MetroStation, MetroStationsAdmin)

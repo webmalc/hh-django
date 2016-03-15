@@ -222,7 +222,8 @@ class RoomManager(models.Manager):
         if 'gender' in kwargs and kwargs['gender'] in ['male', 'female']:
             q = q.filter(Q(gender=kwargs['gender']) | Q(gender='mixed'))
 
-        return q.filter(is_enabled=True, property__is_enabled=True).order_by('-property__sorting', 'price').distinct() \
+        return q.filter(is_enabled=True, property__is_enabled=True, created_by__groups__name='Hotelier')\
+            .order_by('-property__sorting', 'price').distinct() \
             .select_related('property', 'property__city', 'property__tariff') \
             .prefetch_related('property__propertyphoto_set', 'property__city__metrostation_set')
 
