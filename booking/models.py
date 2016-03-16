@@ -1,5 +1,6 @@
-import datetime
 from django.db import models
+from django.conf import settings
+from django.utils.timezone import timedelta, datetime, localtime
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
@@ -41,14 +42,13 @@ class Order(CommonInfo):
     begin = models.DateField(verbose_name=_('Check-in'))
     end = models.DateField(verbose_name=_('Check-out'))
     places = models.PositiveIntegerField(validators=[MinValueValidator(1), MaxValueValidator(20)])
-    total = models.PositiveIntegerField(validators=[MinValueValidator(1)], verbose_name=_('total'))
+    total = models.PositiveIntegerField(null=True, blank=True, validators=[MinValueValidator(1)], verbose_name=_('total'))
     commission = models.PositiveIntegerField(
             default=0, validators=PERCENT_VALIDATORS, verbose_name=_('commission'))
     agent_commission = models.PositiveIntegerField(
             default=0, validators=PERCENT_VALIDATORS, verbose_name=_('agent commission'))
     is_agent_order = models.BooleanField(default=False)
     status = models.CharField(max_length=20, choices=STATUSES, default='process', verbose_name=_('status'))
-    rooms = models.ManyToManyField(Room, verbose_name=_('rooms'))
     accepted_room = models.ForeignKey(
             Room, null=True, blank=True, verbose_name=_('room'), related_name='%(class)s_accepted_room'
     )
@@ -62,8 +62,17 @@ class Order(CommonInfo):
         return '{} {} {}'.format(self.last_name, self.first_name, self.patronymic)
     get_fio.short_description = 'fio'
 
+    def get_end_datetime(self):
+        delta = timedelta(minutes=settings.HH_BOOKING_ORDER_LIFETIME)
+        if self.created_at:
+            return localtime(self.created_at) + delta
+        return datetime.now() + delta
+    get_end_datetime.short_description = 'end at'
+
     def get_commission_sum(self):
-        return int(self.total * self.commission / 100)
+        if self.total:
+            return int(self.total * self.commission / 100)
+        return 0
     get_commission_sum.short_description = 'commission sum'
 
     def get_agent_commission_sum(self):
@@ -88,3 +97,23 @@ class Order(CommonInfo):
 
     class Meta:
         ordering = ['-created_at', 'status']
+
+
+class OrderRoom(models.Model):
+    """
+    Booking order room class
+    """
+    room = models.ForeignKey(Room, verbose_name=_('room'))
+    total = models.PositiveIntegerField(validators=[MinValueValidator(1)], verbose_name=_('total'))
+    order = models.ForeignKey(Order, verbose_name=_('order'))
+    is_accepted = models.BooleanField(default=False, verbose_name=_('is accepted'))
+
+    def get_property(self):
+        return self.room.property
+    get_property.short_description = 'property'
+
+    def delete(self, *args, **kwargs):
+        if self.is_accepted:
+            raise Exception('Cannot delete accepted room')
+        super(OrderRoom, self).delete(*args, **kwargs)
+

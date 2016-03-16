@@ -20,15 +20,16 @@ def mail_order_hoteliers_task(order_id, subject, template, data):
             return False
 
         properties = {}
-        for room in order.rooms.all():
+        for order_room in order.orderroom_set.all():
+            room = order_room.room
             user = room.property.created_by
             if user.is_hotelier() and room.property.is_enabled and room.is_enabled:
                 if room.property.id not in properties:
                     properties[room.property.id] = []
-                properties[room.property.id].append(room)
+                properties[room.property.id].append(order_room)
 
-        for property_id, rooms in properties.items():
-            hotel = rooms[0].property
+        for property_id, order_rooms in properties.items():
+            hotel = order_rooms[0].room.property
             additional_data = {
                 'property': str(hotel),
             }

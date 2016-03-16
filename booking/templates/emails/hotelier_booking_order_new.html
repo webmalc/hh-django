@@ -1,9 +1,32 @@
 {% extends 'emails/base.html' %}
 
 {% block content %}
-    <h3>Заявка на бронирование 1212</h3>
+    <h3>Новая заявка на бронирование #{{ id }}</h3>
 
-    Отель: {{ property }}
+    <p>
+        <strong>ОТЕЛЬ:</strong> {{ property }}<br>
+        <strong>ДАТЫ:</strong> {{ begin }}-{{ end }}<br>
+        <strong>ГОСТЕЙ:</strong> {{ places }}<br>
+        <strong>КОМНАТЫ:</strong><br>
+        Классический номер за 3000 руб.<br>
+        Люкс за 1200 руб.<br>
+        <strong>ГРАЖДАНСТВО:</strong> {{ citizenship }}<br>
+        <strong>КОММЕНТАРИЙ:</strong>
+        {{ comment|linebreaks }}
+    </p>
+    <p>
+        <strong>Заявка действительна до {{ end_time }}</strong>
+    </p>
+    <p>
+        <a href="http://www.mailgun.com" class="btn-primary" itemprop="url" style="font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif; box-sizing: border-box; font-size: 14px; color: #FFF; text-decoration: none; line-height: 2em; font-weight: bold; text-align: center; cursor: pointer; display: inline-block; border-radius: 5px; text-transform: uppercase; background-color: #348eda; margin: 0; border-color: #348eda; border-style: solid; border-width: 10px 20px;">
+            Подтвердить заявку
+        </a>
+    </p>
+    <p>
+        Спасибо за использование,
+        HostelHunt!
+    </p>
+
 {% endblock %}
 
 

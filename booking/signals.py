@@ -1,4 +1,4 @@
-from django.db.models.signals import pre_save, post_save, pre_delete, m2m_changed
+from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from booking.models import Order
 from users.tasks import mail_managers_task, mail_user_task
@@ -32,7 +32,10 @@ def booking_order_post_save(sender, **kwargs):
         'address': '{}, {}'.format(order.accepted_room.property.city,
                                    order.accepted_room.property.address) if order.accepted_room else None,
         'property_phone': str(order.accepted_room.property.created_by.profile.phone) if order.accepted_room else None,
-        'status': order.get_status_display()
+        'status': order.get_status_display(),
+        'comment': order.comment,
+        'citizenship': order.get_citizenship_display(),
+        'end_time': order.get_end_datetime().strftime('%d.%m.%Y %H:%M'),
     }
 
     # Send emails to user on Order completion

@@ -1,12 +1,14 @@
 from django.contrib import admin
 from django.conf import settings
 from reversion.admin import VersionAdmin
-from booking.models import Order
+from booking.models import Order, OrderRoom
 
 
-class RoomInline(admin.TabularInline):
-    model = Order.rooms.through
+class OrderRoomsInline(admin.TabularInline):
+    model = OrderRoom
+    fields = ('get_property', 'room', 'total', 'is_accepted')
     raw_id_fields = ('room', )
+    readonly_fields = ('get_property',)
     verbose_name = "room"
     verbose_name_plural = "rooms"
     extra = 2
@@ -29,7 +31,8 @@ class OrderAdmin(VersionAdmin):
     fieldsets = (
         (
             'General', {
-                'fields': ('begin', 'end', 'places', 'status', 'comment', 'created_by', 'created_at')
+                'fields': (
+                    'begin', 'end', 'places', 'status', 'comment', 'created_by', 'created_at', 'get_end_datetime')
             },
         ),
         (
@@ -51,10 +54,12 @@ class OrderAdmin(VersionAdmin):
             }
         ),
     )
-    readonly_fields = ('created_by', 'get_agent_commission_sum', 'get_commission_sum', 'created_at', 'get_property')
+    readonly_fields = (
+        'created_by', 'get_agent_commission_sum', 'get_commission_sum', 'created_at', 'get_property', 'get_end_datetime'
+    )
     raw_id_fields = ('accepted_room',)
     inlines = [
-        RoomInline,
+        OrderRoomsInline,
     ]
 
     class Media:
