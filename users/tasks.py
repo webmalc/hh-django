@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from hh.celery import app
-from hh.messangers.mailer import Mailer
+from hh.messengers.mailer import Mailer
 from users.models import User
 
 

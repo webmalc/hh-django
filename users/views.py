@@ -4,8 +4,10 @@ from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse_lazy
 from django.contrib import messages
 from django.shortcuts import redirect
+from django.http import JsonResponse
 from users.forms import PartnershipOrderForm, OrganizationForm
 from users.models import Organization, PartnershipOrder
+from hh.messengers.messanger import Messenger
 
 
 class PartnershipOrderCreate(TemplateView):
@@ -111,3 +113,16 @@ class UserUpdate(SuccessMessageMixin, UpdateView):
 
     def get_object(self):
         return self.request.user
+
+
+def get_messages(request):
+    """
+    Get user messages as json
+    :param request: request
+    :return: django.http.JsonResponse
+    """
+    # TODO: REMOVE TEST
+    Messenger.add_message(user=request.user, text='test message')
+    return JsonResponse(
+        Messenger.get_messages(user=request.user), safe=False
+    )

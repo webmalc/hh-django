@@ -158,3 +158,21 @@ class PartnershipOrder(CommonInfo, PartnershipCommonInfo):
 
 class Profile(PartnershipCommonInfo):
     user = models.OneToOneField(BaseUser, on_delete=models.CASCADE)
+
+
+class UserMessage(CommonInfo):
+    """
+    Message for user
+    """
+    TYPES = (
+        ('success', 'success'),
+        ('info', 'info'),
+        ('warning', 'warning'),
+        ('danger', 'danger'),
+        ('default', 'default')
+    )
+
+    content = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    type = models.TextField(max_length=20, choices=TYPES)
+    icon = models.CharField(max_length=50, default='fa fa-exclamation-circle')
