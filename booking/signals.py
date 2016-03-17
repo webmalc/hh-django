@@ -26,6 +26,15 @@ def booking_order_post_save(sender, **kwargs):
                 email=order.email
         )
 
+    # Send emails to user on Order cancellation
+    if order.email and order.status == 'canceled' and order.original_status != order.status:
+        mail_user_task.delay(
+            subject='Заявка на бронирование #{id} отменена'.format(id=order.id),
+            template='emails/user_booking_order_canceled.html',
+            data=email_data,
+            email=order.email
+        )
+
     # Send emails to managers on Order change
     mail_managers_task.delay(
             subject='{text} заявка на бронирование #{id}'.format(
