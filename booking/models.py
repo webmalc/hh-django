@@ -53,6 +53,9 @@ class Order(CommonInfo):
             Room, null=True, blank=True, verbose_name=_('room'), related_name='%(class)s_accepted_room'
     )
     comment = models.TextField(null=True, blank=True, verbose_name=_('comment'))
+    ends_at = models.DateTimeField(
+            verbose_name=_('ends at'),
+            default=datetime.now() + timedelta(minutes=settings.HH_BOOKING_ORDER_LIFETIME))
 
     def __init__(self, *args, **kwargs):
         super(Order, self).__init__(*args, **kwargs)
@@ -61,13 +64,6 @@ class Order(CommonInfo):
     def get_fio(self):
         return '{} {} {}'.format(self.last_name, self.first_name, self.patronymic)
     get_fio.short_description = 'fio'
-
-    def get_end_datetime(self):
-        delta = timedelta(minutes=settings.HH_BOOKING_ORDER_LIFETIME)
-        if self.created_at:
-            return localtime(self.created_at) + delta
-        return datetime.now() + delta
-    get_end_datetime.short_description = 'end at'
 
     def get_commission_sum(self):
         if self.total:
@@ -89,11 +85,8 @@ class Order(CommonInfo):
         if self.begin and self.end and (self.begin > self.end):
             raise ValidationError('Dates incorrect')
 
-        if self.status == 'completed' and not self.accepted_room:
-            raise ValidationError('Completed order must have accepted room')
-
         if self.begin == self.end:
-            self.end = self.begin + datetime.timedelta(days=1)
+            self.end = self.begin + timedelta(days=1)
 
     class Meta:
         ordering = ['-created_at', 'status']
@@ -116,4 +109,11 @@ class OrderRoom(models.Model):
         if self.is_accepted:
             raise Exception('Cannot delete accepted room')
         super(OrderRoom, self).delete(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        super(OrderRoom, self).save(*args, **kwargs)
+
+        if self.is_accepted and not self.order.accepted_room:
+            self.order.accepted_room = self.room
+            self.order.save()
 

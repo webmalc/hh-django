@@ -1,4 +1,5 @@
 {% extends 'emails/base.html' %}
+{% load humanize %}
 
 {% block content %}
     <h3>Новая заявка на бронирование #{{ id }}</h3>
@@ -7,10 +8,11 @@
         <strong>ОТЕЛЬ:</strong> {{ property }}<br>
         <strong>ДАТЫ:</strong> {{ begin }}-{{ end }}<br>
         <strong>ГОСТЕЙ:</strong> {{ places }}<br>
-        <strong>КОМНАТЫ:</strong><br>
-        Классический номер за 3000 руб.<br>
-        Люкс за 1200 руб.<br>
         <strong>ГРАЖДАНСТВО:</strong> {{ citizenship }}<br>
+        <strong>КОМНАТЫ:</strong><br>
+        {% for order_room in order_rooms %}
+            {{ order_room.room }} за {{ order_room.total|intcomma }} руб.<br>
+        {% endfor %}
         <strong>КОММЕНТАРИЙ:</strong>
         {{ comment|linebreaks }}
     </p>

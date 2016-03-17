@@ -2,6 +2,7 @@ from django.contrib import admin
 from django.conf import settings
 from reversion.admin import VersionAdmin
 from booking.models import Order, OrderRoom
+from booking.tasks import mail_order_hoteliers_task, get_order_email_data
 
 
 class OrderRoomsInline(admin.TabularInline):
@@ -32,7 +33,7 @@ class OrderAdmin(VersionAdmin):
         (
             'General', {
                 'fields': (
-                    'begin', 'end', 'places', 'status', 'comment', 'created_by', 'created_at', 'get_end_datetime')
+                    'begin', 'end', 'places', 'status', 'comment', 'created_by', 'ends_at', 'created_at')
             },
         ),
         (
@@ -55,12 +56,25 @@ class OrderAdmin(VersionAdmin):
         ),
     )
     readonly_fields = (
-        'created_by', 'get_agent_commission_sum', 'get_commission_sum', 'created_at', 'get_property', 'get_end_datetime'
+        'created_by', 'get_agent_commission_sum', 'get_commission_sum', 'created_at', 'get_property'
     )
     raw_id_fields = ('accepted_room',)
     inlines = [
         OrderRoomsInline,
     ]
+
+    def save_related(self, request, form, formsets, change):
+        super(OrderAdmin, self).save_related(request, form, formsets, change)
+        order = form.instance
+
+        # Send emails to hoteliers on Order creation
+        if not change:
+            mail_order_hoteliers_task(
+                order_id=order.id,
+                subject='Новая заявка на бронирование #{id}'.format(id=order.id),
+                template='emails/hotelier_booking_order_new.html',
+                data=get_order_email_data(order, not change),
+            )
 
     class Media:
         js = ('admin/js/orders.js',)

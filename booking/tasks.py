@@ -4,6 +4,31 @@ from users.tasks import mail_user_task
 from booking.models import Order
 
 
+def get_order_email_data(order, created=False):
+    return {
+        'id': order.id,
+        'begin': order.begin.strftime('%d.%m.%Y'),
+        'end': order.end.strftime('%d.%m.%Y'),
+        'fio': order.get_fio(),
+        'places': order.places,
+        'phone': str(order.phone),
+        'total': order.total,
+        'commission': order.get_agent_commission_sum(),
+        'agent_commission': order.get_agent_commission_sum(),
+        'is_agent': order.is_agent_order,
+        'is_new': created,
+        'room': '{}, {}'.format(order.accepted_room.property, order.accepted_room) if order.accepted_room else None,
+        'property': str(order.accepted_room.property) if order.accepted_room else None,
+        'address': '{}, {}'.format(order.accepted_room.property.city,
+                                   order.accepted_room.property.address) if order.accepted_room else None,
+        'property_phone': str(order.accepted_room.property.created_by.profile.phone) if order.accepted_room else None,
+        'status': order.get_status_display(),
+        'comment': order.comment,
+        'citizenship': order.get_citizenship_display(),
+        'end_time': order.ends_at.strftime('%d.%m.%Y %H:%M'),
+    }
+
+
 @app.task
 def mail_order_hoteliers_task(order_id, subject, template, data):
     """
@@ -32,7 +57,9 @@ def mail_order_hoteliers_task(order_id, subject, template, data):
             hotel = order_rooms[0].room.property
             additional_data = {
                 'property': str(hotel),
+                'order_rooms': [{'room': r.room.name, 'total': r.total} for r in order_rooms]
             }
+
             full_data = data.copy()
             full_data.update(additional_data)
 
@@ -41,6 +68,3 @@ def mail_order_hoteliers_task(order_id, subject, template, data):
         return True
     except Order.DoesNotExist:
         return False
-
-
-

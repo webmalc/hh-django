@@ -12,8 +12,10 @@
     <strong>ФИО:</strong> {{ fio }}<br>
     <strong>ТЕЛЕФОН:</strong> {{ phone }}<br>
     <strong>КОМНАТА:</strong> {{ room|default:'-' }}<br>
-    <strong>СУММА:</strong> {{ total|intcomma  }}<br>
-    <strong>КОММИССИЯ:</strong> {{ commission|intcomma }}<br>
+    {% if total %}
+        <strong>СУММА:</strong> {{ total|intcomma  }}<br>
+        <strong>КОММИССИЯ:</strong> {{ commission|intcomma }}<br>
+    {% endif %}
     {% if is_agent %}
     <strong>КОММИССИЯ АГЕНТА:</strong> {{ agent_commission|intcomma }}<br>
     {% endif %}

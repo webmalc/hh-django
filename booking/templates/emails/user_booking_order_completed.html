@@ -1,12 +1,20 @@
 {% extends 'emails/base.html' %}
+{% load humanize %}
 
 {% block content %}
     <h3>Заявка на бронирование #{{ id }} подтверждена</h3>
 
     <p>
         Ваша заявка на бронирование c {{ begin }} по {{ end }} подтверждена.<br>
-        Отель «{{ property }}» свяжется с Вами в ближайшее время.</a>
+        «{{ property }}» свяжется с Вами в ближайшее время.</a>
     </p>
+    <p>
+        <strong>Номер:</strong><br>
+        {{ room }} за <strong>{{ total|intcomma }}</strong> руб.
+    </p>
+    {% if is_agent %}
+        <strong>Заработок:</strong> {{ agent_commission|intcomma }} руб.
+    {% endif %}
     <p>
         <strong>Контактные данные:</strong><br>
         Отель «{{ property }}»<br>
