@@ -168,11 +168,10 @@ class UserMessage(CommonInfo):
         ('success', 'success'),
         ('info', 'info'),
         ('warning', 'warning'),
-        ('danger', 'danger'),
-        ('default', 'default')
+        ('danger', 'danger')
     )
 
     content = models.TextField()
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    type = models.TextField(max_length=20, choices=TYPES)
+    type = models.TextField(max_length=20, choices=TYPES, default='info')
     icon = models.CharField(max_length=50, default='fa fa-exclamation-circle')

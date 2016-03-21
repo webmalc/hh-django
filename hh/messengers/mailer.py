@@ -15,5 +15,5 @@ class Mailer:
             from_email=settings.DEFAULT_FROM_EMAIL,
             subject='{prefix} {text}'.format(prefix=settings.EMAIL_SUBJECT_PREFIX, text=subject),
             message='',
-            html_message=render_to_string(template, data)
+            html_message=render_to_string(template)
         )

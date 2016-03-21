@@ -14,10 +14,10 @@ hh.icheck = function () {
     "use strict";
     $('input[type="radio"], input[type="checkbox"]')
         .not('#avatar-delete-form input, #avatar-choose-form input').iCheck({
-        checkboxClass: 'icheckbox_square-blue',
-        radioClass: 'iradio_square-blue'
-    });
-}
+            checkboxClass: 'icheckbox_square-blue',
+            radioClass: 'iradio_square-blue'
+        });
+};
 
 $(document).ready(function () {
     'use strict';

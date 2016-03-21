@@ -1,6 +1,7 @@
 from __future__ import absolute_import
 from hh.celery import app
 from hh.messengers.mailer import Mailer
+from hh.messengers.messenger import Messenger
 from users.models import User
 
 
@@ -40,3 +41,22 @@ def mail_user_task(subject, template, data, user_id=None, email=None):
             return False
 
 
+@app.task
+def add_message_user_task(user_id, text=None, template=None, data={}, icon=None, message_type=None):
+    """
+    Add message for site user
+    :param user_id: user id
+    :param text: message text
+    :param template: message template
+    :param data: data dict for template
+    :param icon: message icon
+    :param message_type: message type danger|info|warning|success|primary
+    :return: boolean
+    """
+
+    try:
+        user = User.objects.get(pk=user_id)
+        Messenger.add_message(user, text, template, data, icon, message_type)
+        return True
+    except User.DoesNotExist:
+        return False

@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.http import JsonResponse
 from users.forms import PartnershipOrderForm, OrganizationForm
 from users.models import Organization, PartnershipOrder
-from hh.messengers.messanger import Messenger
+from hh.messengers.messenger import Messenger
 
 
 class PartnershipOrderCreate(TemplateView):
@@ -121,8 +121,6 @@ def get_messages(request):
     :param request: request
     :return: django.http.JsonResponse
     """
-    # TODO: REMOVE TEST
-    Messenger.add_message(user=request.user, text='test message')
     return JsonResponse(
         Messenger.get_messages(user=request.user), safe=False
     )
