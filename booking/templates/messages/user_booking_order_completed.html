@@ -1,0 +1,14 @@
+{% extends 'messages/base.html' %}
+{% load humanize %}
+
+{% block content %}
+
+    Ваша <a href="">заявка #{{ id }}</a> на бронирование c {{ begin }} по {{ end }} подтверждена.<br>
+    «{{ property }}» свяжется с Вами в ближайшее время.
+
+    <p>
+        <a href="">подробнее</a>
+    </p>
+{% endblock %}
+
+

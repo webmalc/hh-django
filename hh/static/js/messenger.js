@@ -10,7 +10,7 @@ $(document).ready(function () {
                 var items = [],
                     modal = $('#messages-modal');
                 $.each(data, function (k, v) {
-                    items.push('<p class="callout callout-' + v.type + '"><i class="' + v.icon + '"></i> ' + v.content + '</p>');
+                    items.push('<div class="callout callout-' + v.type + '"><i class="' + v.icon + '"></i> ' + v.content + '</div>');
                 });
                 modal.find('.modal-body').html(items.join(''));
                 $('#messages-modal').modal('show');

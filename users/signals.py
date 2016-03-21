@@ -1,7 +1,7 @@
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from users.models import PartnershipOrder, Profile
-from users.tasks import mail_managers_task, mail_user_task
+from users.tasks import mail_managers_task, mail_user_task, add_message_user_task
 
 
 @receiver(post_save, sender=PartnershipOrder, dispatch_uid="users_partnership_order_post_save")
@@ -40,6 +40,11 @@ def users_partnership_order_post_save(sender, **kwargs):
             data={'id': order.id},
             user_id=user.id
         )
+        add_message_user_task.delay(
+            user_id=user.id,
+            text='Заявка на партнерство #{id} подтверждена'.format(id=order.id),
+            message_type='success'
+        )
 
     # Send emails to user on PartnershipOrder cancel
     if not created and order.original_status != order.status \
@@ -50,6 +55,11 @@ def users_partnership_order_post_save(sender, **kwargs):
             template='emails/user_partner_order_canceled.html',
             data={'id': order.id},
             user_id=user.id
+        )
+        add_message_user_task.delay(
+            user_id=user.id,
+            text='Заявка на партнерство #{id} отклонена'.format(id=order.id),
+            message_type='danger'
         )
 
     # Send emails to managers on PartnershipOrder create
