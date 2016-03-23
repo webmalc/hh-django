@@ -69,6 +69,7 @@ def mail_order_hoteliers_task(order_id, subject, template, data):
                         user_id=order.created_by.id,
                         template='messages/hotelier_booking_order_new.html',
                         data=full_data,
+                        subject=subject,
                         message_type='info'
                 )
 

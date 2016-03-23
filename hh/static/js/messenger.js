@@ -10,6 +10,13 @@ $(document).ready(function () {
                 var items = [],
                     modal = $('#messages-modal');
                 $.each(data, function (k, v) {
+                    if (v.subject) {
+                        $.notification({
+                            iconUrl: '/static/img/logo-png-white.png',
+                            title: 'HostelHunt.ru',
+                            body: v.subject
+                        });
+                    }
                     items.push('<div class="callout callout-' + v.type + '"><i class="' + v.icon + '"></i> ' + v.content + '</div>');
                 });
                 modal.find('.modal-body').html(items.join(''));

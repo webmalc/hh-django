@@ -5,9 +5,10 @@ from users.models import UserMessage
 class Messenger:
 
     @staticmethod
-    def add_message(user, text=None, template=None, data={}, icon=None, message_type=None):
+    def add_message(user, subject=None, text=None, template=None, data={}, icon=None, message_type=None):
         message = UserMessage()
         message.user = user
+        message.subject = subject
         content = None
         if text:
             content = text

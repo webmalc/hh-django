@@ -43,6 +43,7 @@ def users_partnership_order_post_save(sender, **kwargs):
         add_message_user_task.delay(
             user_id=user.id,
             text='Заявка на партнерство #{id} подтверждена'.format(id=order.id),
+            subject='Заявка на партнерство #{id} подтверждена'.format(id=order.id),
             message_type='success'
         )
 
@@ -59,6 +60,7 @@ def users_partnership_order_post_save(sender, **kwargs):
         add_message_user_task.delay(
             user_id=user.id,
             text='Заявка на партнерство #{id} отклонена'.format(id=order.id),
+            subject='Заявка на партнерство #{id} отклонена'.format(id=order.id),
             message_type='danger'
         )
 

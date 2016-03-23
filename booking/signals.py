@@ -32,6 +32,7 @@ def booking_order_post_save(sender, **kwargs):
                     user_id=created_by.id,
                     template='messages/user_booking_order_completed.html',
                     data=data,
+                    subject='Заявка на бронирование #{id} подтверждена'.format(id=order.id),
                     message_type='success'
             )
 
@@ -49,6 +50,7 @@ def booking_order_post_save(sender, **kwargs):
                     user_id=created_by.id,
                     template='messages/user_booking_order_canceled.html',
                     data=data,
+                    subject='Заявка на бронирование #{id} отменена'.format(id=order.id),
                     message_type='warning'
             )
 

@@ -172,6 +172,7 @@ class UserMessage(CommonInfo):
     )
 
     content = models.TextField()
+    subject = models.CharField(max_length=255, null=True, blank=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     type = models.TextField(max_length=20, choices=TYPES, default='info')
     icon = models.CharField(max_length=50, default='fa fa-exclamation-circle')

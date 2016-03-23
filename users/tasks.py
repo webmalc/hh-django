@@ -42,10 +42,11 @@ def mail_user_task(subject, template, data, user_id=None, email=None):
 
 
 @app.task
-def add_message_user_task(user_id, text=None, template=None, data={}, icon=None, message_type=None):
+def add_message_user_task(user_id, subject=None, text=None, template=None, data={}, icon=None, message_type=None):
     """
     Add message for site user
     :param user_id: user id
+    :param subject: message subject
     :param text: message text
     :param template: message template
     :param data: data dict for template
@@ -56,7 +57,11 @@ def add_message_user_task(user_id, text=None, template=None, data={}, icon=None,
 
     try:
         user = User.objects.get(pk=user_id)
-        Messenger.add_message(user, text, template, data, icon, message_type)
+        Messenger.add_message(
+                user=user, subject=subject, text=text,
+                template=template, data=data, icon=icon,
+                message_type=message_type
+        )
         return True
     except User.DoesNotExist:
         return False
