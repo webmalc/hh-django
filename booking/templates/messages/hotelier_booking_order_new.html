@@ -1,0 +1,16 @@
+{% extends 'messages/base.html' %}
+{% load humanize %}
+
+{% block content %}
+    <p>Новая заявка на бронирование #{{ id }} в «{{ property }}».</p>
+    <p>
+        {% for order_room in order_rooms %}
+            {{ order_room.room }} за <strong>{{ order_room.total|intcomma }}</strong> руб.<br>
+        {% endfor %}
+    </p>
+    <p>
+        <a href="">подробнее</a>
+    </p>
+{% endblock %}
+
+

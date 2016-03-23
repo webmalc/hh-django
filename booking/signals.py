@@ -44,13 +44,13 @@ def booking_order_post_save(sender, **kwargs):
                     data=data,
                     email=order.email
             )
-            if created_by:
-                add_message_user_task(
-                        user_id=created_by.id,
-                        template='messages/user_booking_order_canceled.html',
-                        data=data,
-                        message_type='warning'
-                )
+        if created_by:
+            add_message_user_task(
+                    user_id=created_by.id,
+                    template='messages/user_booking_order_canceled.html',
+                    data=data,
+                    message_type='warning'
+            )
 
     # Send emails to managers on Order change
     mail_managers_task.delay(

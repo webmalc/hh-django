@@ -1,6 +1,6 @@
 from __future__ import absolute_import
 from hh.celery import app
-from users.tasks import mail_user_task
+from users.tasks import mail_user_task, add_message_user_task
 from booking.models import Order
 
 
@@ -64,6 +64,13 @@ def mail_order_hoteliers_task(order_id, subject, template, data):
             full_data.update(additional_data)
 
             mail_user_task(subject, template, full_data, user_id=hotel.created_by.id)
+            if order.created_by:
+                add_message_user_task(
+                        user_id=order.created_by.id,
+                        template='messages/hotelier_booking_order_new.html',
+                        data=full_data,
+                        message_type='info'
+                )
 
         return True
     except Order.DoesNotExist:
