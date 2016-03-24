@@ -9,7 +9,7 @@
     {% if photos|length %}
         {% for photo in photos %}
             <div class="property-photo-list-link">
-                <a class="fancybox fancybox" rel="gallery" title="{{ photo.name }}"
+                <a class="fancybox" rel="gallery" title="{{ photo.name }}"
                    href="{{ photo.photo.url }}">
                     <img src="{% static photo.thumbnail.url %}" class="img-rounded"
                          data-toggle="tooltip"

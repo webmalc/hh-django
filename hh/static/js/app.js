@@ -32,7 +32,7 @@ $(document).ready(function () {
     $.fn.datepicker.defaults.todayHighlight = true;
 
     //Fancybox
-    $(".fancybox.autoplay").fancybox({
+    $(".fancybox").fancybox({
         openEffect: 'none',
         closeEffect: 'none'
     });

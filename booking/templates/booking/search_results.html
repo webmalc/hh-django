@@ -74,7 +74,7 @@
                             {% with group.grouper.propertyphoto_set.all as photos %}
                                 {% if photos|length %}
                                     {% with photos|first as main_photo %}
-                                        <a class="fancybox fancybox autoplay"
+                                        <a class="fancybox autoplay"
                                            rel="gallery-{{ group.grouper.id }}" title="{{ main_photo.getname }}"
                                            href="{{ main_photo.photo.url }}">
                                             <img src="{% static main_photo.preview_photo.url %}"
