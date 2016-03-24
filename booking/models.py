@@ -32,7 +32,7 @@ class Order(CommonInfo):
     original_status = None
 
     first_name = models.CharField(max_length=50, verbose_name=_('first name'))
-    last_name = models.CharField(max_length=50, verbose_name=_('first name'))
+    last_name = models.CharField(max_length=50, verbose_name=_('last name'))
     patronymic = models.CharField(max_length=50, null=True, blank=True, verbose_name=_('patronymic'))
     citizenship = models.CharField(
             max_length=100, choices=CITIZENSHIP_TYPES, default='rus', verbose_name=_('citizenship')

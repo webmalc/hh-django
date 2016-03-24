@@ -4,6 +4,8 @@
 $(document).ready(function () {
     'use strict';
 
+    $.notification.requestPermission();
+
     var getMessages = function () {
         $.getJSON('/users/messages', function (data) {
             if (data.length) {

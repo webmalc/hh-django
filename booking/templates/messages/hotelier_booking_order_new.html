@@ -2,7 +2,7 @@
 {% load humanize %}
 
 {% block content %}
-    <p>Новая заявка на бронирование #{{ id }} в «{{ property }}».</p>
+    Новая заявка на бронирование #{{ id }} в «{{ property }}».
     <p>
         {% for order_room in order_rooms %}
             {{ order_room.room }} за <strong>{{ order_room.total|intcomma }}</strong> руб.<br>
