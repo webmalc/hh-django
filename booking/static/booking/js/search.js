@@ -8,6 +8,7 @@ $(document).ready(function () {
         todayBtn: "linked"
     });
 
+    //Search results
     (function () {
         var form = $('#search-form'),
             maxRooms = form.attr('data-max-rooms-in-order'),
@@ -34,7 +35,45 @@ $(document).ready(function () {
                     $('.search-results-room-input').not(':checked').iCheck('enable');
                 }
             },
-            sendForm = function () {
+            sendOrder = function () {
+                var orderForm = $('#search-results-form'),
+                    orderOverlay = $('#order-form-overlay'),
+                    orderFormWrapper = $('#order-form-modal-body'),
+                    sendButton = $('#send-order-form');
+
+                if (!orderFormWrapper.html()) {
+                    orderOverlay.hide();
+                    orderFormWrapper.load('/booking/order/create');
+                }
+
+                orderForm.submit(function (e) {
+                    e.preventDefault();
+                    $.ajax({
+                        type: 'POST',
+                        url: '/booking/order/create',
+                        data: orderForm.serialize(),
+                        success: function (response) {
+                            orderOverlay.hide();
+                            orderFormWrapper.html(response);
+                            if ($('#id_first_name').length) {
+                                sendButton.prop('disabled', false);
+                            } else {
+                                hh.secondsCounter()
+                                setTimeout(function () {
+                                    location.reload();
+                                }, 30 * 1000);
+                            }
+                        },
+                        beforeSend: function () {
+                            sendButton.prop('disabled', true)
+                            orderOverlay.show();
+                            orderFormWrapper.html('Подождите...');
+                        }
+                    });
+                });
+            },
+            sendForm = function (scroll) {
+                scroll = scroll === 'undefined' ? false : scroll;
                 var data = form.find('input[name!=csrfmiddlewaretoken], select').serialize();
                 $.ajax({
                     type: 'POST',
@@ -48,9 +87,9 @@ $(document).ready(function () {
                         overlay.hide();
                         results.html(response);
                         window.history.pushState(data, '', '/booking/search/?' + data);
-                        hh.readmore();
-                        hh.icheck();
+                        hh.readmore().icheck().select2().makeRequired();
                         checkRooms();
+                        sendOrder();
                         $('.search-results-room-input').on('ifChanged change', checkRooms);
                         $('#search-results-form-submit').affix({
                             offset: {
@@ -59,6 +98,11 @@ $(document).ready(function () {
                                 }
                             }
                         });
+                        if (scroll) {
+                            $('html, body').animate({
+                                scrollTop: $("#search-results-form").offset().top
+                            }, 300);
+                        }
                     }
                 });
 
@@ -68,7 +112,7 @@ $(document).ready(function () {
         }
         form.submit(function (event) {
             event.preventDefault();
-            sendForm();
+            sendForm(true);
         });
         sendForm();
     }());

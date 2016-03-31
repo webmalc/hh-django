@@ -83,3 +83,4 @@ celerybeat-schedule
 
 #Project
 /hh/local_settings.py
+/nbproject/private/

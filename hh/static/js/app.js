@@ -8,6 +8,7 @@ hh.readmore = function () {
         moreLink: '<a href="#" class="readmore-link">подробнее</a>',
         lessLink: '<a href="#" class="readmore-link">скрыть</a>'
     });
+    return hh;
 };
 
 hh.icheck = function () {
@@ -17,13 +18,60 @@ hh.icheck = function () {
             checkboxClass: 'icheckbox_square-blue',
             radioClass: 'iradio_square-blue'
         });
+    return hh;
+};
+
+hh.select2 = function () {
+    "use strict";
+    $('select.form-control').not('.not-select2').select2();
+    return hh;
+};
+
+hh.makeRequired = function () {
+    "use strict";
+    $('label.requiredField').each(function () {
+        $(this).next('div.controls').find('input').prop('required', true);
+    });
+    return hh;
+};
+
+hh.secondsCounter = function () {
+    "use strict";
+    $('.seconds-counter').each(function () {
+        var span = $(this),
+            counter = parseInt(span.html(), 10);
+        setInterval(function () {
+            counter -= 1;
+            span.html(counter);
+            if (counter === 0) {
+                clearInterval(counter);
+            }
+        }, 1000);
+    });
+    return hh;
 };
 
 $(document).ready(function () {
     'use strict';
 
+    // Ajax CSRFToken
+    $.ajaxSetup({
+        beforeSend: function (xhr, settings) {
+            var csrfSafeMethod = function (method) {
+                // these HTTP methods do not require CSRF protection
+                return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+            };
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", Cookies.get('csrftoken'));
+            }
+        }
+    });
+
     // Readmore.js
     hh.readmore();
+
+    //Seconds counter
+    hh.secondsCounter();
 
     //Datepicker
     $.fn.datepicker.defaults.format = "dd.mm.yyyy";

@@ -1,12 +1,27 @@
 from django.db import models
 from django.conf import settings
-from django.utils.timezone import timedelta, datetime, localtime
+from django.utils.timezone import timedelta, datetime
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 from hh.models import CommonInfo
 from hotels.models import Room
+
+
+class OrderManager(models.Manager):
+    """
+    OrderManager manager
+    """
+    def user_can_booking(self, user):
+        """
+        Check user order limit
+        :param user
+        """
+        orders_count = self.all().filter(created_by=user, status='process').count()
+        limit = settings.HH_BOOKING_ORDER_PARTNER_LIMIT if user.is_partner() else settings.HH_BOOKING_ORDER_USER_LIMIT
+
+        return orders_count < limit
 
 
 class Order(CommonInfo):
@@ -29,6 +44,7 @@ class Order(CommonInfo):
     )
     PERCENT_VALIDATORS = [MaxValueValidator(100)]
 
+    objects = OrderManager()
     original_status = None
 
     first_name = models.CharField(max_length=50, verbose_name=_('first name'))
@@ -62,20 +78,36 @@ class Order(CommonInfo):
         self.original_status = self.status
 
     def get_fio(self):
+        """
+        Get full name
+        :return: full name string string
+        """
         return '{} {} {}'.format(self.last_name, self.first_name, self.patronymic)
     get_fio.short_description = 'fio'
 
     def get_commission_sum(self):
+        """
+        Get commission sum
+        :return: int
+        """
         if self.total:
             return int(self.total * self.commission / 100)
         return 0
     get_commission_sum.short_description = 'commission sum'
 
     def get_agent_commission_sum(self):
+        """
+        Get agent commission sum
+        :return: int
+        """
         return int(self.get_commission_sum() * self.agent_commission / 100)
     get_agent_commission_sum.short_description = 'agent commission sum'
 
     def get_property(self):
+        """
+        Get accepted room property
+        :return: hotels.model.Property
+        """
         if self.accepted_room:
             return self.accepted_room.property
         return None
@@ -85,7 +117,7 @@ class Order(CommonInfo):
         if self.begin and self.end and (self.begin > self.end):
             raise ValidationError('Dates incorrect')
 
-        if self.begin == self.end:
+        if self.begin and self.end and self.begin == self.end:
             self.end = self.begin + timedelta(days=1)
 
     class Meta:

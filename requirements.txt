@@ -31,7 +31,7 @@ html5lib==0.9999999
 image==1.4.4
 kombu==3.0.33
 oauthlib==1.0.3
-phonenumbers==7.2.5
+phonenumbers==7.2.8
 pilkit==1.1.13
 Pillow==3.1.0
 progressbar2==3.6.0
@@ -39,7 +39,7 @@ psycopg2==2.6.1
 python-memcached==1.57
 python-slugify==1.2.0
 python3-openid==3.0.9
-pytz==2015.7
+pytz==2016.3
 rcssmin==1.0.6
 redis==2.10.5
 requests==2.9.1

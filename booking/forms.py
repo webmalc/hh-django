@@ -5,6 +5,7 @@ from django.core.validators import MinValueValidator
 from django_select2.forms import ModelSelect2Widget, ModelSelect2MultipleWidget
 from hh.models import City
 from hotels.models import MetroStation, Room, Property
+from booking.models import Order
 
 
 class CityWithHotelsWidget(ModelSelect2Widget):
@@ -23,14 +24,16 @@ class MetroWithHotelsWidget(ModelSelect2MultipleWidget):
     attrs = {'class': 'not-select2'}
 
 
-class OrderPersonForm(forms.Form):
+class OrderPersonForm(forms.ModelForm):
     """
     Person form for order
     """
-    last_name = forms.CharField(widget=forms.TextInput(attrs={'required': 'true'}), label=_('last name').capitalize)
-    first_name = forms.CharField(widget=forms.TextInput(attrs={'required': 'true'}), label=_('first name').capitalize)
-    patronymic = forms.CharField(required=False, label=_('patronymic').capitalize)
-    #citizenship = forms.ModelChoiceField(queryset=Country.objects.all(), widget=CityWithHotelsWidget, initial=347, label=_('citizenship'))
+    class Meta:
+        model = Order
+        fields = ['first_name', 'last_name', 'patronymic', 'phone', 'email', 'citizenship', 'comment']
+        widgets = {
+            'comment': forms.Textarea(attrs={'rows': 4}),
+        }
 
 
 class SearchForm(forms.Form):

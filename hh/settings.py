@@ -100,6 +100,7 @@ SITE_ID = 1
 
 LOCALE_PATHS = (
     os.path.join(os.path.dirname(__file__), "locale"),
+    os.path.join(os.path.dirname(__file__), "app_locale"),
 )
 
 WSGI_APPLICATION = 'hh.wsgi.application'
@@ -274,3 +275,5 @@ GEOPOSITION_MAP_WIDGET_HEIGHT = 300
 HH_SEARCH_RESULTS_PER_PAGE = 30
 HH_BOOKING_MAX_ORDER_ROOMS = 5
 HH_BOOKING_ORDER_LIFETIME = 30  # in minutes
+HH_BOOKING_ORDER_USER_LIMIT = 1
+HH_BOOKING_ORDER_PARTNER_LIMIT = 3
