@@ -1,6 +1,6 @@
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
-from booking.models import Order
+from booking.models import Order, OrderRoom
 from users.tasks import mail_managers_task, mail_user_task, add_message_user_task
 from booking.tasks import get_order_email_data
 
@@ -28,7 +28,7 @@ def booking_order_post_save(sender, **kwargs):
                     email=order.email
             )
         if created_by:
-            add_message_user_task(
+            add_message_user_task.delay(
                     user_id=created_by.id,
                     template='messages/user_booking_order_completed.html',
                     data=data,
@@ -46,7 +46,7 @@ def booking_order_post_save(sender, **kwargs):
                     email=order.email
             )
         if created_by:
-            add_message_user_task(
+            add_message_user_task.delay(
                     user_id=created_by.id,
                     template='messages/user_booking_order_canceled.html',
                     data=data,

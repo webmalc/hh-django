@@ -103,6 +103,14 @@ class Order(CommonInfo):
         return int(self.get_commission_sum() * self.agent_commission / 100)
     get_agent_commission_sum.short_description = 'agent commission sum'
 
+    def get_duration(self):
+        """
+        :return (int) duration in days or None
+        """
+        if self.end and self.begin:
+            return (self.end - self.begin).days
+        return None
+
     def get_property(self):
         """
         Get accepted room property

@@ -69,7 +69,7 @@ class OrderAdmin(VersionAdmin):
 
         # Send emails to hoteliers on Order creation
         if not change:
-            mail_order_hoteliers_task(
+            mail_order_hoteliers_task.delay(
                 order_id=order.id,
                 subject='Новая заявка на бронирование #{id}'.format(id=order.id),
                 template='emails/hotelier_booking_order_new.html',

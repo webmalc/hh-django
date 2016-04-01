@@ -7,9 +7,10 @@ from django.core.exceptions import ValidationError
 from django.forms import model_to_dict
 from django.core.urlresolvers import reverse_lazy
 from booking.forms import SearchForm, OrderPersonForm
-from booking.models import Order
+from booking.models import Order, OrderRoom
 from hotels.models import Room
 from booking.calculation import calc_commission
+from booking.tasks import mail_order_hoteliers_task, get_order_email_data
 
 
 class SearchView(FormView):
@@ -100,8 +101,7 @@ class OrderCreateView(FormView):
 
         if not Order.objects.user_can_booking(self.request.user):
             return error_response
-
-        rooms = self.request.POST.get('rooms', [])
+        rooms = self.request.POST.getlist('rooms')
         if len(rooms) > settings.HH_BOOKING_MAX_ORDER_ROOMS or len(rooms) == 0:
             return error_response
 
@@ -112,6 +112,24 @@ class OrderCreateView(FormView):
         try:
             order.full_clean()
             order.save()
+            for room_id in rooms:
+                room = Room.objects.filter(pk=int(room_id)).first()
+                if room:
+                    order_room = OrderRoom()
+                    order_room.total = room.calc_price(order.places, order.get_duration())
+                    order_room.room = room
+                    order_room.order = order
+
+                    order_room.full_clean()
+                    order_room.save()
+
+            mail_order_hoteliers_task.delay(
+                order_id=order.id,
+                subject='Новая заявка на бронирование #{id}'.format(id=order.id),
+                template='emails/hotelier_booking_order_new.html',
+                data=get_order_email_data(order, True),
+            )
+
         except ValidationError:
             return error_response
         return super(OrderCreateView, self).form_valid(form)
