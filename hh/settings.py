@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 """
 
 import os
+from datetime import timedelta
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
 # Local settings
@@ -258,6 +259,12 @@ CELERY_ACCEPT_CONTENT = ['application/json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Europe/Moscow'
+CELERYBEAT_SCHEDULE = {
+    'close_old_orders': {
+        'task': 'booking.tasks.close_old_orders',
+        'schedule': timedelta(seconds=60)
+    },
+}
 
 # Django phonenumber
 PHONENUMBER_DB_FORMAT = 'NATIONAL'

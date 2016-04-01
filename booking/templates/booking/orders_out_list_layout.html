@@ -1,0 +1,28 @@
+{% extends 'booking/search.html' %}
+
+{% block booking_content %}
+
+    <div class="nav-tabs-custom">
+        {% block tabs %}
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" {% if tab == 'active' or not tab %}class="active"{% endif %}>
+                    <a href="{% url 'booking:orders_out_active_list' %}" aria-controls="home" role="tab">
+                        <i class="fa fa-bell"></i> Текущие
+                    </a>
+                </li>
+                <li role="presentation" {% if tab == 'completed' %}class="active"{% endif %}>
+                    <a href="{% url 'booking:orders_out_completed_list' %}" aria-controls="security" role="tab">
+                        <i class="fa fa-clock-o"></i> Архив
+                    </a>
+                </li>
+            </ul>
+        {% endblock %}
+
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane active margin-top-md-lg">
+                {% block order_out_list_content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+

@@ -1,0 +1,9 @@
+{% extends 'booking/orders_out_list_layout.html' %}
+
+{% block tabs %}
+    {% with 'completed' as tab %}{{ block.super }}{% endwith %}
+{% endblock tabs %}
+
+{% block order_out_list_content %}
+    Архив
+{% endblock %}

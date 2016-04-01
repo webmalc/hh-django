@@ -1,5 +1,5 @@
 from django.views.generic.edit import FormView
-from django.views.generic import TemplateView
+from django.views.generic import TemplateView, ListView
 from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
@@ -11,6 +11,39 @@ from booking.models import Order, OrderRoom
 from hotels.models import Room
 from booking.calculation import calc_commission
 from booking.tasks import mail_order_hoteliers_task, get_order_email_data
+
+
+class OrderListMixin(ListView):
+    """
+    Base orders list
+    """
+    model = Order
+
+    def get_queryset(self):
+        q = super(OrderListMixin, self).get_queryset()
+        return q .filter(created_by=self.request.user)
+
+
+class OutActiveOrdersView(OrderListMixin):
+    """
+    Outcome orders list (active)
+    """
+    template_name = 'booking/orders_out_active_list.html'
+
+    def get_queryset(self):
+        q = super(OutActiveOrdersView, self).get_queryset()
+        return q.filter(status='process')
+
+
+class OutCompletedOrdersView(OrderListMixin):
+    """
+    Outcome orders list (active)
+    """
+    template_name = 'booking/orders_out_completed_list.html'
+
+    def get_queryset(self):
+        q = super(OutCompletedOrdersView, self).get_queryset()
+        return q.exclude(status='process')
 
 
 class SearchView(FormView):

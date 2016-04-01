@@ -1,10 +1,17 @@
 from __future__ import absolute_import
 from hh.celery import app
+from django.utils.timezone import datetime
 from users.tasks import mail_user_task, add_message_user_task
 from booking.models import Order
 
 
-# TODO: close orders task
+@app.task
+def close_old_orders():
+    orders = Order.objects.filter(status='process', ends_at__lt=datetime.now())
+    for order in orders:
+        order.status = 'canceled'
+        order.save()
+
 
 def get_order_email_data(order, created=False):
     return {
