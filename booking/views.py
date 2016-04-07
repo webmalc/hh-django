@@ -1,6 +1,7 @@
 from django.views.generic.edit import FormView
+from django.shortcuts import get_object_or_404, render_to_response, redirect
+from django.contrib import messages
 from django.views.generic import TemplateView, ListView
-from django.shortcuts import render_to_response
 from django.template import RequestContext
 from django.conf import settings
 from django.core.exceptions import ValidationError
@@ -21,7 +22,10 @@ class OrderListMixin(ListView):
 
     def get_queryset(self):
         q = super(OrderListMixin, self).get_queryset()
-        return q .filter(created_by=self.request.user)
+        return q .filter(created_by=self.request.user).\
+            select_related('accepted_room', 'created_by', 'accepted_room__property',
+                           'accepted_room__property__city').\
+            prefetch_related('order_rooms', 'order_rooms__room', 'order_rooms__room__property')
 
 
 class OutActiveOrdersView(OrderListMixin):
@@ -43,7 +47,7 @@ class OutCompletedOrdersView(OrderListMixin):
 
     def get_queryset(self):
         q = super(OutCompletedOrdersView, self).get_queryset()
-        return q.exclude(status='process')
+        return q.exclude(status='process')[0:30]
 
 
 class SearchView(FormView):
@@ -142,6 +146,7 @@ class OrderCreateView(FormView):
         order.places = self.request.POST['places']
         order.begin = self.request.POST['begin']
         order.end = self.request.POST['end']
+        order.is_agent_order = bool(self.request.user.is_partner())
         try:
             order.full_clean()
             order.save()
@@ -166,3 +171,18 @@ class OrderCreateView(FormView):
         except ValidationError:
             return error_response
         return super(OrderCreateView, self).form_valid(form)
+
+
+def order_cancel(request, pk):
+    """
+    Order cancel view
+    @:param pk order id
+    """
+    order = get_object_or_404(
+        Order.objects.filter(created_by=request.user).filter(status='process'),
+        pk=pk
+    )
+    order.status = 'canceled'
+    order.save()
+    messages.success(request, 'Заявка #{} успешно отменена.'.format(order.id))
+    return redirect('booking:orders_out_active_list')

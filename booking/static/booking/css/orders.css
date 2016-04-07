@@ -1,0 +1,12 @@
+
+#out-active-orders-table tr > td {
+    border-bottom: 1px solid #d2d6de;
+    padding-bottom: 30px;
+    padding-top: 30px;
+}
+#out-active-orders-table h3 {
+    margin-top: 0px;
+}
+#out-active-orders-table tr:last-child > td {
+    border-bottom: 0px;
+}

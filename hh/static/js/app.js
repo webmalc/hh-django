@@ -70,6 +70,22 @@ $(document).ready(function () {
     // Readmore.js
     hh.readmore();
 
+    // Modal confirmation link
+    (function () {
+        $('.modal-confirm').click(function (event) {
+            event.preventDefault();
+            var modal = $('#messages-modal');
+            modal.find('.modal-body').html('Вы уверены?');
+            if (!modal.find('.messages-modal-link').length) {
+                modal.find('.modal-footer')
+                    .append('<a href="" class="btn btn-primary messages-modal-link">Продолжить</a>');
+            }
+            modal.find('.messages-modal-link').prop('href', $(this).attr('href'));
+
+            $('#messages-modal').modal('show');
+        });
+    }());
+
     //Seconds counter
     hh.secondsCounter();
 

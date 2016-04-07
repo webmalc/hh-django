@@ -1,6 +1,6 @@
 from django.db import models
 from django.conf import settings
-from django.utils.timezone import timedelta, datetime
+from django.utils.timezone import timedelta, datetime, now
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import ugettext_lazy as _
@@ -18,10 +18,23 @@ class OrderManager(models.Manager):
         Check user order limit
         :param user
         """
-        orders_count = self.all().filter(created_by=user, status='process').count()
-        limit = settings.HH_BOOKING_ORDER_PARTNER_LIMIT if user.is_partner() else settings.HH_BOOKING_ORDER_USER_LIMIT
+        query = self.all().filter(created_by=user)
 
-        return orders_count < limit
+        if query.count() and not user.is_partner():
+            last_order = query.latest('created_at')
+            time_limit = settings.HH_BOOKING_ORDER_TIME_LIMIT
+            if last_order.created_at + timedelta(minutes=time_limit) > now():
+                return False
+
+        limit = settings.HH_BOOKING_ORDER_PARTNER_LIMIT if user.is_partner() else settings.HH_BOOKING_ORDER_USER_LIMIT
+        if query.filter(status='process').count() >= limit:
+            return False
+
+        return True
+
+
+def get_order_ends_at_datetime():
+    return datetime.now() + timedelta(minutes=settings.HH_BOOKING_ORDER_LIFETIME)
 
 
 class Order(CommonInfo):
@@ -42,6 +55,12 @@ class Order(CommonInfo):
         ('canceled', 'Отменена')
 
     )
+    STATUSES_INFO = {
+        'process': {'icon': 'fa fa-spin fa-spinner', 'class': 'default'},
+        'completed': {'icon': 'fa fa-check', 'class': 'success'},
+        'canceled': {'icon': 'fa fa-ban', 'class': 'danger'}
+    }
+
     PERCENT_VALIDATORS = [MaxValueValidator(100)]
 
     objects = OrderManager()
@@ -71,7 +90,7 @@ class Order(CommonInfo):
     comment = models.TextField(null=True, blank=True, verbose_name=_('comment'))
     ends_at = models.DateTimeField(
             verbose_name=_('ends at'),
-            default=datetime.now() + timedelta(minutes=settings.HH_BOOKING_ORDER_LIFETIME))
+            default=get_order_ends_at_datetime)
 
     def __init__(self, *args, **kwargs):
         super(Order, self).__init__(*args, **kwargs)
@@ -121,6 +140,15 @@ class Order(CommonInfo):
         return None
     get_property.short_description = 'property'
 
+    def get_full_name(self):
+        return '{0} {1} {2}'.format(self.last_name, self.first_name, self.patronymic)
+
+    def get_status_info(self):
+        """
+        Return status dict for order
+        """
+        return self.STATUSES_INFO[self.status]
+
     def clean(self):
         if self.begin and self.end and (self.begin > self.end):
             raise ValidationError('Dates incorrect')
@@ -138,7 +166,7 @@ class OrderRoom(models.Model):
     """
     room = models.ForeignKey(Room, verbose_name=_('room'))
     total = models.PositiveIntegerField(validators=[MinValueValidator(1)], verbose_name=_('total'))
-    order = models.ForeignKey(Order, verbose_name=_('order'))
+    order = models.ForeignKey(Order, verbose_name=_('order'), related_name='order_rooms')
     is_accepted = models.BooleanField(default=False, verbose_name=_('is accepted'))
 
     def get_property(self):
@@ -156,4 +184,7 @@ class OrderRoom(models.Model):
         if self.is_accepted and not self.order.accepted_room:
             self.order.accepted_room = self.room
             self.order.save()
+
+    class Meta:
+        ordering = ['-is_accepted']
 

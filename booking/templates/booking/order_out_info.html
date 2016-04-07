@@ -1,0 +1,85 @@
+{% load humanize %}
+<td>
+    <h3 class="text-info">
+        {% with status_info=order.get_status_info %}
+            <small class="label label-{{ status_info.class }} margin-right-sm">#{{ order.id }}</small>
+            <div class="hidden-sm hidden-md hidden-lg margin-bottom-sm"></div>
+            {{ order.begin }} - {{ order.end }} на {{ order.places }} чел.
+            <small class="text-{{ status_info.class }}">
+                <i class="{{ status_info.icon }}"></i> {{ order.get_status_display|lower }}
+            </small>
+        {% endwith %}
+    </h3>
+    <p class="text-muted font-lg">
+        <small><i class="fa fa-male margin-right-sm"></i></small>
+        {{ order.get_full_name }}, {{ order.phone }}, {{ order.email }}, {{ order.get_citizenship_display }}
+    </p>
+    {% if order.comment %}
+        <div class="bg-gray disabled color-palette padding-all-sm margin-bottom-md">
+            <small>{{ order.comment|linebreaks }}</small>
+        </div>
+    {% endif %}
+
+    {% if order.status != 'process' and order.total %}
+        <div class="bg-navy disabled color-palette padding-all-sm margin-bottom-md">
+            <small class="margin-right-sm">Итого:</small>
+            <strong class="font-lg margin-right-md">{{ order.total|intcomma }} руб.</strong>
+            {% if order.is_agent_order and  order.agent_commission %}
+                <div class="hidden-sm hidden-md hidden-lg margin-bottom-sm"></div>
+                <small class="margin-right-sm">Заработок:</small>
+                <strong class="font-lg">{{ order.get_agent_commission_sum|intcomma }} руб.</strong>
+            {% endif %}
+        </div>
+    {% endif %}
+
+    {% if order.status == 'process' %}
+        <p class="text-danger">
+            <i class="fa fa-clock-o"></i> Заканчивается {{ order.ends_at }}.
+            <strong><a href="{% url 'booking:order_cancel' pk=order.id %}" class="modal-confirm">Отменить?</a></strong>
+        </p>
+    {% endif %}
+
+    <div class="bg-gray padding-all-md color-palette">
+        {% if not order.accepted_room %}
+            <ul class="ul-st">
+                {% for order_room in order.order_rooms.all %}
+                    <li>
+                        {{ order_room.room.property }} -
+                        <small>
+                            {{ order_room.room }} за {{ order_room.total|intcomma }} руб.
+                        </small>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            {% with property=order.accepted_room.property room=order.accepted_room %}
+                <h4>
+                    «{{ property }}»
+                    <small>{{ property.get_type_display }} -
+                        {{ room }}
+                        {{ property.phone }}
+                    </small>
+                </h4>
+                <p>
+                    {% if property.position %}
+                        <a target="_blank" title="Посмотреть на карте" data-toggle="tooltip" data-placement="top"
+                           href="http://maps.google.com/maps?q=loc:{{ property.position }}">
+                            <i class="fa fa-map-marker margin-right-sm"></i>
+                        </a>
+                    {% else %}
+                        <i class="fa fa-compass margin-right-sm"></i>
+                    {% endif %}
+                    {{ property.city }}, {{ property.address }}
+                </p>
+                <p>
+                    <i class="fa fa-phone  margin-right-sm"></i>
+                    {{ property.created_by.profile.phone }}
+                </p>
+
+            {% endwith %}
+        {% endif %}
+    </div>
+    <div class="text-right margin-top-sm">
+        <small>{{ order.created_at }}</small>
+    </div>
+</td>

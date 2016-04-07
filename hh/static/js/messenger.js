@@ -22,6 +22,7 @@ $(document).ready(function () {
                     items.push('<div class="callout callout-' + v.type + '"><i class="' + v.icon + '"></i> ' + v.content + '</div>');
                 });
                 modal.find('.modal-body').html(items.join(''));
+                modal.find('.messages-modal-link').remove();
                 $('#messages-modal').modal('show');
             }
         });

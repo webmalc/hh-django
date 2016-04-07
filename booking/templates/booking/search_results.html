@@ -42,7 +42,7 @@
                                         Если этого не произошло попробуйте отправить новую заявку в другие отели.<br>
                                     </p>
                                     <p><i class="fa fa-info-circle"></i> Ваша заявка: <strong>{{ form.begin }}
-                                        - {{ form.end }}, {{ form.places }} чел.</strong></p>
+                                        - {{ form.end }} на {{ form.places }} чел.</strong></p>
                                 </div>
 
                                 <div class="box box-default">
@@ -74,9 +74,9 @@
                 </div>
                 {% else %}
                     <div class="callout callout-info">
-                        <i class="fa fa-info-circle"></i>
-                        Вы достигли лимита окрытых заявок и не можете создавать новые заявки.
-                        Подождите пока <a href="">Ваши заявки</a> рассмотрят отели или удалите лишние.
+                        <i class="fa fa-clock-o"></i>
+                        Вы не можете создавать новые заявки в данный момент.
+                        Подождите пока <a href="{% url 'booking:orders_out_active_list' %}">Ваши активные заявки</a> рассмотрят отели.
                     </div>
                 {% endif %}
 

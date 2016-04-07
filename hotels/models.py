@@ -116,7 +116,7 @@ class Property(CommonInfo, GeoMixin):
     address = models.TextField(verbose_name=_('address'))
     city = models.ForeignKey(City, on_delete=models.PROTECT, verbose_name=_('city'))
     metro_stations = models.ManyToManyField(MetroStation, blank=True, verbose_name=_('metro'),
-                                            help_text='Ближайшие станции метро')
+                                            help_text='Ближайшие станции метро', related_name='metro_stations')
     tariff = models.ForeignKey(Tariff, null=True, blank=True, on_delete=models.SET_NULL)
     sorting = models.IntegerField(default=0)
     is_enabled = models.BooleanField(default=True, verbose_name=_('is enabled?'))

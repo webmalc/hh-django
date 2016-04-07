@@ -9,4 +9,5 @@ urlpatterns = [
     url(r'order/create/success$', views.OrderCreateSuccessView.as_view(), name='order_create_success'),
     url(r'orders/out/active', views.OutActiveOrdersView.as_view(), name='orders_out_active_list'),
     url(r'orders/out/completed', views.OutCompletedOrdersView.as_view(), name='orders_out_completed_list'),
+    url(r'order/(?P<pk>[0-9]+)/cancel', views.order_cancel, name='order_cancel')
 ]

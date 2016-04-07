@@ -7,7 +7,7 @@
             <ul class="nav nav-tabs" role="tablist">
                 <li role="presentation" {% if tab == 'active' or not tab %}class="active"{% endif %}>
                     <a href="{% url 'booking:orders_out_active_list' %}" aria-controls="home" role="tab">
-                        <i class="fa fa-bell"></i> Текущие
+                        <i class="fa fa-bell"></i> Активные
                     </a>
                 </li>
                 <li role="presentation" {% if tab == 'completed' %}class="active"{% endif %}>

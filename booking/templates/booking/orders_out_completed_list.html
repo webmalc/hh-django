@@ -5,5 +5,18 @@
 {% endblock tabs %}
 
 {% block order_out_list_content %}
-    Архив
+    {% if object_list|length %}
+        <table class="table table-hover table-striped" id="out-active-orders-table">
+            {% for order in object_list %}
+                <tr>
+                    {% include 'booking/order_out_info.html' with order=order %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="alert alert-info">
+            <i class="fa fa-info-circle margin-right-xs"></i>
+            У вас нет архивных заявок. <a href="{% url 'booking:search' %}">Создать новую?</a>
+        </div>
+    {% endif %}
 {% endblock %}
