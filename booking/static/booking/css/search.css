@@ -14,10 +14,10 @@
 #search-form input#id_places{
     width: 60px;
 }
-#search-form button {
+div.callout button {
     margin: 26px 0px 6px 0px;
 }
-#search-form .asteriskField {
+div.callout .asteriskField  {
     display: none;
 }
 .search-results-row {

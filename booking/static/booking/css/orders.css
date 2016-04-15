@@ -10,3 +10,6 @@
 #out-active-orders-table tr:last-child > td {
     border-bottom: 0px;
 }
+#div_id_date  .select2-container {
+    margin-right: 5px !important;
+}

@@ -7,11 +7,12 @@ from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.forms import model_to_dict
 from django.core.urlresolvers import reverse_lazy
-from booking.forms import SearchForm, OrderPersonForm
+from booking.forms import SearchForm, OrderPersonForm, OrdersFilterForm
 from booking.models import Order, OrderRoom
 from hotels.models import Room
 from booking.calculation import calc_commission
 from booking.tasks import mail_order_hoteliers_task, get_order_email_data
+from hh.utils import get_month_day_range
 
 
 class OrderListMixin(ListView):
@@ -22,10 +23,18 @@ class OrderListMixin(ListView):
 
     def get_queryset(self):
         q = super(OrderListMixin, self).get_queryset()
-        return q .filter(created_by=self.request.user).\
+        form = OrdersFilterForm(self.request.GET if self.request.GET.get('is_send', None) else None)
+        date = form.cleaned_data['date'] if form.is_valid() else form.get_initial_data()['date']()
+
+        return q .filter(created_by=self.request.user, created_at__range=get_month_day_range(date)).\
             select_related('accepted_room', 'created_by', 'accepted_room__property',
                            'accepted_room__property__city').\
             prefetch_related('order_rooms', 'order_rooms__room', 'order_rooms__room__property')
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderListMixin, self).get_context_data(**kwargs)
+        context['filter_form'] = OrdersFilterForm(self.request.GET if self.request.GET.get('is_send', None) else None)
+        return context
 
 
 class OutActiveOrdersView(OrderListMixin):

@@ -6,6 +6,18 @@ from django_select2.forms import ModelSelect2Widget, ModelSelect2MultipleWidget
 from hh.models import City
 from hotels.models import MetroStation, Room, Property
 from booking.models import Order
+from hh.widgets.month import MonthYearWidget
+from hh.forms import FormInitialDataMixin
+
+
+def get_datetime_now():
+    return datetime.datetime.now()
+
+
+class OrdersFilterForm(forms.Form, FormInitialDataMixin):
+    date = forms.DateField(
+        widget=MonthYearWidget(attrs={'required': 'true'}), initial=get_datetime_now, label=_('Period'))
+    is_send = forms.CharField(widget=forms.HiddenInput, initial=1)
 
 
 class CityWithHotelsWidget(ModelSelect2Widget):

@@ -1,11 +1,29 @@
 {% extends 'booking/orders_out_list_layout.html' %}
-
+{% load crispy_forms_filters %}
 {% block tabs %}
     {% with 'completed' as tab %}{{ block.super }}{% endwith %}
 {% endblock tabs %}
 
 {% block order_out_list_content %}
+    <div class="callout callout-warning">
+        <form class="form-inline" action="" id="orders-filter-form" method="get">
+                {% for field in filter_form %}
+                    {{ field|as_crispy_field }}
+                {% endfor %}
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-search"></i>
+                    <span class="margin-left-sm">Показать</span>
+                </button>
+            </div>
+        </form>
+    </div>
     {% if object_list|length %}
+        <div class="text-right">
+            <small class="text-muted">
+                всего: {{ object_list|length }}
+            </small>
+        </div>
         <table class="table table-hover table-striped" id="out-active-orders-table">
             {% for order in object_list %}
                 <tr>
@@ -16,7 +34,7 @@
     {% else %}
         <div class="alert alert-info">
             <i class="fa fa-info-circle margin-right-xs"></i>
-            У вас нет архивных заявок. <a href="{% url 'booking:search' %}">Создать новую?</a>
+            Заявки не найдены. <a href="{% url 'booking:search' %}">Создать новую?</a>
         </div>
     {% endif %}
 {% endblock %}
