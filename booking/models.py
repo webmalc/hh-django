@@ -32,6 +32,22 @@ class OrderManager(models.Manager):
 
         return True
 
+    def filter_for_hotelier(self, user, query=None):
+        """
+        Filter Orders for hotelier
+        :param user: user
+        :type user: user.User
+        :param query: query
+        :type query: QuerySet or None
+        :return: filtered QuerySet
+        :rtype: QuerySet
+        """
+        if not query:
+            query = self.all()
+        hotels = user.hotels_property_created_by.all()
+
+        return query.filter(order_rooms__room__property__in=hotels).distinct()
+
 
 def get_order_ends_at_datetime():
     return datetime.now() + timedelta(minutes=settings.HH_BOOKING_ORDER_LIFETIME)

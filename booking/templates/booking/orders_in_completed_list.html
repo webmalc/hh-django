@@ -1,4 +1,4 @@
-{% extends 'booking/orders_out_list_layout.html' %}
+{% extends 'booking/orders_in_list_layout.html' %}
 {% load crispy_forms_filters %}
 {% block tabs %}
     {% with 'completed' as tab %}{{ block.super }}{% endwith %}
@@ -27,14 +27,14 @@
         <table class="table table-hover table-striped" id="out-active-orders-table">
             {% for order in object_list %}
                 <tr>
-                    {% include 'booking/order_info.html' with order=order %}
+                    {% include 'booking/order_info.html' with order=order incoming=True %}
                 </tr>
             {% endfor %}
         </table>
     {% else %}
         <div class="alert alert-info">
             <i class="fa fa-info-circle margin-right-xs"></i>
-            Заявки не найдены.
+            Заявки не найдены. <a href="{% url 'booking:search' %}">Создать новую?</a>
         </div>
     {% endif %}
 {% endblock %}

@@ -10,7 +10,7 @@
         <table class="table table-hover table-striped" id="out-active-orders-table">
             {% for order in object_list %}
                 <tr>
-                    {% include 'booking/order_out_info.html' with order=order %}
+                    {% include 'booking/order_info.html' with order=order %}
                 </tr>
             {% endfor %}
         </table>

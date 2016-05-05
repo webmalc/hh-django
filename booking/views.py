@@ -26,7 +26,7 @@ class OrderListMixin(ListView):
         form = OrdersFilterForm(self.request.GET if self.request.GET.get('is_send', None) else None)
         date = form.cleaned_data['date'] if form.is_valid() else form.get_initial_data()['date']()
 
-        return q .filter(created_by=self.request.user, created_at__range=get_month_day_range(date)).\
+        return q .filter(created_at__range=get_month_day_range(date)).\
             select_related('accepted_room', 'created_by', 'accepted_room__property',
                            'accepted_room__property__city').\
             prefetch_related('order_rooms', 'order_rooms__room', 'order_rooms__room__property')
@@ -45,18 +45,40 @@ class OutActiveOrdersView(OrderListMixin):
 
     def get_queryset(self):
         q = super(OutActiveOrdersView, self).get_queryset()
-        return q.filter(status='process')
+        return q.filter(created_by=self.request.user, status='process')
 
 
 class OutCompletedOrdersView(OrderListMixin):
     """
-    Outcome orders list (active)
+    Outcome orders list (completed)
     """
     template_name = 'booking/orders_out_completed_list.html'
 
     def get_queryset(self):
         q = super(OutCompletedOrdersView, self).get_queryset()
-        return q.exclude(status='process')[0:30]
+        return q.exclude(created_by=self.request.user, status='process')
+
+
+class InActiveOrdersView(OrderListMixin):
+    """
+    Income orders list (active)
+    """
+    template_name = 'booking/orders_in_active_list.html'
+
+    def get_queryset(self):
+        q = Order.objects.filter_for_hotelier(self.request.user, super(InActiveOrdersView, self).get_queryset())
+        return q.filter(status='process')
+
+
+class InCompletedOrdersView(OrderListMixin):
+    """
+    Income orders list (completed)
+    """
+    template_name = 'booking/orders_in_completed_list.html'
+
+    def get_queryset(self):
+        q = Order.objects.filter_for_hotelier(self.request.user, super(InCompletedOrdersView, self).get_queryset())
+        return q.exclude(status='process')
 
 
 class SearchView(FormView):

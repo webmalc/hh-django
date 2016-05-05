@@ -1,5 +1,6 @@
 {% load humanize %}
 <td>
+    <a name="order{{ order.id }}"></a>
     <h3 class="text-info">
         {% with status_info=order.get_status_info %}
             <small class="label label-{{ status_info.class }} margin-right-sm">#{{ order.id }}</small>
@@ -12,7 +13,13 @@
     </h3>
     <p class="text-muted font-lg">
         <small><i class="fa fa-male margin-right-sm"></i></small>
-        {{ order.get_full_name }}, {{ order.phone }}, {{ order.email }}, {{ order.get_citizenship_display }}
+        {% if not incoming or order.accepted_room.property.created_by == request.user %}
+            {{ order.get_full_name }}, {{ order.phone }}, {{ order.email }},
+        {% else %}
+            <span {% if order.status == 'processing' %} class="dashed-bottom" data-toggle="tooltip" data-placement="top"
+                  title="Данные гостя появятся после подтвержедния заявки."{% endif %}>Данные гостя скрыты</span>,
+        {% endif %}
+        {{ order.get_citizenship_display }}
     </p>
     {% if order.comment %}
         <div class="bg-gray disabled color-palette padding-all-sm margin-bottom-md">
@@ -34,8 +41,11 @@
 
     {% if order.status == 'process' %}
         <p class="text-danger">
-            <i class="fa fa-clock-o"></i> Заканчивается {{ order.ends_at }}.
-            <strong><a href="{% url 'booking:order_cancel' pk=order.id %}" class="modal-confirm">Отменить?</a></strong>
+            <i class="fa fa-clock-o"></i> Заканчивается {{ order.ends_at }}
+            {% if order.created_by == request.user and not incoming %}
+                .<strong><a href="{% url 'booking:order_cancel' pk=order.id %}"
+                            class="modal-confirm">Отменить?</a></strong>
+            {% endif %}
         </p>
     {% endif %}
 
@@ -43,12 +53,20 @@
         {% if not order.accepted_room %}
             <ul class="ul-st">
                 {% for order_room in order.order_rooms.all %}
-                    <li>
-                        {{ order_room.room.property }} -
-                        <small>
-                            {{ order_room.room }} за {{ order_room.total|intcomma }} руб.
-                        </small>
-                    </li>
+                    {% if not incoming or incoming and order_room.room.property.created_by == request.user %}
+                        <li>
+                            {% if incoming and order.status == 'process' %}
+                                <button data-toggle="modal" data-target="#order-confirmation-form-modal"
+                                   class="btn btn-success btn-xs margin-right-sm order-confirmation-link">
+                                    <i class="fa fa-check"></i><span class="hidden-xs"> подтвердить</span>
+                                </button>
+                            {% endif %}
+                            {{ order_room.room.property }} -
+                            <small>
+                                {{ order_room.room }} за {{ order_room.total|intcomma }} руб.
+                            </small>
+                        </li>
+                    {% endif %}
                 {% endfor %}
             </ul>
         {% else %}

@@ -1,0 +1,64 @@
+{% extends 'booking/orders_in_list_layout.html' %}
+
+{% block order_out_list_content %}
+    {% if object_list|length %}
+
+        <!-- Order modal -->
+        <div class="modal fade" id="order-confirmation-form-modal" tabindex="-1" role="dialog"
+             aria-labelledby="order-form-modal">
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">
+                            Заполните форму для подтверждения заявки
+                        </h4>
+                    </div>
+
+                    <div class="modal-body main-background">
+                        <div class="bg-gray color-palette alert">
+
+                            <p>
+                                После оформления заявки с Вами в течении <strong>{{ order_lifetime }}
+                                минут</strong> свяжется какой-либо из выбраных отелей.<br>
+                                Если этого не произошло попробуйте отправить новую заявку в другие отели.<br>
+                            </p>
+                        </div>
+
+                        <div class="box box-default">
+                            <input class="number" id="order-confirmation-total" value="12331">
+                        </div>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-success" id="order-confirmation-form">
+                            <i class="fa fa-check"></i>
+                            Подтвердить заявку
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-right">
+            <small class="text-muted">
+                всего: {{ object_list|length }}
+            </small>
+        </div>
+        <table class="table table-hover table-striped" id="out-active-orders-table">
+            {% for order in object_list %}
+                <tr>
+                    {% include 'booking/order_info.html' with order=order incoming=True %}
+                </tr>
+            {% endfor %}
+        </table>
+    {% else %}
+        <div class="alert alert-info">
+            <i class="fa fa-info-circle margin-right-xs"></i>
+            У вас нет активных заявок.
+        </div>
+    {% endif %}
+{% endblock %}

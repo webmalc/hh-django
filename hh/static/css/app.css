@@ -15,7 +15,10 @@ body {
 .clickable{
     cursor: pointer;
 }
-
+.dashed-bottom {
+    border-bottom: 1px dashed #777777;
+    cursor: help;
+}
 .panel-heading span {
 	margin-top: -20px;
 	font-size: 15px;
