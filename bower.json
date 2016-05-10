@@ -29,6 +29,7 @@
     "bootstrap": "^3.3.6",
     "fancybox": "^2.1.5",
     "Readmore.js": "readmore-js#^2.1.0",
-    "jquery.notification": "^1.0.5"
+    "jquery.notification": "^1.0.5",
+    "teamdf/jquery-number": "jquery-number#^2.1.6"
   }
 }

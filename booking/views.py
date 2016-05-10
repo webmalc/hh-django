@@ -21,14 +21,20 @@ class OrderListMixin(ListView):
     """
     model = Order
 
-    def get_queryset(self):
-        q = super(OrderListMixin, self).get_queryset()
+    def filtered_queryset(self):
+        """
+        :return filtered queryset:
+        """
         form = OrdersFilterForm(self.request.GET if self.request.GET.get('is_send', None) else None)
         date = form.cleaned_data['date'] if form.is_valid() else form.get_initial_data()['date']()
 
-        return q .filter(created_at__range=get_month_day_range(date)).\
-            select_related('accepted_room', 'created_by', 'accepted_room__property',
-                           'accepted_room__property__city').\
+        return super(OrderListMixin, self).get_queryset().filter(created_at__range=get_month_day_range(date))
+
+    def get_queryset(self):
+        q = super(OrderListMixin, self).get_queryset()
+
+        return q.select_related('accepted_room', 'created_by', 'accepted_room__property',
+                                'accepted_room__property__city'). \
             prefetch_related('order_rooms', 'order_rooms__room', 'order_rooms__room__property')
 
     def get_context_data(self, **kwargs):
@@ -55,7 +61,7 @@ class OutCompletedOrdersView(OrderListMixin):
     template_name = 'booking/orders_out_completed_list.html'
 
     def get_queryset(self):
-        q = super(OutCompletedOrdersView, self).get_queryset()
+        q = super(OutCompletedOrdersView, self).filtered_queryset()
         return q.exclude(created_by=self.request.user, status='process')
 
 
@@ -77,7 +83,7 @@ class InCompletedOrdersView(OrderListMixin):
     template_name = 'booking/orders_in_completed_list.html'
 
     def get_queryset(self):
-        q = Order.objects.filter_for_hotelier(self.request.user, super(InCompletedOrdersView, self).get_queryset())
+        q = Order.objects.filter_for_hotelier(self.request.user, super(InCompletedOrdersView, self).filtered_queryset())
         return q.exclude(status='process')
 
 

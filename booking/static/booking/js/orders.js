@@ -5,6 +5,11 @@ $(document).ready(function () {
 
     // Order confirmation modal
     (function () {
-        $('.order-confirmation-link');
+        var orderTotalInput = $('#order-confirmation-total');
+        $('.order-confirmation-link').click(function () {
+            var total = $(this).attr('data-total');
+            orderTotalInput.val(total).attr('max', total);
+            $('#order-confirmation-total-help').html($.number(total, 0, '.', ' '));
+        });
     }());
 });

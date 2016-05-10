@@ -17,7 +17,8 @@
             {{ order.get_full_name }}, {{ order.phone }}, {{ order.email }},
         {% else %}
             <span {% if order.status == 'processing' %} class="dashed-bottom" data-toggle="tooltip" data-placement="top"
-                  title="Данные гостя появятся после подтвержедния заявки."{% endif %}>Данные гостя скрыты</span>,
+                                                        title="Данные гостя появятся после подтвержедния заявки."{% endif %}>Данные гостя скрыты</span>
+            ,
         {% endif %}
         {{ order.get_citizenship_display }}
     </p>
@@ -57,7 +58,8 @@
                         <li>
                             {% if incoming and order.status == 'process' %}
                                 <button data-toggle="modal" data-target="#order-confirmation-form-modal"
-                                   class="btn btn-success btn-xs margin-right-sm order-confirmation-link">
+                                        class="btn btn-success btn-xs margin-right-sm order-confirmation-link"
+                                        data-total="{{ order_room.total }}">
                                     <i class="fa fa-check"></i><span class="hidden-xs"> подтвердить</span>
                                 </button>
                             {% endif %}

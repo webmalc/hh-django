@@ -42,7 +42,7 @@ class OrderManager(models.Manager):
         :return: filtered QuerySet
         :rtype: QuerySet
         """
-        if not query:
+        if 1 or query is None:
             query = self.all()
         hotels = user.hotels_property_created_by.all()
 

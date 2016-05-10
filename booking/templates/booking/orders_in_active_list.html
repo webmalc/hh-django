@@ -3,6 +3,7 @@
 {% block order_out_list_content %}
     {% if object_list|length %}
 
+        <form id="order-confirmation-form" action="" method="get">
         <!-- Order modal -->
         <div class="modal fade" id="order-confirmation-form-modal" tabindex="-1" role="dialog"
              aria-labelledby="order-form-modal">
@@ -21,14 +22,29 @@
                         <div class="bg-gray color-palette alert">
 
                             <p>
-                                После оформления заявки с Вами в течении <strong>{{ order_lifetime }}
-                                минут</strong> свяжется какой-либо из выбраных отелей.<br>
-                                Если этого не произошло попробуйте отправить новую заявку в другие отели.<br>
+                                После подтверждения заявки отобразятся <strong>контактные данные заказчика</strong>,
+                                необходимые для связи с ним.<br>
+                                Если этого не произошло обратитесь в техническую поддержку HostelHunt.<br>
                             </p>
                         </div>
 
                         <div class="box box-default">
-                            <input class="number" id="order-confirmation-total" value="12331">
+                            <div class="box-body" id="order-form-modal-body">
+                                <div id="div_id_first_name" class="form-group">
+                                    <label for="order_confirmation_total" class="control-label  requiredField">
+                                        Cумма заказа<span class="asteriskField">*</span>
+                                    </label>
+                                    <div class="controls ">
+                                        <input class="textinput textInput form-control"
+                                               id="order-confirmation-total" min="0" max="999999999999999"
+                                               name="order_confirmation_total" type="number" value="0" required>
+                                        <span class="help-block">
+                                            Окончательная сумма заказа.
+                                            Сумма не может быть больше <span id="order-confirmation-total-help">0</span> руб.
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
 
                     </div>
@@ -42,6 +58,7 @@
                 </div>
             </div>
         </div>
+        </form>
 
         <div class="text-right">
             <small class="text-muted">

@@ -53,10 +53,10 @@ class SearchForm(forms.Form):
     Hotels search form
     """
     begin = forms.DateField(
-        label=_('Check-in'), initial=datetime.date.today(), widget=forms.DateInput(attrs={'required': 'true'}))
+        label=_('Check-in'), initial=get_datetime_now, widget=forms.DateInput(attrs={'required': 'true'}))
 
     end = forms.DateField(
-        label=_('Check-out'), initial=datetime.date.today() + datetime.timedelta(days=1),
+        label=_('Check-out'), initial=lambda: get_datetime_now() + datetime.timedelta(days=1),
         widget=forms.DateInput(attrs={'required': 'true'}))
 
     places = forms.IntegerField(
