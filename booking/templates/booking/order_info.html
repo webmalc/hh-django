@@ -32,7 +32,7 @@
         <div class="bg-navy disabled color-palette padding-all-sm margin-bottom-md">
             <small class="margin-right-sm">Итого:</small>
             <strong class="font-lg margin-right-md">{{ order.total|intcomma }} руб.</strong>
-            {% if order.is_agent_order and  order.agent_commission %}
+            {% if order.is_agent_order and  order.agent_commission and order.created_by == request.user %}
                 <div class="hidden-sm hidden-md hidden-lg margin-bottom-sm"></div>
                 <small class="margin-right-sm">Заработок:</small>
                 <strong class="font-lg">{{ order.get_agent_commission_sum|intcomma }} руб.</strong>
@@ -58,6 +58,7 @@
                         <li>
                             {% if incoming and order.status == 'process' %}
                                 <button data-toggle="modal" data-target="#order-confirmation-form-modal"
+                                        data-url="{% url 'booking:order_confirmation' pk=order.id order_room_id=order_room.id %}"
                                         class="btn btn-success btn-xs margin-right-sm order-confirmation-link"
                                         data-total="{{ order_room.total }}">
                                     <i class="fa fa-check"></i><span class="hidden-xs"> подтвердить</span>

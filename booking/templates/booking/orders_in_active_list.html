@@ -30,7 +30,8 @@
 
                         <div class="box box-default">
                             <div class="box-body" id="order-form-modal-body">
-                                <div id="div_id_first_name" class="form-group">
+                                <div class="alert alert-danger" style="display: none"; id="order-confirmation-total-error"></div>
+                                <div id="div_order-confirmation-total" class="form-group">
                                     <label for="order_confirmation_total" class="control-label  requiredField">
                                         Cумма заказа<span class="asteriskField">*</span>
                                     </label>
@@ -45,12 +46,15 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="overlay" id="order-confirmation-form-overlay" style="display: none;">
+                                <i class="fa fa-refresh fa-spin"></i>
+                            </div>
                         </div>
 
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
-                        <button type="submit" class="btn btn-success" id="order-confirmation-form">
+                        <button type="submit" class="btn btn-success" id="send-order-confirmation-form">
                             <i class="fa fa-check"></i>
                             Подтвердить заявку
                         </button>

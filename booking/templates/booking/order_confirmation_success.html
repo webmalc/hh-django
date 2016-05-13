@@ -1,0 +1,8 @@
+Заявка #{{ order.id }} успешно подтверждена.
+<a href="{% url 'booking:orders_in_completed_list' %}#order{{ order.id }}">
+    Перейти к заявке в архиве?
+</a>
+<br><br>
+<strong>Заказчик: {{ order.get_full_name }}, {{ order.phone }}, {{ order.email }}</strong>
+
+

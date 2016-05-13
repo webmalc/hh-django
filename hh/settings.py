@@ -14,6 +14,13 @@ import os
 from datetime import timedelta
 from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS as TCP
 
+try:
+    import psycopg2
+except ImportError:
+    # Fall back to psycopg2cffi
+    from psycopg2cffi import compat
+    compat.register()
+
 # Local settings
 try:
     from hh.local_settings import *

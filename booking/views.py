@@ -1,8 +1,10 @@
 from django.views.generic.edit import FormView
 from django.shortcuts import get_object_or_404, render_to_response, redirect
+from django.template.loader import render_to_string
 from django.contrib import messages
 from django.views.generic import TemplateView, ListView
 from django.template import RequestContext
+from django.http import JsonResponse
 from django.conf import settings
 from django.core.exceptions import ValidationError
 from django.forms import model_to_dict
@@ -223,3 +225,47 @@ def order_cancel(request, pk):
     order.save()
     messages.success(request, 'Заявка #{} успешно отменена.'.format(order.id))
     return redirect('booking:orders_out_active_list')
+
+
+def order_confirmation(request, pk, order_room_id):
+    """
+    :param request: request
+    :param pk: order id
+    :type pk: int
+    :param order_room_id: order room id
+    :type order_room_id: int
+    :return: response
+    """
+    order_room = get_object_or_404(
+        OrderRoom.objects.filter(room__created_by=request.user, order__id=pk),
+        pk=order_room_id
+    )
+    order = order_room.order
+    total = int(request.GET.get('order_confirmation_total', order_room.total))
+
+    if order.status != 'process':
+        return JsonResponse({
+            'success': False,
+            'message': 'Заявка #{} больше недоступна для подтверждения. Пожалуйста обновите страницу.'.format(order.id)
+        })
+
+    if total > order_room.total:
+        return JsonResponse({
+            'success': False,
+            'message': 'Окончательная сумма заказа не может быть больше {}'.format(order_room.total)
+        })
+
+    order.status = 'completed'
+    order.accepted_room = order_room.room
+    commission = calc_commission(order.accepted_room, total)
+    order.commission = commission['tariff_element'].commission
+    if order.is_agent_order:
+        order.agent_commission = commission['tariff_element'].agent_commission
+    order.total = total
+    order.save()
+
+    order_room.is_accepted = True
+    order_room.save()
+
+    messages.success(request, render_to_string('booking/order_confirmation_success.html', {'order': order_room.order}))
+    return JsonResponse({'success': True})

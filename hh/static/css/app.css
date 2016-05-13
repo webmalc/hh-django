@@ -4,6 +4,12 @@
 body {
     font-family: 'Open Sans','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
+.hide {
+    display: none;
+}
+.alert-dismissable .close {
+    margin: 0px !important;
+}
 #hh-navbar-logo {
     display: inline-block;
     margin: 0px 8px 3px 0px;
