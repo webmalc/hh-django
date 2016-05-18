@@ -4,7 +4,7 @@
     <h3 class="text-info">
         {% with status_info=order.get_status_info %}
             <small class="label label-{{ status_info.class }} margin-right-sm">#{{ order.id }}</small>
-            <div class="hidden-sm hidden-md hidden-lg margin-bottom-sm"></div>
+            <br class="hidden-sm hidden-md hidden-lg margin-bottom-sm">
             {{ order.begin }} - {{ order.end }} на {{ order.places }} чел.
             <small class="text-{{ status_info.class }}">
                 <i class="{{ status_info.icon }}"></i> {{ order.get_status_display|lower }}
@@ -40,12 +40,15 @@
         </div>
     {% endif %}
 
-    {% if order.status == 'process' %}
+    {% if order.status == 'process' or order.status == 'completed' %}
         <p class="text-danger">
-            <i class="fa fa-clock-o"></i> Заканчивается {{ order.ends_at }}.
-            {% if order.created_by == request.user and not incoming %}
+            {% if order.status == 'process' %}
+                <i class="fa fa-clock-o"></i> Заканчивается {{ order.ends_at }}.
+                <br class="hidden-sm hidden-md hidden-lg margin-bottom-sm">
+            {% endif %}
+            {% if order.created_by == request.user and not incoming and order.can_cancel %}
                 <strong><a href="{% url 'booking:order_cancel' pk=order.id %}"
-                            class="modal-confirm">Отменить?</a></strong>
+                            class="modal-confirm">Отменить заявку?</a></strong>
             {% endif %}
         </p>
     {% endif %}

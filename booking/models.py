@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 from django.conf import settings
 from django.utils.timezone import timedelta, datetime, now
@@ -164,6 +165,14 @@ class Order(CommonInfo):
         Return status dict for order
         """
         return self.STATUSES_INFO[self.status]
+
+    @property
+    def can_cancel(self):
+        """
+        :return: can cancel order or not
+        :rtype: boolean
+        """
+        return self.begin >= date.today()
 
     def clean(self):
         if self.begin and self.end and (self.begin > self.end):

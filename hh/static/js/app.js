@@ -23,7 +23,7 @@ hh.icheck = function () {
 
 hh.select2 = function () {
     "use strict";
-    $('select.form-control').not('.not-select2').select2();
+    $('select.form-control').not('.not-select2, .select2-hidden-accessible').select2();
     return hh;
 };
 

@@ -1,3 +1,4 @@
+import datetime
 from django.views.generic.edit import FormView
 from django.shortcuts import get_object_or_404, render_to_response, redirect
 from django.template.loader import render_to_string
@@ -217,9 +218,10 @@ def order_cancel(request, pk):
     Order cancel view
     @:param pk order id
     """
-    # TODO: order with status=completed cancel
     order = get_object_or_404(
-        Order.objects.filter(created_by=request.user).filter(status='process'),
+        Order.objects.filter(
+            created_by=request.user, status__in=('process', 'completed'), begin__gte=datetime.date.today()
+        ),
         pk=pk
     )
     order.status = 'canceled'

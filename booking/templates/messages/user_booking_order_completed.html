@@ -7,7 +7,7 @@
     «{{ property }}» свяжется с Вами в ближайшее время.
 
     <p>
-        <a href="">подробнее</a>
+        <a href="{% url 'booking:orders_out_completed_list' %}#order{{ id }}">подробнее</a>
     </p>
 {% endblock %}
 
