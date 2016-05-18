@@ -30,8 +30,12 @@ class OrderListMixin(ListView):
         """
         form = OrdersFilterForm(self.request.GET if self.request.GET.get('is_send', None) else None)
         date = form.cleaned_data['date'] if form.is_valid() else form.get_initial_data()['date']()
+        status = form.cleaned_data['status'] if form.is_valid() else None
+        q = super(OrderListMixin, self).get_queryset().filter(created_at__range=get_month_day_range(date))
+        if status:
+            q = q.filter(status=status)
 
-        return super(OrderListMixin, self).get_queryset().filter(created_at__range=get_month_day_range(date))
+        return q
 
     def get_queryset(self):
         q = super(OrderListMixin, self).get_queryset()

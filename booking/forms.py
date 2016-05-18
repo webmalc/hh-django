@@ -17,6 +17,8 @@ def get_datetime_now():
 class OrdersFilterForm(forms.Form, FormInitialDataMixin):
     date = forms.DateField(
         widget=MonthYearWidget(attrs={'required': 'true'}), initial=get_datetime_now, label=_('Period'))
+    status = forms.ChoiceField(choices=[['', '----------']] + list(Order.STATUSES)[1:],
+                               required=False, label=_('status').capitalize())
     is_send = forms.CharField(widget=forms.HiddenInput, initial=1)
 
 
