@@ -36,6 +36,8 @@ def booking_order_post_save(sender, **kwargs):
                     message_type='success'
             )
 
+    # TODO: send email to hotelier on Order cancellation
+
     # Send messages & emails to user on Order cancellation
     if order.status == 'canceled' and order.original_status != order.status:
         if order.email:

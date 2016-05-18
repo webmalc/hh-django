@@ -54,7 +54,7 @@ def mail_order_hoteliers_task(order_id, subject, template, data):
             return False
 
         properties = {}
-        for order_room in order.orderroom_set.all():
+        for order_room in order.order_rooms.all():
             room = order_room.room
             user = room.property.created_by
             if user.is_hotelier() and room.property.is_enabled and room.is_enabled:
@@ -73,14 +73,14 @@ def mail_order_hoteliers_task(order_id, subject, template, data):
             full_data.update(additional_data)
 
             mail_user_task.delay(subject, template, full_data, user_id=hotel.created_by.id)
-            if order.created_by:
-                add_message_user_task.delay(
-                        user_id=order.created_by.id,
-                        template='messages/hotelier_booking_order_new.html',
-                        data=full_data,
-                        subject=subject,
-                        message_type='info'
-                )
+
+            add_message_user_task.delay(
+                    user_id=hotel.created_by.id,
+                    template='messages/hotelier_booking_order_new.html',
+                    data=full_data,
+                    subject=subject,
+                    message_type='info'
+            )
 
         return True
     except Order.DoesNotExist:

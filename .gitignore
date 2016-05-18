@@ -80,6 +80,7 @@ bower_components/*
 
 #celery
 celerybeat-schedule
+celerybeat.pid
 
 #Project
 /hh/local_settings.py

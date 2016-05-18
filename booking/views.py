@@ -217,6 +217,7 @@ def order_cancel(request, pk):
     Order cancel view
     @:param pk order id
     """
+    # TODO: order with status=completed cancel
     order = get_object_or_404(
         Order.objects.filter(created_by=request.user).filter(status='process'),
         pk=pk

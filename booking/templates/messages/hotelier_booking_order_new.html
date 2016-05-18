@@ -9,7 +9,7 @@
         {% endfor %}
     </p>
     <p>
-        <a href="">подробнее</a>
+        <a href="{% url 'booking:orders_in_active_list' %}#order{{ id }}">подробнее</a>
     </p>
 {% endblock %}
 

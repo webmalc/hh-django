@@ -42,9 +42,9 @@
 
     {% if order.status == 'process' %}
         <p class="text-danger">
-            <i class="fa fa-clock-o"></i> Заканчивается {{ order.ends_at }}
+            <i class="fa fa-clock-o"></i> Заканчивается {{ order.ends_at }}.
             {% if order.created_by == request.user and not incoming %}
-                .<strong><a href="{% url 'booking:order_cancel' pk=order.id %}"
+                <strong><a href="{% url 'booking:order_cancel' pk=order.id %}"
                             class="modal-confirm">Отменить?</a></strong>
             {% endif %}
         </p>
