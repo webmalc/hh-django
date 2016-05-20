@@ -52,7 +52,7 @@
         "access_restricted": false,
         "access_perm_type": 1,
         "parent": null,
-        "sort_order": 26,
+        "sort_order": 36,
         "icon": "fa-user",
         "access_permissions": []
     }
@@ -302,7 +302,7 @@
         "access_restricted": false,
         "access_perm_type": 2,
         "parent": null,
-        "sort_order": 15,
+        "sort_order": 26,
         "icon": "fa fa-cogs",
         "access_permissions": []
     }
@@ -352,7 +352,7 @@
         "access_restricted": false,
         "access_perm_type": 1,
         "parent": null,
-        "sort_order": 36,
+        "sort_order": 38,
         "icon": "",
         "access_permissions": []
     }
@@ -602,7 +602,7 @@
         "access_restricted": false,
         "access_perm_type": 1,
         "parent": null,
-        "sort_order": 13,
+        "sort_order": 15,
         "icon": "fa fa-home",
         "access_permissions": []
     }
@@ -836,7 +836,7 @@
     "model": "hh.sitetreeitem",
     "pk": 36,
     "fields": {
-        "title": "\u0417\u0430\u044f\u0432\u043a\u0438",
+        "title": "\u0412\u0430\u0448\u0438 \u0437\u0430\u044f\u0432\u043a\u0438",
         "hint": "",
         "url": "booking:orders_out_active_list",
         "urlaspattern": true,
@@ -861,7 +861,7 @@
     "model": "hh.sitetreeitem",
     "pk": 37,
     "fields": {
-        "title": "\u0410\u0440\u0445\u0438\u0432 \u0437\u0430\u044f\u0432\u043e\u043a \u0437\u0430 \u0433\u043e\u0434",
+        "title": "\u0410\u0440\u0445\u0438\u0432 \u0437\u0430\u044f\u0432\u043e\u043a",
         "hint": "",
         "url": "booking:orders_out_completed_list",
         "urlaspattern": true,
@@ -878,6 +878,56 @@
         "access_perm_type": 1,
         "parent": 36,
         "sort_order": 37,
+        "icon": "",
+        "access_permissions": []
+    }
+},
+{
+    "model": "hh.sitetreeitem",
+    "pk": 38,
+    "fields": {
+        "title": "\u0417\u0430\u043f\u0440\u043e\u0441\u044b \u0432 \u043e\u0442\u0435\u043b\u044c",
+        "hint": "",
+        "url": "booking:orders_in_active_list",
+        "urlaspattern": true,
+        "tree": 1,
+        "hidden": false,
+        "alias": null,
+        "description": "",
+        "inmenu": true,
+        "inbreadcrumbs": true,
+        "insitetree": true,
+        "access_loggedin": true,
+        "access_guest": false,
+        "access_restricted": false,
+        "access_perm_type": 1,
+        "parent": null,
+        "sort_order": 13,
+        "icon": "fa fa-phone",
+        "access_permissions": []
+    }
+},
+{
+    "model": "hh.sitetreeitem",
+    "pk": 39,
+    "fields": {
+        "title": "\u0410\u0440\u0445\u0438\u0432 \u0437\u0430\u043f\u0440\u043e\u0441\u043e\u0432",
+        "hint": "",
+        "url": "booking:orders_in_completed_list",
+        "urlaspattern": true,
+        "tree": 1,
+        "hidden": false,
+        "alias": null,
+        "description": "",
+        "inmenu": false,
+        "inbreadcrumbs": true,
+        "insitetree": false,
+        "access_loggedin": true,
+        "access_guest": false,
+        "access_restricted": false,
+        "access_perm_type": 1,
+        "parent": 38,
+        "sort_order": 39,
         "icon": "",
         "access_permissions": []
     }
