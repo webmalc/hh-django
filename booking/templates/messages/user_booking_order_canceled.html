@@ -3,7 +3,7 @@
 
 {% block content %}
     Ваша заявка на бронирование #{{ id }} c {{ begin }} по {{ end }} отменена.<br>
-    <a href="{% url 'booking:search' %}">Отправить новую заявку</a> в другие отели.
+    <a href="https://my.hostelhunt.ru{% url 'booking:search' %}">Отправить новую заявку</a> в другие отели.
 {% endblock %}
 
 

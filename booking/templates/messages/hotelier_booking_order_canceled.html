@@ -4,7 +4,7 @@
 {% block content %}
     Заявка #{{ id }} отменена гостем.<br>
     Информация: {{ room }} c {{ begin }} по {{ end }}<br>
-    <a href="{% url 'booking:orders_in_completed_list' %}#order{{ id }}">Подробнее</a>.
+    <a href="https://my.hostelhunt.ru{% url 'booking:orders_in_completed_list' %}#order{{ id }}">Подробнее</a>.
 {% endblock %}
 
 
