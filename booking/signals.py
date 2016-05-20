@@ -22,46 +22,61 @@ def booking_order_post_save(sender, **kwargs):
     if order.status == 'completed' and order.original_status != order.status:
         if order.email:
             mail_user_task.delay(
-                    subject='Заявка на бронирование #{id} подтверждена'.format(id=order.id),
-                    template='emails/user_booking_order_completed.html',
-                    data=data,
-                    email=order.email
+                subject='Заявка на бронирование #{id} подтверждена'.format(id=order.id),
+                template='emails/user_booking_order_completed.html',
+                data=data,
+                email=order.email
             )
         if created_by:
             add_message_user_task.delay(
-                    user_id=created_by.id,
-                    template='messages/user_booking_order_completed.html',
-                    data=data,
-                    subject='Заявка на бронирование #{id} подтверждена'.format(id=order.id),
-                    message_type='success'
+                user_id=created_by.id,
+                template='messages/user_booking_order_completed.html',
+                data=data,
+                subject='Заявка на бронирование #{id} подтверждена'.format(id=order.id),
+                message_type='success'
             )
-
-    # TODO: send email to hotelier on Order cancellation
 
     # Send messages & emails to user on Order cancellation
     if order.status == 'canceled' and order.original_status != order.status:
         if order.email:
             mail_user_task.delay(
-                    subject='Заявка на бронирование #{id} отменена'.format(id=order.id),
-                    template='emails/user_booking_order_canceled.html',
-                    data=data,
-                    email=order.email
+                subject='Заявка на бронирование #{id} отменена'.format(id=order.id),
+                template='emails/user_booking_order_canceled.html',
+                data=data,
+                email=order.email
             )
         if created_by:
             add_message_user_task.delay(
-                    user_id=created_by.id,
-                    template='messages/user_booking_order_canceled.html',
-                    data=data,
-                    subject='Заявка на бронирование #{id} отменена'.format(id=order.id),
-                    message_type='warning'
+                user_id=created_by.id,
+                template='messages/user_booking_order_canceled.html',
+                data=data,
+                subject='Заявка на бронирование #{id} отменена'.format(id=order.id),
+                message_type='warning'
+            )
+
+        if order.accepted_room:
+            hotelier = order.accepted_room.created_by
+            mail_user_task.delay(
+                subject='Заявка #{id} отменена гостем'.format(id=order.id),
+                template='emails/hotelier_booking_order_canceled.html',
+                data=data,
+                user_id=hotelier.id
+            )
+
+            add_message_user_task.delay(
+                user_id=hotelier.id,
+                template='messages/hotelier_booking_order_canceled.html',
+                data=data,
+                subject='Заявка #{id} отменена гостем'.format(id=order.id),
+                message_type='warning'
             )
 
     # Send emails to managers on Order change
     mail_managers_task.delay(
-            subject='{text} заявка на бронирование #{id}'.format(
-                    id=order.id, text='Новая' if created else 'Обновлена'),
-            template='emails/manager_new_booking_order.html',
-            data=data)
+        subject='{text} заявка на бронирование #{id}'.format(
+            id=order.id, text='Новая' if created else 'Обновлена'),
+        template='emails/manager_new_booking_order.html',
+        data=data)
 
 
 @receiver(pre_save, sender=Order, dispatch_uid="booking_order_pre_save")
