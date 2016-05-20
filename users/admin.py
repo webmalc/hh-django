@@ -94,7 +94,7 @@ class EmailsInline(admin.TabularInline):
     model = EmailAddress
 
 
-class MyUserAdmin(UserAdmin, VersionAdmin):
+class HHUserAdmin(UserAdmin, VersionAdmin):
     """
     User admin interface
     """
@@ -128,7 +128,7 @@ class MyUserAdmin(UserAdmin, VersionAdmin):
 
 
 admin.site.unregister(User)
-admin.site.register(User, MyUserAdmin)
+admin.site.register(User, HHUserAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(PartnershipOrder, PartnershipOrderAdmin)
 patch_admin(Group)

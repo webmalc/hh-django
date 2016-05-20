@@ -158,6 +158,7 @@ class PartnershipOrder(CommonInfo, PartnershipCommonInfo):
 
 class Profile(PartnershipCommonInfo):
     user = models.OneToOneField(BaseUser, on_delete=models.CASCADE)
+    wallet_balance = models.IntegerField(default=0)
 
 
 class UserMessage(CommonInfo):
