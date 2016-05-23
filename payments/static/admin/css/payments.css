@@ -1,0 +1,10 @@
+th.column-is_completed, td.field-is_completed {
+    text-align: center !important;
+}
+
+th.column-total, td.field-total {
+    text-align: right !important;
+}
+td.field-total a {
+    color: #00a65a;
+}
