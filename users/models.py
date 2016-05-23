@@ -62,7 +62,8 @@ class User(BaseUser):
     def get_profile(self):
         """
         Check profile
-        :return: Profile
+        :return: user profile
+        :rtype: users.models.Profile|None
         """
         try:
             return self.profile

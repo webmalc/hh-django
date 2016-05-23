@@ -4,7 +4,7 @@ from django.contrib.auth.models import User, Group
 from django.utils.translation import ugettext_lazy as _
 from reversion.admin import VersionAdmin
 from allauth.account.models import EmailAddress
-from users.models import Profile, Organization, PartnershipOrder
+from users.models import Profile, Organization, PartnershipOrder, User as HHUser
 
 
 class OrganizationAdmin(VersionAdmin):
@@ -128,7 +128,7 @@ class HHUserAdmin(UserAdmin, VersionAdmin):
 
 
 admin.site.unregister(User)
-admin.site.register(User, HHUserAdmin)
+admin.site.register(HHUser, HHUserAdmin)
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(PartnershipOrder, PartnershipOrderAdmin)
 patch_admin(Group)
