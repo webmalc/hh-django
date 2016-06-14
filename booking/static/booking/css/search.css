@@ -14,12 +14,6 @@
 #search-form input#id_places{
     width: 60px;
 }
-div.callout button {
-    margin: 26px 0px 6px 0px;
-}
-div.callout .asteriskField  {
-    display: none;
-}
 .search-results-row {
     border-bottom: 1px solid #d2d6de;
     padding: 20px 0px 20px 0px;

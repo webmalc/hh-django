@@ -75,6 +75,9 @@ class User(BaseUser):
         patronymic = profile.patronymic if profile else ''
         return '{0} {1} {2}'.format(self.last_name, self.first_name, patronymic)
 
+    def get_last_payments(self):
+        return self.payments.all()[:6]
+
     def __str__(self):
 
         if self.first_name:

@@ -29,26 +29,42 @@
             {% if user.is_authenticated %}
                 <ul class="nav navbar-nav">
 
-                {% if user.is_partner %}
-                    <!-- Wallet balance -->
-                    <li class="dropdown messages-menu">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                            <i class="fa fa-ruble"></i>
-                            {% with balance=user.profile.wallet_balance %}
-                                <span class="label label-{% if balance > 0 %}success{% elif balance == 0 %}default{% else %}warning{% endif %}">{{ balance|intcomma }} р.</span>
-                            {% endwith %}
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li class="header">You have 4 messages</li>
-                            <li>
+                    {% if user.is_partner %}
+                        <!-- Wallet balance -->
+                        <li class="dropdown messages-menu">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                <i class="fa fa-ruble"></i>
+                                {% with balance=user.profile.wallet_balance %}
+                                    <span class="label label-{% if balance > 0 %}success{% elif balance == 0 %}default{% else %}warning{% endif %}">{{ balance|intcomma }} р.</span>
+                                {% endwith %}
+                            </a>
+                            <ul class="dropdown-menu">
+                                {% with last_payments=user.get_last_payments %}
+                                    {% if last_payments|length %}
+                                        <li>
+                                            <ul class="menu">
+                                                {% for payment in last_payments %}
+                                                    <li>
+                                                        <a href="{% url 'payments:payments_list' %}?date_month={{ payment.created_at|date:'n' }}&date_year={{ payment.created_at|date:'Y' }}&payment_type=&is_send=1#payment{{ payment.id }}">
+                                                            <small class="text-muted">
+                                                                #{{ payment.number }} от
+                                                                {{ payment.created_at }}
+                                                            </small>
+                                                            &nbsp;
+                                                            <strong class="text-{% if payment.total > 0 %}success{% else %}danger{% endif %}">{{ payment.total }}
+                                                                р.</strong>
+                                                        </a>
+                                                    </li>
+                                                {% endfor %}
+                                            </ul>
+                                        </li>
+                                    {% endif %}
+                                {% endwith %}
+                                <li class="footer"><a href="{% url 'payments:payments_list' %}">Список всех платежей</a></li>
+                            </ul>
+                        </li>
 
-                                        test
-                            </li>
-                            <li class="footer"><a href="#">See All Messages</a></li>
-                        </ul>
-                    </li>
-
-                {% endif %}
+                    {% endif %}
 
                     <!-- User Account -->
                     <li class="dropdown user user-menu">

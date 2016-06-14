@@ -33,6 +33,7 @@ urlpatterns = [
     url(r'^avatar/', include('avatar.urls')),
     url(r'^users/', include('users.urls', namespace="users")),
     url(r'^booking/', include('booking.urls', namespace="booking")),
+    url(r'^payments/', include('payments.urls', namespace="payments")),
     url(r'^hotels/', include('hotels.urls', namespace="hotel")),
     url(r'^$', RedirectView.as_view(pattern_name='booking:search', permanent=True), name='index'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

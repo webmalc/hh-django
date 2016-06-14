@@ -52,7 +52,7 @@
         "access_restricted": false,
         "access_perm_type": 1,
         "parent": null,
-        "sort_order": 36,
+        "sort_order": 38,
         "icon": "fa-user",
         "access_permissions": []
     }
@@ -302,7 +302,7 @@
         "access_restricted": false,
         "access_perm_type": 2,
         "parent": null,
-        "sort_order": 26,
+        "sort_order": 36,
         "icon": "fa fa-cogs",
         "access_permissions": []
     }
@@ -352,7 +352,7 @@
         "access_restricted": false,
         "access_perm_type": 1,
         "parent": null,
-        "sort_order": 38,
+        "sort_order": 40,
         "icon": "",
         "access_permissions": []
     }
@@ -602,7 +602,7 @@
         "access_restricted": false,
         "access_perm_type": 1,
         "parent": null,
-        "sort_order": 15,
+        "sort_order": 26,
         "icon": "fa fa-home",
         "access_permissions": []
     }
@@ -929,6 +929,31 @@
         "parent": 38,
         "sort_order": 39,
         "icon": "",
+        "access_permissions": []
+    }
+},
+{
+    "model": "hh.sitetreeitem",
+    "pk": 40,
+    "fields": {
+        "title": "\u0412\u0430\u0448\u0438 \u043f\u043b\u0430\u0442\u0435\u0436\u0438",
+        "hint": "",
+        "url": "payments:payments_list",
+        "urlaspattern": true,
+        "tree": 1,
+        "hidden": false,
+        "alias": null,
+        "description": "",
+        "inmenu": true,
+        "inbreadcrumbs": true,
+        "insitetree": true,
+        "access_loggedin": true,
+        "access_guest": false,
+        "access_restricted": false,
+        "access_perm_type": 1,
+        "parent": null,
+        "sort_order": 15,
+        "icon": "fa fa-ruble",
         "access_permissions": []
     }
 }

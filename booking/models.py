@@ -43,7 +43,7 @@ class OrderManager(models.Manager):
         :return: filtered QuerySet
         :rtype: QuerySet
         """
-        if 1 or query is None:
+        if query is None:
             query = self.all()
         hotels = user.hotels_property_created_by.all()
 
@@ -51,7 +51,7 @@ class OrderManager(models.Manager):
 
 
 def get_order_ends_at_datetime():
-    return datetime.now() + timedelta(minutes=settings.HH_BOOKING_ORDER_LIFETIME)
+    return now() + timedelta(minutes=settings.HH_BOOKING_ORDER_LIFETIME)
 
 
 class Order(CommonInfo):

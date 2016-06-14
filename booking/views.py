@@ -31,13 +31,14 @@ class OrderListMixin(ListView):
         form = OrdersFilterForm(self.request.GET if self.request.GET.get('is_send', None) else None)
         date = form.cleaned_data['date'] if form.is_valid() else form.get_initial_data()['date']()
         status = form.cleaned_data['status'] if form.is_valid() else None
-        q = super(OrderListMixin, self).get_queryset().filter(created_at__range=get_month_day_range(date))
+        q = self.get_main_queryset().filter(created_at__range=get_month_day_range(date))
+
         if status:
             q = q.filter(status=status)
 
         return q
 
-    def get_queryset(self):
+    def get_main_queryset(self):
         q = super(OrderListMixin, self).get_queryset()
 
         return q.select_related('accepted_room', 'created_by', 'accepted_room__property',
@@ -57,7 +58,7 @@ class OutActiveOrdersView(OrderListMixin):
     template_name = 'booking/orders_out_active_list.html'
 
     def get_queryset(self):
-        q = super(OutActiveOrdersView, self).get_queryset()
+        q = super(OutActiveOrdersView, self).get_main_queryset()
         return q.filter(created_by=self.request.user, status='process')
 
 
@@ -79,7 +80,7 @@ class InActiveOrdersView(OrderListMixin):
     template_name = 'booking/orders_in_active_list.html'
 
     def get_queryset(self):
-        q = Order.objects.filter_for_hotelier(self.request.user, super(InActiveOrdersView, self).get_queryset())
+        q = Order.objects.filter_for_hotelier(self.request.user, super(InActiveOrdersView, self).get_main_queryset())
         return q.filter(status='process')
 
 

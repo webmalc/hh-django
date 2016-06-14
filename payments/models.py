@@ -33,5 +33,10 @@ class Payment(CommonInfo):
 
     objects = PaymentManager()
 
+    @property
+    def number(self):
+        return self.id if not self.order else '{}-{}'.format(self.id, self.order.id)
+
     class Meta:
         ordering = ['-created_at']
+        get_latest_by = "created_at"

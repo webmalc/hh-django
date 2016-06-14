@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+{% load staticfiles %}
+{% load sitetree %}
+{% load humanize %}
+
+{% block css %}
+    {{ block.super }}
+    <link rel="stylesheet" href="{% static 'payments/css/payments.css' %}">
+{% endblock %}
+
+
+{% block tilte %}
+    <h1>
+        {% sitetree_page_title from "navbar" %}
+        <small>{% block small_tilte %}{% endblock %}</small>
+
+        {% with balance=user.profile.wallet_balance %}
+            <span class="label label-{% if balance > 0 %}success{% elif balance == 0 %}default{% else %}warning{% endif %}">{{ balance|intcomma }} р.</span>
+        {% endwith %}
+    </h1>
+{% endblock %}
+
+{% block content %}
+    {% block payments_content %}{{ block.super }}{% endblock %}
+{% endblock %}

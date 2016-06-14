@@ -1,6 +1,7 @@
 from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from booking.models import Order, OrderRoom
+from payments.models import Payment
 from users.tasks import mail_managers_task, mail_user_task, add_message_user_task
 from booking.tasks import get_order_email_data
 
@@ -18,7 +19,7 @@ def booking_order_post_save(sender, **kwargs):
     created_by = order.created_by
     data = get_order_email_data(order, created)
 
-    # Send messages & emails to user on Order completion
+    # Send messages & emails to user on Order completion & payments
     if order.status == 'completed' and order.original_status != order.status:
         if order.email:
             mail_user_task.delay(
@@ -35,6 +36,23 @@ def booking_order_post_save(sender, **kwargs):
                 subject='Заявка на бронирование #{id} подтверждена'.format(id=order.id),
                 message_type='success'
             )
+
+        # Commission payment
+        commission = Payment()
+        commission.total = -order.get_commission_sum()
+        commission.order = order
+        commission.user = order.accepted_room.property.created_by
+        commission.comment = 'Комиссия HostelHunt с брони #{}'.format(order.id)
+        commission.save()
+
+        # Agent commission payment
+        if order.is_agent_order:
+            agent_commission = Payment()
+            agent_commission.total = order.get_agent_commission_sum()
+            agent_commission.order = order
+            agent_commission.user = order.accepted_room.property.created_by
+            agent_commission.comment = 'Агентское вознаграждение с брони #{}'.format(order.id)
+            agent_commission.save()
 
     # Send messages & emails to user on Order cancellation
     if order.status == 'canceled' and order.original_status != order.status:

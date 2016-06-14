@@ -1,0 +1,60 @@
+{% extends 'payments/layout.html' %}
+{% load crispy_forms_filters %}
+{% load humanize %}
+
+{% block payments_content %}
+    <div class="callout callout-warning">
+        <form class="form-inline" action="" id="payments-filter-form" method="get">
+                {% for field in filter_form %}
+                    {{ field|as_crispy_field }}
+                {% endfor %}
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fa fa-search"></i>
+                    <span class="margin-left-sm">Показать</span>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <div class="box box-default" id="payments-results">
+        <div class="box-body" id="payments-results-body">
+            {% if object_list|length %}
+
+                <table class="table table-hover table-striped" id="out-active-orders-table">
+                    {% for payment in object_list %}
+                        <tr>
+                            <td>
+                                <a name="payment{{ payment.id }}"></a>
+                                <h3 class="text-info">
+                                    <small class="label label-{% if not payment.is_completed %}default{% elif payment.total >= 0 %}success{% else %}danger{% endif %} margin-right-md">
+                                        #{{ payment.number }}
+                                    </small>
+                                    <small>от</small> {{ payment.created_at }}
+                                    <small class="margin-right-md">на сумму</small> <span class="text-{% if payment.total >= 0 %}success{% else %}danger{% endif %}">{{ payment.total|intcomma }} р.</span>
+                                    {% if not payment.is_completed %}
+                                        <small class="text-{{ status_info.class }} margin-left-md">
+                                            <i class="fa fa-spin fa-spinner"></i> обрабатывается
+                                        </small>
+                                    {% endif %}
+                                </h3>
+                                {% if payment.comment %}
+                                    <small class="text-muted">{{ payment.comment }}</small>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </table>
+
+            {% else %}
+                <div class="alert alert-info">
+                    <i class="fa fa-info-circle margin-right-xs"></i>
+                    Нет платежей за указанный период.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+
+
+{% endblock %}

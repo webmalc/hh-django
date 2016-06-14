@@ -1,6 +1,8 @@
-try:
-    from django.conf.urls import *
-except ImportError:  # django < 1.4
-    from django.conf.urls.defaults import *
+from django.conf.urls import url
 
-# place app url patterns here
+import payments.views as views
+
+urlpatterns = [
+    # Orders out
+    url(r'$', views.PaymentsListView.as_view(), name='payments_list'),
+]
