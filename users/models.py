@@ -76,7 +76,7 @@ class User(BaseUser):
         return '{0} {1} {2}'.format(self.last_name, self.first_name, patronymic)
 
     def get_last_payments(self):
-        return self.payments.all()[:6]
+        return self.payments.all().filter(is_completed=True)[:6]
 
     def __str__(self):
 

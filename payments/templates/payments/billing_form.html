@@ -1,0 +1,26 @@
+{% extends 'payments/layout.html' %}
+{% load humanize %}
+
+{% block add_funds_button %}{% endblock %}
+
+{% block payments_content %}
+
+    {% include 'payments/add_funds_description.html' %}
+
+    <div class="box box-default" id="billing-form">
+        <div class="box-body" id="billing-form-body">
+            <form action="" method="post" class="form">
+                <button type="submit" class="btn btn-success margin-right-sm">
+                    <i class="fa fa-check-circle-o"></i>
+                    <span class="margin-left-sm">
+                        Оплатить счет на {{ object.total|intcomma }} руб.
+                    </span>
+                </button>
+                <a href="{% url 'payments:payments_list' %}" class="btn btn-default">
+                    <i class="fa fa-ban"></i><span class="hidden-xs margin-left-sm">Отмена</span>
+                </a>
+            </form>
+        </div>
+    </div>
+
+{% endblock %}

@@ -1,7 +1,39 @@
-from django.views.generic import ListView
+from django.views.generic import ListView, CreateView, DetailView
+from django.core.urlresolvers import reverse_lazy
 from payments.models import Payment
-from payments.forms import PaymentsFilterForm
+from payments.forms import PaymentsFilterForm, AddFundsForm
 from hh.utils import get_month_day_range
+
+
+class AddFundsView(CreateView):
+    """
+    Add payment form billing system
+    """
+    model = Payment
+    template_name = 'payments/add_funds.html'
+    form_class = AddFundsForm
+
+    def get_success_url(self):
+        return reverse_lazy('payments:billing_form', kwargs={'pk': self.object.id})
+
+    def form_valid(self, form):
+        payment = form.save(commit=False)
+        payment.user = self.request.user
+        payment.is_completed = False
+        payment.comment = "Пополнение счета HostelHunt"
+        return super(AddFundsView, self).form_valid(form)
+
+
+class BillingFormView(DetailView):
+    """
+    Billing form view
+    """
+    model = Payment
+    template_name = 'payments/billing_form.html'
+
+    def get_queryset(self):
+        q = super(BillingFormView, self).get_queryset()
+        return q.filter(is_completed=False, user=self.request.user)
 
 
 class PaymentsListView(ListView):

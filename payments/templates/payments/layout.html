@@ -13,10 +13,17 @@
     <h1>
         {% sitetree_page_title from "navbar" %}
         <small>{% block small_tilte %}{% endblock %}</small>
+        <br class="hidden-sm hidden-md hidden-lg margin-bottom-sm">
 
         {% with balance=user.profile.wallet_balance %}
-            <span class="label label-{% if balance > 0 %}success{% elif balance == 0 %}default{% else %}warning{% endif %}">{{ balance|intcomma }} р.</span>
+            <span class="margin-left-md label label-{% if balance > 0 %}success{% elif balance == 0 %}default{% else %}warning{% endif %}">{{ balance|intcomma }} р.</span>
         {% endwith %}
+
+        {% block add_funds_button %}
+        <a href="{% url 'payments:add_funds' %}" class="margin-left-sm btn btn-success">
+            <i class="fa fa-plus margin-right-sm"></i>Пополнить балланс
+        </a>
+        {% endblock %}
     </h1>
 {% endblock %}
 

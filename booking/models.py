@@ -1,7 +1,7 @@
 from datetime import date
 from django.db import models
 from django.conf import settings
-from django.utils.timezone import timedelta, datetime, now
+from django.utils.timezone import timedelta, now
 from django.core.exceptions import ValidationError
 from django.core.validators import MinValueValidator, MaxValueValidator
 from django.utils.translation import ugettext_lazy as _

@@ -1,0 +1,32 @@
+{% extends 'payments/layout.html' %}
+{% load crispy_forms_filters %}
+{% load humanize %}
+
+{% block add_funds_button %}{% endblock %}
+
+{% block payments_content %}
+
+    {% include 'payments/add_funds_description.html' %}
+
+    <div class="box box-default" id="payments-results">
+        <div class="box-body" id="payments-results-body">
+            <form action="" method="post" class="form">
+                {% csrf_token %}
+                {{ form|crispy }}
+
+                <button type="submit" class="btn btn-success margin-right-sm">
+                    <i class="fa fa-check-circle-o"></i>
+                    <span class="margin-left-sm">
+                        Создать счет
+                    </span>
+                </button>
+                <a href="{% url 'payments:payments_list' %}" class="btn btn-default">
+                    <i class="fa fa-ban"></i><span class="hidden-xs margin-left-sm">Отмена</span>
+                </a>
+            </form>
+        </div>
+    </div>
+
+
+
+{% endblock %}

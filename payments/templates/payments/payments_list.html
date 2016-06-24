@@ -31,10 +31,13 @@
                                         #{{ payment.number }}
                                     </small>
                                     <small>от</small> {{ payment.created_at }}
-                                    <small class="margin-right-md">на сумму</small> <span class="text-{% if payment.total >= 0 %}success{% else %}danger{% endif %}">{{ payment.total|intcomma }} р.</span>
+                                    <small class="margin-right-md">на сумму</small> <span class="text-{% if not payment.is_completed %}muted{% elif payment.total >= 0 %}success{% else %}danger{% endif %}">{{ payment.total|intcomma }} р.</span>
                                     {% if not payment.is_completed %}
-                                        <small class="text-{{ status_info.class }} margin-left-md">
-                                            <i class="fa fa-spin fa-spinner"></i> обрабатывается
+                                        <small class="text-default margin-left-md">
+                                            <a href="{% url 'payments:billing_form' pk=payment.id %}"
+                                               class="btn btn-default btn-sm">
+                                                <i class="fa fa-spin fa-spinner"></i> оплатить
+                                            </a>
                                         </small>
                                     {% endif %}
                                 </h3>
