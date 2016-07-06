@@ -64,8 +64,8 @@ class Rbk(object):
             payment_status, user_name, user_email, payment_data, settings.HH_RBK_KEY
         ]).hexdigest()
 
-        # if signature != request_signature:
-        #     return False
+        if signature != request_signature:
+            return False
 
         payment = Payment.objects.filter(pk=order_id, is_completed=False).first()
 
