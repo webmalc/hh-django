@@ -19,6 +19,15 @@
 
     <div class="box box-default" id="payments-results">
         <div class="box-body" id="payments-results-body">
+
+            {% block add_funds_button %}
+                <div class="text-right margin-bottom-md">
+                    <a href="{% url 'payments:add_funds' %}" class="margin-left-sm btn btn-success">
+                        <i class="fa fa-plus margin-right-sm"></i>Пополнить балланс
+                    </a>
+                </div>
+            {% endblock %}
+
             {% if object_list|length %}
 
                 <table class="table table-hover table-striped" id="out-active-orders-table">

@@ -18,12 +18,6 @@
         {% with balance=user.profile.wallet_balance %}
             <span class="margin-left-md label label-{% if balance > 0 %}success{% elif balance == 0 %}default{% else %}warning{% endif %}">{{ balance|intcomma }} р.</span>
         {% endwith %}
-
-        {% block add_funds_button %}
-        <a href="{% url 'payments:add_funds' %}" class="margin-left-sm btn btn-primary">
-            <i class="fa fa-plus margin-right-sm"></i>Пополнить балланс
-        </a>
-        {% endblock %}
     </h1>
 {% endblock %}
 
