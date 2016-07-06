@@ -1,0 +1,17 @@
+{% extends "emails/base.html" %}
+{% load humanize %}
+
+{% block content %}
+    <h3>Баланс успешно пополнен</h3>
+
+    <p>
+        Ваш баланс пополнен на {{ total|intcomma }} р.<br>
+        Номер счета #{{ id }}.
+    </p>
+    <p>
+        Спасибо за использование,
+        HostelHunt!
+    </p>
+{% endblock %}
+
+

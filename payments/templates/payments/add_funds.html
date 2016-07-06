@@ -6,7 +6,16 @@
 
 {% block payments_content %}
 
-    {% include 'payments/add_funds_description.html' %}
+    <div class="bg-gray color-palette alert">
+        <p>
+            Для пополнения кошелька введите сумму,
+            которую Вы хотите положить на счет и нажмите кнопку <strong>"Создать счет".</strong>
+        </p>
+        <p>
+            После оплаты счёта, деньги будут зачислены в течении 10 минут.
+            Если этого не произошло обратитесь в техническую поддержку.
+        </p>
+    </div>
 
     <div class="box box-default" id="payments-results">
         <div class="box-body" id="payments-results-body">

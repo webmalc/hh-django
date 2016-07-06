@@ -1,0 +1,7 @@
+{% extends "messages/base.html" %}
+{% load humanize %}
+
+{% block content %}
+    Ваш баланс пополнен на {{ total|intcomma }} р.<br>
+    Номер счета #{{ id }}.
+{% endblock %}

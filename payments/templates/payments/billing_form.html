@@ -5,11 +5,19 @@
 
 {% block payments_content %}
 
-    {% include 'payments/add_funds_description.html' %}
+    <div class="bg-gray color-palette alert">
+        <p>
+            Нажмите кнопку оплатить счет, для пепрехода на страницу платежной системы.
+        </p>
+    </div>
 
     <div class="box box-default" id="billing-form">
         <div class="box-body" id="billing-form-body">
-            <form action="" method="post" class="form">
+
+            <form class="billing-form" method="post" action="https://rbkmoney.ru/acceptpurchase.aspx">
+                {% for key, value in form_data.items %}
+                <input type="hidden" name="{{ key }}" value="{{ value }}">
+                {% endfor %}
                 <button type="submit" class="btn btn-success margin-right-sm">
                     <i class="fa fa-check-circle-o"></i>
                     <span class="margin-left-sm">

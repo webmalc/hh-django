@@ -16,6 +16,17 @@ class User(BaseUser):
         """
         return set([e.email for e in self.emailaddress_set.all() if e.verified] + [self.email])
 
+    def get_first_email(self):
+        """
+        Get user first email
+        :return: user first email
+        :rtype: string
+        """
+        try:
+            return self.get_emails().pop()
+        except KeyError:
+            return None
+
     def partner_create(self):
         """
         Add user to Partner group

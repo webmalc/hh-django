@@ -1,8 +1,26 @@
 from django.views.generic import ListView, CreateView, DetailView
+from django.http import HttpResponse, HttpResponseNotFound
 from django.core.urlresolvers import reverse_lazy
+from django.views.decorators.csrf import csrf_exempt
 from payments.models import Payment
 from payments.forms import PaymentsFilterForm, AddFundsForm
 from hh.utils import get_month_day_range
+from payments.rbk import Rbk
+
+
+@csrf_exempt
+def check_payment(request):
+    """
+    Payment verification
+    :param request: request
+    :type request: django.http.HttpRequest
+    :return: response
+    :rtype: django.http.HttpResponse | django.http.HttpResponseNotFound
+    """
+    if Rbk.process_request(request):
+        return HttpResponse('OK')
+    else:
+        return HttpResponseNotFound('FAIL')
 
 
 class AddFundsView(CreateView):
@@ -30,6 +48,12 @@ class BillingFormView(DetailView):
     """
     model = Payment
     template_name = 'payments/billing_form.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(BillingFormView, self).get_context_data(**kwargs)
+        context['form_data'] = Rbk.get_form_data(context['payment'])
+
+        return context
 
     def get_queryset(self):
         q = super(BillingFormView, self).get_queryset()

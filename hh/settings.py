@@ -226,6 +226,7 @@ STRONGHOLD_PUBLIC_URLS = (
     r'^/admin.+$',
     r'^/accounts.+$',
     r'^/__debug__.+$',
+    r'^/payments/check/payment$'
 )
 
 # Django avatar
