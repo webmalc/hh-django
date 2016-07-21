@@ -68,7 +68,7 @@ class Order(CommonInfo):
     )
     STATUSES = (
         ('process', 'Обрабатывается'),
-        ('completed', 'Завершена'),
+        ('completed', 'Принята'),
         ('canceled', 'Отменена')
 
     )

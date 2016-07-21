@@ -43,11 +43,11 @@
     {% if order.status == 'process' or order.status == 'completed' %}
         <p class="text-danger">
             {% if order.status == 'process' %}
-                <i class="fa fa-clock-o"></i> Заканчивается {{ order.ends_at }}.
+                <i class="fa fa-clock-o"></i> Заканчивается <span class="order-ends-at">{{ order.ends_at|date:'Y/m/d H:i:s'}}</span>
                 <br class="hidden-sm hidden-md hidden-lg margin-bottom-sm">
             {% endif %}
             {% if order.created_by == request.user and not incoming and order.can_cancel %}
-                <strong><a href="{% url 'booking:order_cancel' pk=order.id %}"
+                <strong class="margin-left-sm"><a href="{% url 'booking:order_cancel' pk=order.id %}"
                             class="modal-confirm">Отменить заявку?</a></strong>
             {% endif %}
         </p>
@@ -64,7 +64,7 @@
                                         data-url="{% url 'booking:order_confirmation' pk=order.id order_room_id=order_room.id %}"
                                         class="btn btn-success btn-xs margin-right-sm order-confirmation-link"
                                         data-total="{{ order_room.total }}">
-                                    <i class="fa fa-check"></i><span class="hidden-xs"> подтвердить</span>
+                                    <i class="fa fa-check"></i><span class="hidden-xs"> принять гостей</span>
                                 </button>
                             {% endif %}
                             {{ order_room.room.property }} -

@@ -85,6 +85,7 @@ MIDDLEWARE_CLASSES = [
     'hh.middleware.AdminLocaleMiddleware',
     'hh.middleware.WhodidMiddleware',
     'stronghold.middleware.LoginRequiredMiddleware',
+    'booking.middleware.IncomingOrdersMiddleware'
 ]
 
 ROOT_URLCONF = 'hh.urls'

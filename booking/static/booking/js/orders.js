@@ -3,6 +3,16 @@
 $(document).ready(function () {
     'use strict';
 
+    // Orders countdown
+    $('.order-ends-at').each(function () {
+        var clock = $(this);
+        clock.countdown(clock.html(), function (event) {
+            var totalHours = event.offset.totalDays * 24 + event.offset.hours,
+                output = totalHours > 0 ? totalHours + ' ч %M мин. %S сек.' : '%M мин. %S сек.';
+            $(this).html(event.strftime('через ' + output));
+        });
+    });
+
     // Order confirmation modal
     (function () {
         var orderTotalInput = $('#order-confirmation-total'),

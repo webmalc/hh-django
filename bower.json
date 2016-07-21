@@ -30,6 +30,7 @@
     "fancybox": "^2.1.5",
     "Readmore.js": "readmore-js#^2.1.0",
     "jquery.notification": "^1.0.5",
-    "teamdf/jquery-number": "customd/jquery-number#^2.1.6"
+    "teamdf/jquery-number": "customd/jquery-number#^2.1.6",
+    "jquery.countdown": "^2.1.0"
   }
 }

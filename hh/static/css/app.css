@@ -18,6 +18,15 @@ body {
     margin-bottom: 20px;
 }
 
+.blink {
+  animation: blinker 1s linear infinite;
+}
+@keyframes blinker {
+  50% { opacity: 0.0; }
+}
+.opacity-half {
+    opacity: 0.5;
+}
 .clickable{
     cursor: pointer;
 }
@@ -45,6 +54,10 @@ body {
 }
 .margin-right-md {
     margin-right: 10px;
+    display: inline-block;
+}
+.margin-right-lg {
+    margin-right: 20px;
     display: inline-block;
 }
 .margin-left-md {

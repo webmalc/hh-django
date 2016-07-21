@@ -145,6 +145,7 @@
                                 <div class="readmore margin-top-sm">
                                     <small class="text-muted">{{ property.description|linebreaks }}</small>
                                 </div>
+
                                 <!-- END: Hotel info -->
 
                                 {% with group.list as property_rooms %}
@@ -182,11 +183,13 @@
                                                     </small>
                                                 </td>
                                                 <td class="td-xs text-right">
-                                                    <div class="search-results-row-inputs {{ can_booking|yesno:',hidden' }}">
+                                                    <div class="search-results-row-inputs">
+                                                        {% if property.created_by != user and can_booking %}
                                                         <input type="checkbox" id="room_input_{{ room.id }}"
                                                                {% if forloop.parentloop.counter0 < 3 and not forloop.counter0 %}checked{% endif %}
                                                                class="search-results-room-input" value="{{ room.id }}"
                                                                name="rooms">
+                                                        {% endif %}
                                                     </div>
                                                 </td>
                                             </tr>

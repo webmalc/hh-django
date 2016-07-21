@@ -197,7 +197,7 @@ class OrderCreateView(FormView):
             order.save()
             for room_id in rooms:
                 room = Room.objects.filter(pk=int(room_id)).first()
-                if room:
+                if room and room.created_by != self.request.user:
                     order_room = OrderRoom()
                     order_room.total = room.calc_price(order.places, order.get_duration())
                     order_room.room = room
