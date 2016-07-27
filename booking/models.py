@@ -19,6 +19,9 @@ class OrderManager(models.Manager):
         Check user order limit
         :param user
         """
+        if not user.is_authenticated():
+            return False
+
         query = self.all().filter(created_by=user)
 
         if query.count() and not user.is_partner():

@@ -2,6 +2,22 @@
 
 <aside class="main-sidebar">
     <section class="sidebar">
-        {% sitetree_menu from 'navbar' include "trunk" template "sitetree/menu_bootstrap3.html" %}
+        {% if user.is_authenticated %}
+            {% sitetree_menu from 'navbar' include "trunk" template "sitetree/menu_bootstrap3.html" %}
+        {% else %}
+            <ul class="sidebar-menu">
+                <li class="header">ВХОД</li>
+                <li>
+                    <a href="{% url 'account_login' %}">
+                        <i class="fa fa-sign-in"></i><span>Войти</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'account_signup' %}">
+                        <i class="fa fa-plus"></i><span>Регистрация</span>
+                    </a>
+                </li>
+            </ul>
+        {% endif %}
     </section>
 </aside>

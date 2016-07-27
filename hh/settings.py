@@ -227,7 +227,10 @@ STRONGHOLD_PUBLIC_URLS = (
     r'^/admin.+$',
     r'^/accounts.+$',
     r'^/__debug__.+$',
-    r'^/payments/check/payment$'
+    r'^/payments/check/payment$',
+    r'^/select2/fields/auto.+$',
+    r'^/booking/search.+$',
+    r'^/$'
 )
 
 # Django avatar

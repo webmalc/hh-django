@@ -110,6 +110,19 @@
                         </ul>
                     </li>
                 </ul>
+            {% else %}
+                <ul class="nav navbar-nav">
+                <li class="user user-menu">
+                        <a href="{% url 'account_login' %}">
+                            <i class="fa fa-sign-in"></i> <strong>Войти</strong>
+                        </a>
+                </li>
+                <li class="user user-menu">
+                        <a href="{% url 'account_signup' %}">
+                            <i class="fa fa-plus"></i> Регистрация
+                        </a>
+                </li>
+                </ul>
             {% endif %}
         </div>
     </nav>

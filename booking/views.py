@@ -124,9 +124,10 @@ class SearchResultsView(FormView):
     def form_valid(self, form):
         data = form.cleaned_data
         user = self.request.user
+
         rooms = Room.objects.search(**data)[:settings.HH_SEARCH_RESULTS_PER_PAGE]
         duration = (data['end'] - data['begin']).days
-        is_partner = self.request.user.is_partner()
+        is_partner = user.is_partner() if user.is_authenticated() else None
 
         for room in rooms:
             room.total = room.calc_price(data['places'], duration)

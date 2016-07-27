@@ -73,11 +73,16 @@
                     </button>
                 </div>
                 {% else %}
+
                     <div class="callout callout-info">
-                        <i class="fa fa-clock-o"></i>
-                        Вы не можете создавать новые заявки в данный момент.
-                        Подождите пока <a href="{% url 'booking:orders_out_active_list' %}">Ваши активные заявки</a> рассмотрят отели.
-                    </div>
+                        <i class="fa fa-exclamation-circle"></i>
+                        {% if user.is_authenticated %}
+                            Вы не можете создавать новые заявки в данный момент.
+                            Подождите пока <a href="{% url 'booking:orders_out_active_list' %}">Ваши активные заявки</a> рассмотрят отели.
+                        {% else %}
+                            Вы не можете создавать новые заявки пока не <strong><a href="{% url 'account_signup' %}">зарегистрируетесь</a></strong>.
+                        {% endif %}
+                     </div>
                 {% endif %}
 
                 {% for group in rooms_by_properties %}
@@ -161,7 +166,7 @@
                                             <tr>
                                                 <td>
                                                     <label for="room_input_{{ room.id }}"
-                                                           class="font-lg text-primary cursor-pointer">{{ room }}</label>
+                                                           class="font-lg text-primary {{ can_booking|yesno:'cursor-pointer,' }}">{{ room }}</label>
                                                     <p>
                                                         <small><i class="fa fa-male margin-right-sm"></i>
                                                             {{ room.get_gender_display }} на {{ room.places }}
@@ -189,6 +194,13 @@
                                                                {% if forloop.parentloop.counter0 < 3 and not forloop.counter0 %}checked{% endif %}
                                                                class="search-results-room-input" value="{{ room.id }}"
                                                                name="rooms">
+                                                        {% else %}
+                                                            {% if not user.is_authenticated %}
+                                                                <small>
+                                                                    <a href="{% url 'account_login' %}"><i class="fa fa-sign-in"></i> войти</a><br>
+                                                                    <a href="{% url 'account_signup' %}">регистрация</a>
+                                                                </small>
+                                                            {% endif %}
                                                         {% endif %}
                                                     </div>
                                                 </td>
