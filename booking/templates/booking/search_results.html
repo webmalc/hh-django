@@ -74,13 +74,13 @@
                 </div>
                 {% else %}
 
-                    <div class="callout callout-info">
+                    <div class="callout callout-info font-lg">
                         <i class="fa fa-exclamation-circle"></i>
                         {% if user.is_authenticated %}
-                            Вы не можете создавать новые заявки в данный момент.
+                            Вы не можете создавать новые заявки в данный момент.<br>
                             Подождите пока <a href="{% url 'booking:orders_out_active_list' %}">Ваши активные заявки</a> рассмотрят отели.
                         {% else %}
-                            Вы не можете создавать новые заявки пока не <strong><a href="{% url 'account_signup' %}">зарегистрируетесь</a></strong>.
+                                Вы не можете создавать новые заявки пока не <strong><a href="{% url 'account_signup' %}">зарегистрируетесь</a></strong>.
                         {% endif %}
                      </div>
                 {% endif %}
