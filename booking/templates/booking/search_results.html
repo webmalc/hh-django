@@ -95,7 +95,7 @@
                                         <a class="fancybox autoplay"
                                            rel="gallery-{{ group.grouper.id }}" title="{{ main_photo.getname }}"
                                            href="{{ main_photo.photo.url }}">
-                                            <img src="{% static main_photo.preview_photo.url %}"
+                                            <img src="{{ main_photo.preview_photo.url }}"
                                                  class="img-rounded img-responsive"
                                                  data-toggle="tooltip"
                                                  data-placement="top" title="Посмотреть фото">
@@ -107,7 +107,7 @@
                                                 <a class="fancybox fancybox autoplay"
                                                    rel="gallery-{{ group.grouper.id }}" title="{{ photo.name }}"
                                                    href="{{ photo.photo.url }}">
-                                                    <img src="{% static photo.thumbnail_xs.url %}"
+                                                    <img src="{{ photo.thumbnail_xs.url }}"
                                                          data-toggle="tooltip"
                                                          data-placement="top" title="Посмотреть фото">
                                                 </a>
@@ -115,7 +115,7 @@
                                         {% endfor %}
                                     </div>
                                 {% else %}
-                                    <img src="{% static group.grouper.get_main_photo_thumbnail %}" class="img-rounded">
+                                    <img src="{{ group.grouper.get_main_photo_thumbnail }}" class="img-rounded">
                                 {% endif %}
                             {% endwith %}
                         </div>

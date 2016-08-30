@@ -15,6 +15,7 @@
 {% block hotel_content %}
     <form action="" method="post" class="form">
         {% csrf_token %}
+        {{ user }}
         {{ form|crispy }}
 
         <button type="submit" class="btn btn-success margin-right-sm">

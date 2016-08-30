@@ -139,7 +139,8 @@ class SearchResultsView(FormView):
             'form': data,
             'duration': duration,
             'order_lifetime': settings.HH_BOOKING_ORDER_LIFETIME,
-            'can_booking': Order.objects.user_can_booking(user)
+            'can_booking': Order.objects.user_can_booking(user),
+            'user': user
         }, RequestContext(self.request))
 
 
