@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-06-22 16:59+0300\n"
+"POT-Creation-Date: 2016-08-30 14:34+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,19 +20,19 @@ msgstr ""
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : n%10==0 || (n%10>=5 && n%10<=9) || (n"
 "%100>=11 && n%100<=14)? 2 : 3);\n"
 
-#: booking/forms.py:19 payments/forms.py:30
+#: booking/forms.py:19 payments/forms.py:38
 msgid "Period"
 msgstr "Период"
 
-#: booking/forms.py:21 booking/models.py:103
+#: booking/forms.py:21 booking/models.py:106
 msgid "status"
 msgstr ""
 
-#: booking/forms.py:58 booking/models.py:94
+#: booking/forms.py:58 booking/models.py:97
 msgid "Check-in"
 msgstr "Заезд"
 
-#: booking/forms.py:61 booking/models.py:95
+#: booking/forms.py:61 booking/models.py:98
 msgid "Check-out"
 msgstr "Выезд"
 
@@ -56,61 +56,61 @@ msgstr ""
 msgid "Gender"
 msgstr "Пол"
 
-#: booking/models.py:86 users/models.py:151
+#: booking/models.py:89 users/models.py:162
 msgid "first name"
 msgstr "Имя"
 
-#: booking/models.py:87 users/models.py:152
+#: booking/models.py:90 users/models.py:163
 msgid "last name"
 msgstr "Фамилия"
 
-#: booking/models.py:88
+#: booking/models.py:91
 msgid "patronymic"
 msgstr "Отчество"
 
-#: booking/models.py:90
+#: booking/models.py:93
 msgid "citizenship"
 msgstr "Гражданство"
 
-#: booking/models.py:92
+#: booking/models.py:95
 msgid "mobile phone"
 msgstr "Мобильный телефон"
 
-#: booking/models.py:93
+#: booking/models.py:96
 msgid "e-mail"
 msgstr "E-mail"
 
-#: booking/models.py:97 booking/models.py:193
+#: booking/models.py:100 booking/models.py:196
 msgid "total"
 msgstr ""
 
-#: booking/models.py:99
+#: booking/models.py:102
 msgid "commission"
 msgstr ""
 
-#: booking/models.py:101
+#: booking/models.py:104
 msgid "agent commission"
 msgstr ""
 
-#: booking/models.py:105 booking/models.py:192
+#: booking/models.py:108 booking/models.py:195
 #, fuzzy
 #| msgid "room name"
 msgid "room"
 msgstr "Нозвание номера"
 
-#: booking/models.py:107
+#: booking/models.py:110
 msgid "comment"
 msgstr "Комментарий"
 
-#: booking/models.py:109
+#: booking/models.py:112
 msgid "ends at"
 msgstr ""
 
-#: booking/models.py:194
+#: booking/models.py:197
 msgid "order"
 msgstr ""
 
-#: booking/models.py:195
+#: booking/models.py:198
 msgid "is accepted"
 msgstr ""
 
@@ -150,7 +150,7 @@ msgstr ""
 msgid "The following e-mail addresses are associated with your account:"
 msgstr ""
 
-#: hh/templates/account/email.html:38 hh/templates/account/email.html.py:40
+#: hh/templates/account/email.html:38 hh/templates/account/email.html:40
 #: hh/templates/account/email.html:44
 msgid "Verified"
 msgstr ""
@@ -159,7 +159,7 @@ msgstr ""
 msgid "Unverified"
 msgstr ""
 
-#: hh/templates/account/email.html:51 hh/templates/account/email.html.py:53
+#: hh/templates/account/email.html:51 hh/templates/account/email.html:53
 msgid "Primary"
 msgstr ""
 
@@ -395,7 +395,7 @@ msgstr "Метро"
 msgid "is enabled?"
 msgstr "Включен?"
 
-#: hotels/models.py:123 payments/forms.py:31
+#: hotels/models.py:123 payments/forms.py:39
 msgid "type"
 msgstr "тип"
 
@@ -431,7 +431,7 @@ msgstr "Тип номера"
 msgid "price"
 msgstr "Цена"
 
-#: payments/forms.py:16
+#: payments/forms.py:20
 msgid "Sum"
 msgstr "Сумма"
 

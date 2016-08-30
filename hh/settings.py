@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'colorful',
     'geoposition',
     'imagekit',
+    'envelope',
 
     # HH apps
     'hh',
@@ -214,6 +215,7 @@ STRONGHOLD_PUBLIC_URLS = (
     r'^/payments/check/payment$',
     r'^/select2/fields/auto.+$',
     r'^/booking/search.+$',
+    r'^/pages/contacts.+$',
     r'^/$'
 )
 
@@ -274,6 +276,10 @@ SELECT2_CSS = 'AdminLTE/plugins/select2/select2.min.css'
 
 # Django geoposition
 GEOPOSITION_MAP_WIDGET_HEIGHT = 300
+
+# Django envelope
+ENVELOPE_EMAIL_RECIPIENTS = ADMINS
+ENVELOPE_SUBJECT_INTRO = 'Новое сообщение от пользователя. '
 
 # HH settings
 HH_SEARCH_RESULTS_PER_PAGE = 30

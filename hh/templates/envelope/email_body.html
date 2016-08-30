@@ -1,0 +1,8 @@
+{% extends 'emails/base.html' %}
+
+{% block content %}
+   <h3>Новое сообщение от пользователя. {{ subject }}</h3>
+
+    <p>{{ message|linebreaksbr }}</p>
+    <p><strong>{{ sender }}<br>{{ email }}</strong></p>
+{% endblock %}

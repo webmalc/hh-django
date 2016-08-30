@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+{% load envelope_tags %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+    <div class="box box-default">
+        <div class="box-body">
+            <h4>
+                <i class="fa fa-phone"></i>
+                <span class="margin-left-sm">+7 (925)317-28-78</span>
+            </h4>
+            <h4>
+                <i class="fa fa-envelope"></i>
+                <a class="margin-left-sm" href="mailto:webmalc@gmail.com">webmalc@gmail.com</a>
+            </h4>
+        </div>
+    </div>
+
+    <div class="box box-default">
+        <div class="box-header with-border">
+            <h3 class="box-title">Написать нам письмо</h3>
+        </div>
+        <div class="box-body">
+            <form action="{% url 'envelope-contact' %}" method="post" class="form">
+                {% csrf_token %}
+                {% antispam_fields %}
+                {{ form|crispy }}
+
+                <button type="submit" class="btn btn-success margin-right-sm">
+                    <i class="fa fa-check-circle-o"></i><span class="margin-left-sm">Отправить письмо</span>
+                </button>
+            </form>
+        </div>
+    </div>
+{% endblock %}

@@ -20,6 +20,7 @@ from django.contrib.auth import views as auth_views
 from django.conf.urls.static import static
 from django.views.generic.base import RedirectView
 from users.views import PasswordChangeRedirectView
+from hh.views import ContactFormView
 
 urlpatterns = [
 
@@ -36,4 +37,5 @@ urlpatterns = [
     url(r'^payments/', include('payments.urls', namespace="payments")),
     url(r'^hotels/', include('hotels.urls', namespace="hotel")),
     url(r'^$', RedirectView.as_view(pattern_name='booking:search', permanent=True), name='index'),
+    url(r'^pages/contacts/', ContactFormView.as_view(), name='envelope-contact')
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
