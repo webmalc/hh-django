@@ -24,6 +24,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+    'django.contrib.flatpages',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -70,7 +71,8 @@ MIDDLEWARE_CLASSES = [
     'hh.middleware.AdminLocaleMiddleware',
     'hh.middleware.WhodidMiddleware',
     'stronghold.middleware.LoginRequiredMiddleware',
-    'booking.middleware.IncomingOrdersMiddleware'
+    'booking.middleware.IncomingOrdersMiddleware',
+    'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware'
 ]
 
 ROOT_URLCONF = 'hh.urls'

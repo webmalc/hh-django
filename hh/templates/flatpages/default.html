@@ -1,0 +1,28 @@
+{% extends  'layout.html' %}
+{% block title %}{{ flatpage.title }} | {% endblock %}
+
+{% block content_header %}
+    <section class="content-header">
+        {% block tilte %}
+            <h1>
+                {{ flatpage.title }}
+            </h1>
+        {% endblock %}
+        {% block breadcrumb %}
+            <ul class="breadcrumb">
+                <li>
+                    <a href="{% url 'index' %}"><i class="fa fa-home"></i></a>
+                </li>
+                <li class="active">{{ flatpage.title }}</li>
+            </ul>
+        {% endblock %}
+    </section>
+{% endblock %}
+
+{% block content %}
+    <div class="box box-default">
+        <div class="box-body">
+            {{ flatpage.content }}
+        </div>
+    </div>
+{% endblock %}

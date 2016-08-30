@@ -17,7 +17,17 @@ body {
 .breadcrumb {
     margin-bottom: 20px;
 }
-
+ul#footer-menu {
+    margin: 0px !important;
+    padding: 0px !important;
+}
+ul#footer-menu li {
+    display: inline-block;
+    margin-right: 10px;
+}
+ul#footer-menu a {
+    color: #333;
+}
 .blink {
   animation: blinker 1s linear infinite;
 }

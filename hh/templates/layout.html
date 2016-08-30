@@ -1,5 +1,6 @@
 {% extends 'meta.html' %}
 {% load sitetree %}
+{% load flatpages %}
 
 {% block body %}
     {% with 'skin-red sidebar-mini' as body_classes %}{{ block.super }}{% endwith %}
@@ -63,8 +64,13 @@
                 &nbsp;
             </div>
             {% block footer_content %}
-                <strong>Copyright &copy; 2015-{% now "Y" %} <a href="{% url 'index' %}">HostelHunt</a>.</strong>
-                Все права защищены.
+                {% get_flatpages as flatpages %}
+                <ul id="footer-menu">
+                    <li><a href="/pages/contacts/">Контакты</a></li>
+                    {% for page in flatpages|dictsort:'title' %}
+                        <li><a href="{{ page.url }}">{{ page.title }}</a></li>
+                    {% endfor %}
+                </ul>
             {% endblock %}
         </footer>
         {% endblock %}

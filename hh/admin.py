@@ -11,6 +11,8 @@ from allauth.account.models import EmailAddress
 from allauth.socialaccount.models import SocialAccount, SocialToken, SocialApp
 from avatar.models import Avatar
 from hh.models import City, Region, Country
+from django.contrib.flatpages.models import FlatPage
+from django.contrib.flatpages.admin import FlatPageAdmin
 
 
 class HHCityAdmin(CityAdmin, VersionAdmin):
@@ -51,6 +53,11 @@ class CustomTreeItemAdmin(TreeItemAdmin):
         }),
     )
 
+
+class FlatPageAdmin(FlatPageAdmin, VersionAdmin):
+    pass
+
+
 override_item_admin(CustomTreeItemAdmin)
 admin.site.unregister(City)
 admin.site.register(City, HHCityAdmin)
@@ -62,3 +69,5 @@ patch_admin(SocialApp)
 patch_admin(SocialToken)
 patch_admin(Avatar)
 patch_admin(Site)
+admin.site.unregister(FlatPage)
+admin.site.register(FlatPage, FlatPageAdmin)

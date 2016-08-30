@@ -37,5 +37,6 @@ urlpatterns = [
     url(r'^payments/', include('payments.urls', namespace="payments")),
     url(r'^hotels/', include('hotels.urls', namespace="hotel")),
     url(r'^$', RedirectView.as_view(pattern_name='booking:search', permanent=True), name='index'),
-    url(r'^pages/contacts/', ContactFormView.as_view(), name='envelope-contact')
+    url(r'^pages/contacts/', ContactFormView.as_view(), name='envelope-contact'),
+    url(r'^pages/', include('django.contrib.flatpages.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
